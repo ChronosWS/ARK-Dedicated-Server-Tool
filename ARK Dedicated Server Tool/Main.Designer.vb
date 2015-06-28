@@ -522,7 +522,7 @@ Partial Class Main
         'lblCurrentServer
         '
         Me.lblCurrentServer.AutoSize = True
-        Me.lblCurrentServer.Location = New System.Drawing.Point(749, 100)
+        Me.lblCurrentServer.Location = New System.Drawing.Point(749, 128)
         Me.lblCurrentServer.Name = "lblCurrentServer"
         Me.lblCurrentServer.Size = New System.Drawing.Size(45, 13)
         Me.lblCurrentServer.TabIndex = 46
