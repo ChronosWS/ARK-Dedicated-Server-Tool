@@ -291,8 +291,36 @@ Public Class Main
         configINI.AddSection("ServerSettings").AddKey("ServerAdminPassword").Value = txtAdminPassword.Text
         configINI.AddSection("SessionSettings").AddKey("SessionName").Value = txtServerName.Text
         configINI.AddSection("SessionSettings").AddKey("QueryPort").Value = txtServerPort.Text
-        configINI.AddSection("ServerSettings").AddKey("DifficultyOffset").Value = txtDifficultyOffset.Text
         configINI.AddSection("ServerSettings").AddKey("MaxStructuresInRange").Value = txtMaxStructuresInRange.Text
+
+        'Write all Float Type Values
+        configINI.AddSection("ServerSettings").AddKey("DifficultyOffset").Value = numDifficulty.Value
+
+        configINI.AddSection("ServerSettings").AddKey("DayCycleSpeedScale").Value = numDayCycle.Value
+        configINI.AddSection("ServerSettings").AddKey("NightTimeSpeedScale").Value = numNightTime.Value
+        configINI.AddSection("ServerSettings").AddKey("DayTimeSpeedScale").Value = numDayTime.Value
+
+        configINI.AddSection("ServerSettings").AddKey("PlayerDamageMultiplier").Value = numPlayerDamage.Value
+        configINI.AddSection("ServerSettings").AddKey("DinoDamageMultiplier").Value = numDinoDamage.Value
+        configINI.AddSection("ServerSettings").AddKey("StructureDamageMultiplier").Value = numStructureDamage.Value
+
+        configINI.AddSection("ServerSettings").AddKey("PlayerResistanceMultiplier").Value = numPlayerResist.Value
+        configINI.AddSection("ServerSettings").AddKey("DinoResistanceMultiplier").Value = numDinoResist.Value
+        configINI.AddSection("ServerSettings").AddKey("StructureResistanceMultiplier").Value = numStructureResist.Value
+
+        configINI.AddSection("ServerSettings").AddKey("XPMultiplier").Value = numExperience.Value
+        configINI.AddSection("ServerSettings").AddKey("TamingSpeedMultiplier").Value = numTamingSpeed.Value
+        configINI.AddSection("ServerSettings").AddKey("HarvestAmountMultiplier").Value = numHarvestAmount.Value
+
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterWaterDrainMultiplier").Value = numPlayerWater.Value
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterFoodDrainMultiplier").Value = numPlayerFood.Value
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterStaminaDrainMultiplier").Value = numPlayerStamina.Value
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterHealthRecoveryMultiplier").Value = numPlayerHealth.Value
+
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterWaterDrainMultiplier").Value = numDinoWater.Value
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterFoodDrainMultiplier").Value = numDinoFood.Value
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterStaminaDrainMultiplier").Value = numDinoStamina.Value
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterHealthRecoveryMultiplier").Value = numDinoHealth.Value
 
         If chkMultiHome.Checked = True Then
             configINI.AddSection("SessionSettings").AddKey("MultiHome").Value = txtMultiHome.Text
@@ -363,8 +391,36 @@ Public Class Main
         txtAdminPassword.Text = configINI.GetSection("ServerSettings").GetKey("ServerAdminPassword").GetValue()
         txtServerName.Text = configINI.GetSection("SessionSettings").GetKey("SessionName").GetValue()
         txtServerPort.Text = configINI.GetSection("SessionSettings").GetKey("QueryPort").GetValue()
-        txtDifficultyOffset.Text = configINI.GetSection("ServerSettings").GetKey("DifficultyOffset").GetValue()
         'txtMaxStructuresInRange.Text = configINI.GetSection("ServerSettings").GetKey("MaxStructuresInRange").GetValue()
+
+        'Get & Set all Float Type Values
+        numDifficulty.Value = configINI.GetSection("ServerSettings").GetKey("DifficultyOffset").GetValue()
+
+        numDayCycle.Value = configINI.GetSection("ServerSettings").GetKey("DayCycleSpeedScale").GetValue()
+        numNightTime.Value = configINI.GetSection("ServerSettings").GetKey("NightTimeSpeedScale").GetValue()
+        numDayTime.Value = configINI.GetSection("ServerSettings").GetKey("DayTimeSpeedScale").GetValue()
+
+        numPlayerDamage.Value = configINI.GetSection("ServerSettings").GetKey("PlayerDamageMultiplier").GetValue()
+        numDinoDamage.Value = configINI.GetSection("ServerSettings").GetKey("DinoDamageMultiplier").GetValue()
+        numStructureDamage.Value = configINI.GetSection("ServerSettings").GetKey("StructureDamageMultiplier").GetValue()
+
+        numPlayerResist.Value = configINI.GetSection("ServerSettings").GetKey("PlayerResistanceMultiplier").GetValue()
+        numDinoResist.Value = configINI.GetSection("ServerSettings").GetKey("DinoResistanceMultiplier").GetValue()
+        numStructureResist.Value = configINI.GetSection("ServerSettings").GetKey("StructureResistanceMultiplier").GetValue()
+
+        numExperience.Value = configINI.GetSection("ServerSettings").GetKey("XPMultiplier").GetValue()
+        numTamingSpeed.Value = configINI.GetSection("ServerSettings").GetKey("TamingSpeedMultiplier").GetValue()
+        numHarvestAmount.Value = configINI.GetSection("ServerSettings").GetKey("HarvestAmountMultiplier").GetValue()
+
+        numPlayerWater.Value = configINI.GetSection("ServerSettings").GetKey("PlayerCharacterWaterDrainMultiplier").GetValue()
+        numPlayerFood.Value = configINI.GetSection("ServerSettings").GetKey("PlayerCharacterFoodDrainMultiplier").GetValue()
+        numPlayerStamina.Value = configINI.GetSection("ServerSettings").GetKey("PlayerCharacterStaminaDrainMultiplier").GetValue()
+        numPlayerHealth.Value = configINI.GetSection("ServerSettings").GetKey("PlayerCharacterHealthRecoveryMultiplier").GetValue()
+
+        numDinoWater.Value = configINI.GetSection("ServerSettings").GetKey("DinoCharacterWaterDrainMultiplier").GetValue()
+        numDinoFood.Value = configINI.GetSection("ServerSettings").GetKey("DinoCharacterFoodDrainMultiplier").GetValue()
+        numDinoStamina.Value = configINI.GetSection("ServerSettings").GetKey("DinoCharacterStaminaDrainMultiplier").GetValue()
+        numDinoHealth.Value = configINI.GetSection("ServerSettings").GetKey("DinoCharacterHealthRecoveryMultiplier").GetValue()
 
         chkMultiHome.Checked = serversINI.GetSection("MultiHome").GetKey("MultiHome").GetValue()
         If chkMultiHome.Checked = True Then
@@ -410,6 +466,35 @@ Public Class Main
         configINI.AddSection("SessionSettings").AddKey("QueryPort").Value = "27015"
         configINI.AddSection("ServerSettings").AddKey("DifficultyOffset").Value = "1.0"
         configINI.AddSection("ServerSettings").AddKey("MaxStructuresInRange").Value = "1300"
+
+        'Write all Float Type Values
+        configINI.AddSection("ServerSettings").AddKey("DifficultyOffset").Value = 1.0
+
+        configINI.AddSection("ServerSettings").AddKey("DayCycleSpeedScale").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("NightTimeSpeedScale").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("DayTimeSpeedScale").Value = 1.0
+
+        configINI.AddSection("ServerSettings").AddKey("PlayerDamageMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("DinoDamageMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("StructureDamageMultiplier").Value = 1.0
+
+        configINI.AddSection("ServerSettings").AddKey("PlayerResistanceMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("DinoResistanceMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("StructureResistanceMultiplier").Value = 1.0
+
+        configINI.AddSection("ServerSettings").AddKey("XPMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("TamingSpeedMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("HarvestAmountMultiplier").Value = 1.0
+
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterWaterDrainMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterFoodDrainMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterStaminaDrainMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("PlayerCharacterHealthRecoveryMultiplier").Value = 1.0
+
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterWaterDrainMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterFoodDrainMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterStaminaDrainMultiplier").Value = 1.0
+        configINI.AddSection("ServerSettings").AddKey("DinoCharacterHealthRecoveryMultiplier").Value = 1.0
 
         If chkMultiHome.Checked = True Then
             configINI.AddSection("SessionSettings").AddKey("MultiHome").Value = "127.0.0.1"
