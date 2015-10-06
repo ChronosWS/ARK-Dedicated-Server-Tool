@@ -1520,7 +1520,10 @@
                                             <Button Width="22" Height="22" Click="PlayerLevels_Clear" IsEnabled="{Binding ElementName=EnableLevelsCheckbox, Path=IsChecked}" ToolTip="Delete all levels">
                                                 <Image Source="Art/Delete.png" Width="16"/>
                                             </Button>
-                                            <Button Width="22" Height="22" Margin="5,0,0,0" Click="PlayerLevels_Reset" IsEnabled="{Binding ElementName=EnableLevelsCheckbox, Path=IsChecked}" ToolTip="Reset levels to game defaults">
+                                            <Button Width="22" Height="22" Margin="5,0,0,0" Click="PlayerLevels_Reset" IsEnabled="{Binding ElementName=EnableLevelsCheckbox, Path=IsChecked}" ToolTip="Reset levels to ASM defaults">
+                                                <Image Source="Art/Refresh.png" Width="16"/>
+                                            </Button>
+                                            <Button Width="22" Height="22" Margin="5,0,0,0" Click="PlayerLevels_ResetOfficial" IsEnabled="{Binding ElementName=EnableLevelsCheckbox, Path=IsChecked}" ToolTip="Reset levels to official defaults">
                                                 <Image Source="Art/Refresh.png" Width="16"/>
                                             </Button>
                                         </StackPanel>
@@ -1575,7 +1578,11 @@
                                                 <Image Source="Art/Delete.png" Width="16"/>
                                             </Button>
                                             <Button Width="22" Height="22" Margin="5,0,0,0" Click="DinoLevels_Reset"  IsEnabled="{Binding ElementName=EnableLevelsCheckbox, Path=IsChecked}"
-                                                    ToolTip="Reset levels to game defaults">
+                                                    ToolTip="Reset levels to ASM defaults">
+                                                <Image Source="Art/Refresh.png" Width="16"/>
+                                            </Button>
+                                            <Button Width="22" Height="22" Margin="5,0,0,0" Click="DinoLevels_ResetOfficial"  IsEnabled="{Binding ElementName=EnableLevelsCheckbox, Path=IsChecked}"
+                                                    ToolTip="Reset levels to official defaults">
                                                 <Image Source="Art/Refresh.png" Width="16"/>
                                             </Button>
                                         </StackPanel>

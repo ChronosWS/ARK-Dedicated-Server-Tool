@@ -169,7 +169,7 @@ namespace ARK_Server_Manager.Lib
         public static readonly DependencyProperty GlobalSpoilingTimeMultiplierProperty = DependencyProperty.Register(nameof(GlobalSpoilingTimeMultiplier), typeof(float), typeof(ServerProfile), new PropertyMetadata(1.0f));
         public static readonly DependencyProperty GlobalCorpseDecompositionTimeMultiplierProperty = DependencyProperty.Register(nameof(GlobalCorpseDecompositionTimeMultiplier), typeof(float), typeof(ServerProfile), new PropertyMetadata(1.0f));
         public static readonly DependencyProperty OverrideMaxExperiencePointsDinoProperty = DependencyProperty.Register(nameof(OverrideMaxExperiencePointsDino), typeof(int), typeof(ServerProfile), new PropertyMetadata(100000));
-        public static readonly DependencyProperty OverrideMaxExperiencePointsPlayerProperty = DependencyProperty.Register(nameof(OverrideMaxExperiencePointsPlayer), typeof(int), typeof(ServerProfile), new PropertyMetadata(100000));
+        public static readonly DependencyProperty OverrideMaxExperiencePointsPlayerProperty = DependencyProperty.Register(nameof(OverrideMaxExperiencePointsPlayer), typeof(int), typeof(ServerProfile), new PropertyMetadata(360887));
         public static readonly DependencyProperty GlobalItemDecompositionTimeMultiplierProperty = DependencyProperty.Register(nameof(GlobalItemDecompositionTimeMultiplier), typeof(float), typeof(ServerProfile), new PropertyMetadata(1.0f));
 
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "GlobalVoiceChat")]
@@ -1205,6 +1205,23 @@ namespace ARK_Server_Manager.Lib
 
             list.Clear();
             list.AddRange(GameData.LevelProgression);
+        }
+
+        public void ResetLevelProgressionToOfficial(LevelProgression levelProgression)
+        {
+            LevelList list = GetLevelList(levelProgression);
+
+            list.Clear();
+
+            switch (levelProgression)
+            {
+                case LevelProgression.Player:
+                    list.AddRange(GameData.LevelProgressionPlayerOfficial);
+                    break;
+                case LevelProgression.Dino:
+                    list.AddRange(GameData.LevelProgressionDinoOfficial);
+                    break;
+            }
         }
 
         public void ClearLevelProgression(LevelProgression levelProgression)

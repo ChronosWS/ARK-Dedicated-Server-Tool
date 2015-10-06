@@ -347,22 +347,50 @@ namespace ARK_Server_Manager
 
         private void DinoLevels_Clear(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to clear all the current dino levels.", "Confirm Clear Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.ClearLevelProgression(ServerProfile.LevelProgression.Dino);
         }
 
         private void DinoLevels_Reset(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current dino levels.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.ResetLevelProgressionToDefault(ServerProfile.LevelProgression.Dino);
+        }
+
+        private void DinoLevels_ResetOfficial(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current dino levels.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            this.Settings.ResetLevelProgressionToOfficial(ServerProfile.LevelProgression.Dino);
         }
 
         private void PlayerLevels_Clear(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to clear all the current player levels.", "Confirm Clear Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.ClearLevelProgression(ServerProfile.LevelProgression.Player);
         }
 
         private void PlayerLevels_Reset(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current player levels.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.ResetLevelProgressionToDefault(ServerProfile.LevelProgression.Player);
+        }
+
+        private void PlayerLevels_ResetOfficial(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current player levels.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            this.Settings.ResetLevelProgressionToOfficial(ServerProfile.LevelProgression.Player);
         }
 
         private void DinoSpawn_Reset(object sender, RoutedEventArgs e)
@@ -392,6 +420,9 @@ namespace ARK_Server_Manager
 
         private void HarvestResourceItemAmountClassMultipliers_Reset(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current resource harvest amount multiplier changes.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.HarvestResourceItemAmountClassMultipliers.Reset();
         }
 
@@ -414,6 +445,9 @@ namespace ARK_Server_Manager
 
         private void Engrams_Reset(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current engram changes.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.OverrideNamedEngramEntries.Reset();
         }
 
@@ -441,6 +475,9 @@ namespace ARK_Server_Manager
 
         private void DinoCustomization_Reset(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset all the current dino customizations.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
             this.Settings.DinoSettings.Reset();
         }
     }
