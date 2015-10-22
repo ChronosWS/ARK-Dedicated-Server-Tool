@@ -654,7 +654,7 @@ namespace ARK_Server_Manager.Lib
             new EngramEntry { EngramClassName="EngramEntry_StoneWall_C",                EngramLevelRequirement=15, EngramPointsCost=8,  EngramHidden=false, RemoveEngramPreReq=false },
             new EngramEntry { EngramClassName="EngramEntry_StoneSlopedWall_Left_C",     EngramLevelRequirement=15, EngramPointsCost=4,  EngramHidden=false, RemoveEngramPreReq=false },
             new EngramEntry { EngramClassName="EngramEntry_StoneSlopedWall_Right_C",    EngramLevelRequirement=15, EngramPointsCost=4,  EngramHidden=false, RemoveEngramPreReq=false },
-			new EngramEntry { EngramClassName="EngramEntry_StoneRailing_C",             EngramLevelRequirement=20, EngramPointsCost=4,  EngramHidden=false, RemoveEngramPreReq=false },
+            new EngramEntry { EngramClassName="EngramEntry_StoneRailing_C",             EngramLevelRequirement=20, EngramPointsCost=4,  EngramHidden=false, RemoveEngramPreReq=false },
             new EngramEntry { EngramClassName="EngramEntry_StoneRoof_C",                EngramLevelRequirement=15, EngramPointsCost=4,  EngramHidden=false, RemoveEngramPreReq=false },
             new EngramEntry { EngramClassName="EngramEntry_StoneWallWithDoor_C",        EngramLevelRequirement=20, EngramPointsCost=6,  EngramHidden=false, RemoveEngramPreReq=false },
             new EngramEntry { EngramClassName="EngramEntry_StoneWallWithWindow_C",      EngramLevelRequirement=25, EngramPointsCost=11, EngramHidden=false, RemoveEngramPreReq=false },

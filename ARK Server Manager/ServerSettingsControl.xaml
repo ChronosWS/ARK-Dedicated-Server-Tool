@@ -1314,8 +1314,8 @@
 
                                     <StackPanel Grid.Column="0">
                                         <local:AnnotatedSlider Label="Mating Interval:"   Value="{Binding MatingIntervalMultiplier}"  Suffix="x" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="Specifies the multiplier for time between tamed dino mating. Lower values decrease the time between mating."/>
-                                        <local:AnnotatedSlider Label="Egg Hatch Speed:"   Value="{Binding EggHatchSpeedMultiplier}"   Suffix="x" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="Specifies the multiplier for time that fertilised eggs hatch. Lower values decrease the time an eggs hatches."/>
-                                        <local:AnnotatedSlider Label="Baby Mature Speed:" Value="{Binding BabyMatureSpeedMultiplier}" Suffix="x" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="Specifies the multiplier for time that baby dinos mature into adults. Lower values decrease the time it take baby dinos to mature into adults."/>
+                                        <local:AnnotatedSlider Label="Egg Hatch Speed:"   Value="{Binding EggHatchSpeedMultiplier}"   Suffix="x" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="Specifies the multiplier for time that fertilised eggs hatch. Higher values decrease the time an eggs hatches."/>
+                                        <local:AnnotatedSlider Label="Baby Mature Speed:" Value="{Binding BabyMatureSpeedMultiplier}" Suffix="x" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="Specifies the multiplier for time that baby dinos mature into adults. Higher values decrease the time it take baby dinos to mature into adults."/>
                                     </StackPanel>
                                 </GroupBox>
                                 <!--<GroupBox  HorizontalAlignment="Stretch">
