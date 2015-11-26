@@ -55,7 +55,7 @@ function Write-Server($minutes)
 try
 {
     $lockFilePath = "$($ServerCache)\$($CacheUpdateInProgressFileName)"
-    while($True) { try { $lockFile = [System.IO.File]::Open($lockFilePath, 'CreateNew', 'Write', 'None');  break; } catch { Write-Host "Waiting for lock file"; Start-Sleep -Seconds 10; } }
+    while($True) { try { $lockFile = [System.IO.File]::Open($lockFilePath, 'Create', 'Write', 'None');  break; } catch { Write-Host "Waiting for lock file"; Start-Sleep -Seconds 10; } }
 
     if(Test-Path $forceUpdateFile)
     {
