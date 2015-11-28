@@ -11,7 +11,6 @@ namespace ARK_Server_Manager.Lib
         IEnumerable<string> ToIniValues();
         void FromIniValues(IEnumerable<string> values);
         bool IsEnabled { get; set; }
-        bool IsArray { get; }
         string IniCollectionKey { get; }
     }
 }

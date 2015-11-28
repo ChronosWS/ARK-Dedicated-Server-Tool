@@ -1,0 +1,614 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ARK_Server_Manager"
+             xmlns:eo="http://schemas.essentialobjects.com/wpf/" xmlns:Controls="clr-namespace:ARK_Server_Manager.Controls" x:Class="ARK_Server_Manager.ServerDetailControl"
+             x:Name="controlRoot"
+             mc:Ignorable="d" d:DesignWidth="1024" Width="Auto" MinHeight="500">
+    <UserControl.Resources>
+        <Storyboard x:Key="hide">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="mainTabControl">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="ServerDetail">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-64"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="mainTabControl">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="104"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="mainTabControl">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="3"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ServerDetail">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="controlRoot">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ServerDetail">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="show">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="mainTabControl">
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="ServerDetail">
+                <SplineDoubleKeyFrame KeyTime="0" Value="20"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="border">
+                <SplineDoubleKeyFrame KeyTime="0" Value="-53"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="mainTabControl">
+                <SplineDoubleKeyFrame KeyTime="0" Value="104"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="mainTabControl">
+                <SplineDoubleKeyFrame KeyTime="0" Value="3"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ServerDetail">
+                <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="border">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="controlRoot">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ServerDetail">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <BooleanToVisibilityConverter x:Key="B2VConverter"/>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="backToListButton">
+            <BeginStoryboard x:Name="hide_BeginStoryboard" Storyboard="{StaticResource hide}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid x:Name="ServerDetail" Margin="0" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+        <Grid.Effect>
+            <BlurEffect Radius="0"/>
+        </Grid.Effect>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="209"/>
+            <ColumnDefinition Width="6"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TabControl x:Name="mainTabControl" Padding="0" Background="{StaticResource DarkNeutralFade_Brush}" BorderBrush="Black" SelectedIndex="{Binding SelectedIndex, ElementName=listBox}" Margin="0,0,0,-0.333" UseLayoutRounding="True" Grid.Column="2" Style="{StaticResource TabControlHiddenHeader}" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+            <TabControl.Effect>
+                <BlurEffect Radius="0"/>
+            </TabControl.Effect>
+            <TabControl.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TabControl.RenderTransform>
+            <TabItem x:Name="tabAdmin" Header="tabAdmin" Margin="0">
+                <Grid>
+                    <Border x:Name="headerArea" Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemAdmin}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <Grid x:Name="toolButtons" Height="58" Margin="2,0,0,0">
+                                <Border Background="{StaticResource VeryDarkNeutral_Brush}" Padding="4" Margin="10,0">
+                                    <StackPanel Margin="10,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                        <Button x:Name="duplicateButton" ToolTip="Duplicate this profile to a new one" d:LayoutOverrides="LeftPosition, RightPosition" Width="40" Margin="0" Height="40">
+                                            <Viewbox Height="30" Stretch="Fill" Width="27">
+                                                <Grid Height="96" Width="84">
+                                                    <Path Data="F1M42.116,0L0,0 0,82 66,82 66,25.276z" Fill="{StaticResource ButtonText_Brush}" Margin="0,14,18,0"/>
+                                                    <Path Data="F1M42.116,0L0,0 0,5 34.098,5 61,32.582 61,82 66,82 66,25.276z" Fill="{StaticResource ButtonText_Brush}" Margin="9,5,9,9"/>
+                                                    <Path Data="F1M21,13L13,13 13,20 7,20 7,13 0,13 0,7 7,7 7,0 13,0 13,7 21,7z" Fill="{StaticResource ButtonText_Brush}" Margin="63,0,0,76"/>
+                                                </Grid>
+                                            </Viewbox>
+                                        </Button>
+                                        <Button x:Name="updateButton" HorizontalAlignment="Right" Margin="4,0,0,0" Width="40" d:LayoutOverrides="LeftPosition, RightPosition" ToolTip="Update to most recent version" Height="40">
+                                            <Path Data="F1M0,44.979L0,37.604 22.183,44.348 22.183,0 38.319,0 38.319,44.348 60.502,35.869 60.502,44.979 30.251,75.209z" Fill="{StaticResource ButtonText_Brush}" Width="22.686" Height="28.2" Stretch="Fill" UseLayoutRounding="False" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform/>
+                                                        <SkewTransform/>
+                                                        <RotateTransform Angle="180"/>
+                                                        <TranslateTransform/>
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                        </Button>
+                                        <Button x:Name="installFolderButton_Copy"  ToolTip="Change install location" HorizontalAlignment="Right" Width="40" Margin="4,0,0,0" d:LayoutOverrides="LeftPosition, RightPosition" Height="40">
+                                            <Viewbox Stretch="Fill" Height="20" Width="26">
+                                                <Grid Height="45" Width="58">
+                                                    <Path Data="F1M0,8.126C0,8.126 0.103,5.94 1.104,5.704 2.107,5.468 2.511,4.629 2.629,3.038 2.747,1.448 3.799,0 4.626,0L20.005,0C20.005,0 21.831,1.027 21.949,2.736 22.067,4.445 22.421,5.531 24.249,5.531L49.231,5.531C49.231,5.531,51.708,5.704,52.061,7.649z" Fill="{StaticResource ButtonText_Brush}" Margin="2.645,0,2.96,36.943"/>
+                                                    <Path Data="F1M31.988,31.177L27.134,31.177 31.731,23.177 13.76,23.177 13.76,14.177 31.731,14.177 27.134,6.177 31.988,6.177 44.305,18.677z M54.706,0.177L2.851,0.177C-0.449,0.177 0.023,2.4 0.023,2.4 0.023,6.76 1.201,30.348 1.201,32.469 1.201,34.59 2.851,35.177 2.851,35.177L54.94,35.177C56.473,35.177 56.473,32.177 56.473,32.177 56.473,23.103 57.418,5.888 57.653,2.47 57.889,-0.948 54.706,0.177 54.706,0.177" Fill="{StaticResource ButtonText_Brush}" Margin="0,9.892,0,0"/>
+                                                </Grid>
+                                            </Viewbox>
+                                        </Button>
+                                        <Button x:Name="stopButton"  ToolTip="Stop server" HorizontalAlignment="Right" Width="40" Margin="4,0,0,0" Height="40">
+                                            <Rectangle Fill="#FFE20000" Height="18" Stroke="Black" Width="18"/>
+                                        </Button>
+                                        <Button x:Name="openRCONButton"  ToolTip="Open cosole window" HorizontalAlignment="Right" Width="40" Margin="4,0,0,0" Height="40">
+                                            <Viewbox Stretch="Fill" Width="26" Height="21">
+                                                <Grid Height="54" Width="67">
+                                                    <Path Data="F1M65,10L2,10 2,2 65,2z M0,54L67,54 67,0 0,0z" Fill="Black"/>
+                                                    <Path Data="F1M13.395,17.438C12.58,17.86 10.874,18.279 8.72,18.279 3.73,18.279 0,15.126 0,9.297 0,3.73 3.755,0 9.245,0 11.423,0 12.843,0.473 13.446,0.79L12.869,2.654C12.029,2.233 10.794,1.918 9.324,1.918 5.175,1.918 2.416,4.57 2.416,9.218 2.416,13.579 4.913,16.334 9.193,16.334 10.611,16.334 12.029,16.046 12.948,15.599z" Fill="White" Margin="10.356,21.118,43.198,14.603"/>
+                                                    <Path Data="F1M0,10.924C0,9.951 0.656,9.27 1.548,9.27 2.495,9.27 3.099,9.951 3.099,10.924 3.099,11.842 2.495,12.552 1.522,12.552 0.631,12.552 0,11.842 0,10.924 M0,1.653C0,0.682 0.656,0 1.548,0 2.495,0 3.099,0.682 3.099,1.653 3.099,2.572 2.495,3.282 1.522,3.282 0.631,3.282 0,2.572 0,1.653" Fill="White" Margin="26.043,26.845,37.858,14.603"/>
+                                                    <Path Data="F1M7.142,19.039L0,0 1.787,0 8.928,19.039z" Fill="White" Margin="30.141,21.093,27.931,13.868"/>
+                                                    <Path Data="F1M13.131,1.313L0,1.313 0,0 13.131,0z" Fill="White" Margin="44.618,41.077,9.251,11.61"/>
+                                                </Grid>
+                                            </Viewbox>
+                                        </Button>
+                                        <Button x:Name="openRCONButton_Copy"  ToolTip="Open RCON" HorizontalAlignment="Right" Width="40" Margin="4,0,0,0" Height="40">
+                                            <Grid Height="30" Width="30">
+                                                <Viewbox Stretch="Fill" Margin="4,2,6,12">
+                                                    <Grid Height="54" Width="67">
+                                                        <Path Data="F1M65,10L2,10 2,2 65,2z M0,54L67,54 67,0 0,0z" Fill="Black"/>
+                                                        <Path Data="F1M13.395,17.438C12.58,17.86 10.874,18.279 8.72,18.279 3.73,18.279 0,15.126 0,9.297 0,3.73 3.755,0 9.245,0 11.423,0 12.843,0.473 13.446,0.79L12.869,2.654C12.029,2.233 10.794,1.918 9.324,1.918 5.175,1.918 2.416,4.57 2.416,9.218 2.416,13.579 4.913,16.334 9.193,16.334 10.611,16.334 12.029,16.046 12.948,15.599z" Fill="White" Margin="10.356,21.118,43.198,14.603"/>
+                                                        <Path Data="F1M0,10.924C0,9.951 0.656,9.27 1.548,9.27 2.495,9.27 3.099,9.951 3.099,10.924 3.099,11.842 2.495,12.552 1.522,12.552 0.631,12.552 0,11.842 0,10.924 M0,1.653C0,0.682 0.656,0 1.548,0 2.495,0 3.099,0.682 3.099,1.653 3.099,2.572 2.495,3.282 1.522,3.282 0.631,3.282 0,2.572 0,1.653" Fill="White" Margin="26.043,26.845,37.858,14.603"/>
+                                                        <Path Data="F1M7.142,19.039L0,0 1.787,0 8.928,19.039z" Fill="White" Margin="30.141,21.093,27.931,13.868"/>
+                                                        <Path Data="F1M13.131,1.313L0,1.313 0,0 13.131,0z" Fill="White" Margin="44.618,41.077,9.251,11.61"/>
+                                                    </Grid>
+                                                </Viewbox>
+                                                <TextBlock x:Name="textBlock2" Margin="1.734,0,1.266,0.971" TextWrapping="Wrap" Text="RCON" VerticalAlignment="Bottom" FontSize="9.333" FontWeight="Bold" Height="11" Foreground="{StaticResource ButtonText_Brush}"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                            <GroupBox Header="Profile Basics" FontFamily="{StaticResource HeaderFont}" FontSize="16" Foreground="{StaticResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="2" Columns="2" Height="140">
+                                    <local:LabeledTextBox x:Name="ltbProfileName" Height="60" InputText="{Binding Profile.ProfileName}" LabelText="Server Profile Name:" Width="Auto" d:LayoutOverrides="TopPosition, BottomPosition" Margin="{StaticResource DetailItemMargins}" RenderTransformOrigin="0.502,0.467" />
+                                    <Grid Height="60" Background="#00000000" Margin="{StaticResource DetailItemMargins}" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+                                        <local:LabeledTextBox Height="60" InputText="{Binding Profile.InstallDirectory}" LabelText="Installation Location:" Width="Auto" />
+                                        <Button x:Name="installFolderButton"  ToolTip="Change install location" HorizontalAlignment="Right" Height="22" VerticalAlignment="Top" Width="22" Margin="0,3,4,0">
+                                            <Viewbox Height="13" Stretch="Fill" Width="16">
+                                                <Grid Height="45" Width="58">
+                                                    <Path Data="F1M0,8.126C0,8.126 0.103,5.94 1.104,5.704 2.107,5.468 2.511,4.629 2.629,3.038 2.747,1.448 3.799,0 4.626,0L20.005,0C20.005,0 21.831,1.027 21.949,2.736 22.067,4.445 22.421,5.531 24.249,5.531L49.231,5.531C49.231,5.531,51.708,5.704,52.061,7.649z" Fill="{StaticResource ButtonText_Brush}" Margin="2.645,0,2.96,36.943"/>
+                                                    <Path Data="F1M31.988,31.177L27.134,31.177 31.731,23.177 13.76,23.177 13.76,14.177 31.731,14.177 27.134,6.177 31.988,6.177 44.305,18.677z M54.706,0.177L2.851,0.177C-0.449,0.177 0.023,2.4 0.023,2.4 0.023,6.76 1.201,30.348 1.201,32.469 1.201,34.59 2.851,35.177 2.851,35.177L54.94,35.177C56.473,35.177 56.473,32.177 56.473,32.177 56.473,23.103 57.418,5.888 57.653,2.47 57.889,-0.948 54.706,0.177 54.706,0.177" Fill="{StaticResource ButtonText_Brush}" Margin="0,9.892,0,0"/>
+                                                </Grid>
+                                            </Viewbox>
+                                        </Button>
+                                    </Grid>
+                                    <local:LabeledTextBox Height="60" InputText="{Binding Profile.AdditionalArgs}" LabelText="Additional Args:" Width="Auto" d:LayoutOverrides="TopPosition, BottomPosition" Margin="{StaticResource DetailItemMargins}" RenderTransformOrigin="0.502,0.467" />
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="Server Details" Margin="6,0,6,10"  FontFamily="{StaticResource HeaderFont}" FontSize="16" Foreground="{StaticResource TextLight_Brush}" d:LayoutOverrides="TopPosition, BottomPosition">
+                                <UniformGrid Rows="4" Columns="3" Height="280">
+                                    <Controls:LabeledTextBlock BodyText="{Binding Profile.Version, FallbackValue=[Runtime Value]}" LabelText="Installed Version:" d:LayoutOverrides="LeftPosition, RightPosition" Margin="{StaticResource DetailItemMargins}"/>
+                                    <Controls:LabeledTextBlock LabelText="Latest Version:" Margin="{StaticResource DetailItemMargins}" BodyText="[Unbound]"/>
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="{StaticResource DetailItemMargins}" LabelText="Enable RCON Port:" InputText="{Binding RCONPort}" HasCheckBox="True" IsCheckboxChecked="{Binding RCONEnabled}"/>
+                                    <Controls:LabeledTextBlock BodyText="{Binding Runtime.Status, FallbackValue=[Runtime Value]}" LabelText="Server Status:" Margin="{StaticResource DetailItemMargins}"/>
+                                    <Controls:LabeledTextBlock BodyText="{Binding Runtime.Status, FallbackValue=[Runtime Value]}" LabelText="Availability:" Margin="{StaticResource DetailItemMargins}"/>
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="{StaticResource DetailItemMargins}" LabelText="Query Port:" InputText="{Binding Profile.ServerPort}"/>
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="{StaticResource DetailItemMargins}" LabelText="Server Port:" InputText="{Binding Profile.ServerConnectionPort}"/>
+                                    <Controls:LabeledTextBlock LabelText="Local IP:" Margin="{StaticResource DetailItemMargins}"/>
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="{StaticResource DetailItemMargins}" LabelText="Enable Idle Timeout (min):" InputText="{Binding Profile.EnableKickIdlePlayers}" ToolTip="Enables automatically kicking players that have been idle for the time you choose." HasCheckBox="True"/>
+
+                                    <local:LabeledSpinner Width="Auto" Height="Auto" Margin="{StaticResource DetailItemMargins}" LabelText="Auto Save Period (Minutes):" Value="{Binding Profile.AutoSavePeriodMinutes}" Minimum="1" Maximum="9999"/>
+                                    <local:LabeledSlider Margin="4" IsChecked="True" LabelText="Max Players:" LargeChange="10" Maximum="127" Minimum="1" SmallChange="1"  Value="{Binding Profile.MaxPlayers}" Width="Auto" Height="Auto"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Height="210" Margin="6,0,6,10" Header="Message of the Day:"  Foreground="{StaticResource TextLight_Brush}" FontSize="16" FontFamily="{StaticResource HeaderFont}">
+
+                                <Grid Background="{StaticResource VeryDarkNeutral_Brush}" Margin="{StaticResource DetailItemMargins}" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition">
+                                    <TextBox TextWrapping="Wrap" MaxLines="5" AcceptsReturn="True" Text="{Binding Profile.MOTD}" Style="{StaticResource DefaultTextBox}" FontFamily="{StaticResource DefaultTextBoxFont}" FontSize="{StaticResource DefaultTextBoxSize}" Margin="10,10,10,35"/>
+                                    <eo:SpinEdit Value="{Binding Profile.MOTDDuration}" Margin="164,0,0,9" FontFamily="{StaticResource DetailBody_Font}" FontWeight="Bold" FontSize="{StaticResource DetailBodyFont_Size}" Maximum="{Binding Maximum}" Background="{StaticResource TextBoxBG_Brush}" BorderBrush="{StaticResource VeryDarkNeutral_Brush}" BorderThickness="0" Width="100" HorizontalAlignment="Left" LargeChange="5" Minimum="{Binding Minimum}" SmallChange="1" VerticalAlignment="Bottom"/>
+                                    <TextBlock x:Name="textBlock_Copy" TextWrapping="Wrap" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource DetailLabelFont}" FontSize="{StaticResource DetailLabelFont_Size}" FontWeight="Bold" Margin="10,0,0,10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Text="Duration (Seconds):"/>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox Header="Passwords" FontFamily="{StaticResource HeaderFont}" FontSize="16" Foreground="{StaticResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="1" Columns="3" Height="70">
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="4,4,4,4" LabelText="Server Password:" InputText="{Binding Profile.ServerPassword}"/>
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="4,4,4,4" LabelText="Admin Password:" InputText="{Binding Profile.AdminPassword}"/>
+                                    <local:LabeledTextBox Width="Auto" Height="Auto" Margin="4,4,4,4" LabelText="Spectator Password:" InputText="{Binding Profile.SpectatorPassword}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="Automatic Management" FontFamily="{StaticResource HeaderFont}" FontSize="16" Foreground="{StaticResource TextLight_Brush}" Margin="6,0,6,10" d:LayoutOverrides="LeftPosition, RightPosition">
+                                <Grid Margin="12,12,0,12" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="TopPosition, BottomPosition">
+                                    <Border BorderThickness="2" Margin="0,38,0,0" BorderBrush="{StaticResource Master_Brush}" Width="400.167"/>
+                                    <StackPanel Orientation="Vertical" Margin="10,47,10,10" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=checkBox1}">
+                                        <CheckBox Height="22" IsChecked="{Binding Profile.EnableAutoStart}" Content="Auto-start Server On Boot" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Foreground="{StaticResource TextLight_Brush}" Width="196.533" HorizontalAlignment="Left"/>
+                                        <local:LabeledTextBox InputText="UNBOUND"  LabelText="Update Every (hh:mm):" Height="62" Width="375" HorizontalAlignment="Left" Margin="0,8,0,0" Style="{StaticResource LabeledTextBoxDefault}" />
+                                        <local:LabeledTextBox InputText="UNBOUND"  LabelText="Restart Grace Period (min):" Height="62" Width="375" HorizontalAlignment="Left" Margin="0,8,0,0" Style="{StaticResource LabeledTextBoxDefault}" />
+                                        <local:LabeledTextBox InputText="UNBOUND"  HasCheckBox="True" LabelText="Force Updates and Restart At (hh:mm):" Height="62" Width="375" HorizontalAlignment="Left" Margin="0,8,0,0" Style="{StaticResource LabeledTextBoxDefault}" />
+                                    </StackPanel>
+                                    <CheckBox x:Name="checkBox1" Height="22" Content="Enable Periodic Auto-Updates" IsChecked="{Binding Profile.EnableAutoUpdate}" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Foreground="{StaticResource TextLight_Brush}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="375" d:LayoutOverrides="VerticalAlignment" Margin="10,11,0,0"/>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabRules" Header="tabRules">
+                <Grid>
+                    <Border x:Name="headerArea_Copy" BorderBrush="Black" Padding="0,8" Margin="8,8,8,0" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemRules}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <GroupBox Header="Basic Options" FontFamily="{StaticResource GroupBoxHeaderFont}" FontSize="{StaticResource GroupBoxHeaderFontSize}" Foreground="{StaticResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <Grid>
+                                    <UniformGrid Rows="2" Columns="2" Height="60" Margin="8">
+                                        <CheckBox Content="Enable Hardcore Mode" IsChecked="{Binding Profile.EnableHardcore}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" Width="375" />
+                                        <CheckBox Content="Enable PvP" IsChecked="{Binding Profile.EnablePVP}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" Width="375" />
+                                        <CheckBox Content="Enable PvE Cave Building" IsChecked="{Binding Profile.AllowCaveBuildingPvE}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" Width="375" />
+                                        <CheckBox Content="Disable PvE Friendly Fire Damage" IsChecked="{Binding Profile.DisableFriendlyFirePvE}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" Width="375" />
+                                    </UniformGrid>
+                                </Grid>
+                            </GroupBox>
+                            <GroupBox FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Foreground="{StaticResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <GroupBox.Header>
+                                    <CheckBox x:Name="enableTributeCB" Content="Enable Tribute Downloads" FontFamily="{StaticResource GroupBoxHeaderFont}" FontSize="{StaticResource GroupBoxHeaderFontSize}" Foreground="{StaticResource TextLight_Brush}" Height="25"  />
+                                </GroupBox.Header>
+                                <UniformGrid Rows="2" Columns="2" Height="60" IsEnabled="{Binding IsChecked, ElementName=enableTributeCB}" Margin="8">
+                                    <CheckBox Content="No Survivor Downloads" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="No Item Downloads" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="No Dino Downloads" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Foreground="{StaticResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <GroupBox.Header>
+                                    <CheckBox x:Name="enablePvPRespawn" Content="Increase PvP Respawn Interval" FontFamily="{StaticResource GroupBoxHeaderFont}" FontSize="{StaticResource GroupBoxHeaderFontSize}" Foreground="{StaticResource TextLight_Brush}" Height="25"  />
+                                </GroupBox.Header>
+                                <UniformGrid Height="70" Rows="1" Columns="3" IsEnabled="{Binding IsChecked, ElementName=enablePvPRespawn}">
+                                    <local:LabeledTextBox LabelText="Increase Check Period (seconds):" InputText="{Binding Profile.IncreasePvPRespawnIntervalCheckPeriod}" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox LabelText="Increase Multiplier:" InputText="{Binding Profile.IncreasePvPRespawnIntervalMultiplier}" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox LabelText="Increase Base Amount (seconds):" InputText="{Binding Profile.IncreasePvPRespawnIntervalBaseAmount}" Margin="4" Height="Auto" Width="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Foreground="{StaticResource TextLight_Brush}" Margin="6,0,6,10" d:LayoutOverrides="LeftPosition, RightPosition">
+                                <GroupBox.Header>
+                                    <CheckBox x:Name="pveScheduleCB" IsChecked="{Binding Profile.AutoPvETimer}" Content="PvE Schedule" FontFamily="{StaticResource GroupBoxHeaderFont}" FontSize="{StaticResource GroupBoxHeaderFontSize}" Foreground="{StaticResource TextLight_Brush}" Height="25"  />
+                                </GroupBox.Header>
+                                <StackPanel Orientation="Vertical" IsEnabled="{Binding IsChecked, ElementName=pveScheduleCB}">
+                                    <CheckBox IsChecked="{Binding Profile.AutoPvEUseSystemTime}" Content="Use Server Time" Foreground="{StaticResource TextLight_Brush}" Margin="8" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" HorizontalAlignment="Left" />
+                                    <UniformGrid Height="70" Rows="1" Columns="3" >
+                                        <local:LabeledTextBox LabelText="Start Time (hh:mm):" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                        <local:LabeledTextBox LabelText="Stop Time (hh:mm):" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    </UniformGrid>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabUI" Header="tabUI">
+                <Grid>
+                    <Border Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemUI}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <GroupBox Header="Chat and Notifications" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="2" Columns="2" Height="60" Margin="8">
+                                    <CheckBox Content="Enable Global Voice Chat" IsChecked="{Binding Profile.EnableGlobalVoiceChat}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Enable Proximity Text Chat" IsChecked="{Binding Profile.EnableProximityChat}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Enable &quot;Player Left&quot; Notification" IsChecked="{Binding Profile.EnablePlayerLeaveNotifications}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Enable &quot;Player Joined&quot; Notification" IsChecked="{Binding Profile.EnablePlayerJoinedNotifications}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="HUD and Visuals" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="3" Columns="2" Height="90" Margin="8">
+                                    <CheckBox Content="Allow Crosshair" IsChecked="{Binding Profile.AllowCrosshair}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Allow HUD" IsChecked="{Binding Profile.AllowHUD}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Allow Third-Person View" IsChecked="{Binding Profile.AllowThirdPersonView}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Allow Map Player Location" IsChecked="{Binding Profile.AllowMapPlayerLocation}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                    <CheckBox Content="Allow Player Gamma Settings in PvP" IsChecked="{Binding Profile.AllowPVPGamma}" Foreground="{StaticResource TextLight_Brush}" Margin="4" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" />
+                                </UniformGrid>
+                            </GroupBox>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabPlayer" Header="tabPlayer" Margin="-2,0" FontSize="18.667">
+                <Grid>
+                    <Border Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemPlayers}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <Grid Margin="8" Height="100">
+                                <CheckBox Content="Enable Flyer-Carry" IsChecked="{Binding Profile.EnableFlyerCarry}" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="Width, Height" />
+                                <local:LabeledTextBox LabelText="Maximum XP:" InputText="{Binding Profile.OverrideMaxExperiencePointsPlayer}" Margin="0,30,0,10" Width="200"  Style="{StaticResource LabeledTextBoxDefault}" Height="60" HorizontalAlignment="Left" d:LayoutOverrides="Width"/>
+                            </Grid>
+
+                            <GroupBox Header="Multipliers" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="2" Columns="4" Height="140">
+                                    <local:LabeledTextBox InputText="{Binding Profile.XPMultiplier}" LabelText="XP Gain:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PlayerDamageMultiplier}" LabelText="Damage Dealt:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PlayerResistanceMultiplier}" LabelText="Resistance:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PlayerCharacterWaterDrainMultiplier}" LabelText="Water Drain:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PlayerCharacterFoodDrainMultiplier}" LabelText="Food Drain:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PlayerCharacterStaminaDrainMultiplier}" LabelText="Stamina Drain:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PlayerCharacterHealthRecoveryMultiplier}" LabelText="Health Recovery:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="Engrams" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <TextBlock Text="SECTION INCOMPLETE" Background="Red" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Padding="20" />
+                            </GroupBox>
+                            <GroupBox Header="Custom Player Level Progression" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <TextBlock Text="SECTION INCOMPLETE" Background="Red" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Padding="20" />
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabDino" Header="tabDino">
+                <Grid>
+                    <Border Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemDinos}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <local:LabeledTextBox LabelText="Maximum XP:" InputText="{Binding Profile.OverrideMaxExperiencePointsDino}" Margin="10,30,0,10" Width="200"  Style="{StaticResource LabeledTextBoxDefault}" Height="60" HorizontalAlignment="Left" d:LayoutOverrides="Width"/>
+
+                            <GroupBox Header="Multipliers" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="4" Columns="3" Height="280">
+
+                                    <local:LabeledTextBox InputText="{Binding Profile.DinoDamageMultiplier}" LabelText="Damage Dealt:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.TamedDinoDamageMultiplier}" LabelText="Tamed Damage Dealt:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.DinoResistanceMultiplier}" LabelText="Resistance:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.TamedDinoResistanceMultiplier}" LabelText="Tamed Resistance:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.MaxTamedDinos}" LabelText="Max Tamed Dinos:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.DinoCharacterFoodDrainMultiplier}" LabelText="Food Drain:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.DinoCharacterStaminaDrainMultiplier}" LabelText="Stamina Drain:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.DinoCharacterHealthRecoveryMultiplier}" LabelText="Health Recovery:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.DinoCountMultiplier}" LabelText="Dino Spawn Rate:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.TamingSpeedMultiplier}" LabelText="Taming Speed:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="Custom Dino Settings" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <TextBlock Text="SECTION INCOMPLETE" Background="Red" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Padding="20" />
+                            </GroupBox>
+                            <GroupBox Header="Custom Dino Level Progression" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <TextBlock Text="SECTION INCOMPLETE" Background="Red" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Padding="20" />
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabStructures" Header="Structures">
+                <Grid>
+                    <Border Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock TextWrapping="Wrap" Text="Structures" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <GroupBox Header="Structure Basics" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="2" Columns="2" Height="140">
+                                    <local:LabeledTextBox InputText="{Binding Profile.StructureResistanceMultiplier}" LabelText="Structure Resistance Multiplier:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.StructureDamageMultiplier}" LabelText="Structure Damage Multiplier:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PvPZoneStructureDamageMultiplier}" LabelText="PvP Zone Structure Damage Multiplier:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.MaxStructuresVisible}" LabelText="Max Structures Visible:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <GroupBox.Header>
+                                    <CheckBox x:Name="enableStructureDecayCB" IsChecked="{Binding Profile.EnableStructureDecay}" Content="Enable Structure Decay" FontFamily="{StaticResource GroupBoxHeaderFont}" FontSize="{StaticResource GroupBoxHeaderFontSize}" Foreground="{StaticResource TextLight_Brush}" Height="25"  />
+                                </GroupBox.Header>
+                                <UniformGrid Rows="1" Columns="3" Height="70" IsEnabled="{Binding IsChecked, ElementName=enableStructureDecayCB}">
+                                    <local:LabeledTextBox InputText="{Binding Profile.PvEStructureDecayDestructionPeriod}" LabelText="Structure Decay Period:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.PvEStructureDecayPeriodMultiplier}" LabelText="Structure Decay Multiplier:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabEnvironment" Header="tabEnvironment">
+                <Grid>
+                    <Border Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemEnviron}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox Content="Clamp Resource Harvest Damage" IsChecked="{Binding Profile.ClampResourceHarvestDamage}"  Foreground="{StaticResource TextLight_Brush}" Margin="14,8,8,8" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Width="375" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                            <GroupBox Header="Harvesting Multipliers" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="3" Columns="2" Height="210">
+                                    <local:LabeledTextBox InputText="{Binding Profile.HarvestAmountMultiplier}" LabelText="Harvest Amount:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.HarvestHealthMultiplier}" LabelText="Harvest Health:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.ResourcesRespawnPeriodMultiplier}" LabelText="Resources Respawn Period:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.ResourceNoReplenishRadiusPlayers}" LabelText="Suppress Replenish Radius (Player):" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.ResourceNoReplenishRadiusStructures}" LabelText="Suppress Replenish Radius (Structure):" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="Custom Harvest Amount Multipliers" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <TextBlock Text="SECTION INCOMPLETE" Background="Red" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" Padding="20" />
+                            </GroupBox>
+
+                            <GroupBox Header="Environment Multipliers" FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <UniformGrid Rows="2" Columns="3" Height="140">
+                                    <local:LabeledTextBox InputText="{Binding Profile.DayCycleSpeedScale}" LabelText="Day Cycle Speed:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.DayTimeSpeedScale}" LabelText="Day Time Speed:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.NightTimeSpeedScale}" LabelText="Night Time Speed:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.GlobalSpoilingTimeMultiplier}" LabelText="Global Spoiling Time:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.GlobalItemDecompositionTimeMultiplier}" LabelText="Global Item Decomp Time:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                    <local:LabeledTextBox InputText="{Binding Profile.GlobalCorpseDecompositionTimeMultiplier}" LabelText="Global Corpse Decomp Time:" Margin="4" Width="Auto" Height="Auto" Style="{StaticResource LabeledTextBoxDefault}"/>
+                                </UniformGrid>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabMods" Header="tabMods">
+                <Grid>
+                    <Border Margin="8,8,8,0" BorderBrush="Black" Padding="0,8" VerticalAlignment="Top" >
+                        <Border.Effect>
+                            <DropShadowEffect ShadowDepth="0" Opacity="0.5" BlurRadius="3"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <SolidColorBrush Color="{StaticResource VeryDark_Color}"/>
+                        </Border.Background>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Content, ElementName=listBoxItemMods}" FontFamily="{StaticResource HeaderFont}" FontSize="{StaticResource HeaderSize}" HorizontalAlignment="Center">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{StaticResource LightNeutral_Color}"/>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Border>
+                    <ScrollViewer Margin="0,64,0,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <GroupBox FontFamily="{DynamicResource HeaderFont}" FontSize="16" Foreground="{DynamicResource TextLight_Brush}" d:LayoutOverrides="LeftPosition, RightPosition" Margin="6,0,6,10">
+                                <GroupBox.Header>
+                                    <CheckBox x:Name="enableSotFCB" IsChecked="{Binding Profile.SOTF_Enabled}" Content="Survival of the Fittest" FontFamily="{StaticResource GroupBoxHeaderFont}" FontSize="{StaticResource GroupBoxHeaderFontSize}" Foreground="{StaticResource TextLight_Brush}" Height="25"  />
+                                </GroupBox.Header>
+                                <Grid IsEnabled="{Binding IsChecked, ElementName=enableSotFCB}">
+                                    <CheckBox Content="Disable Death Spectator" IsChecked="{Binding Profile.SOTF_DisableDeathSPectator}" Foreground="{StaticResource TextLight_Brush}" Margin="10,10,0,0" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" ToolTip="If checked, players cannot be spectators after they die." HorizontalAlignment="Left" VerticalAlignment="Top" d:LayoutOverrides="Height"/>
+                                    <CheckBox Content="Only Admin Rejoin as Spectator" IsChecked="{Binding Profile.SOTF_OnlyAdminRejoinAsSpectator}" Foreground="{StaticResource TextLight_Brush}" Margin="287,10,121,0" FontFamily="{StaticResource DetailBody_Font}" FontSize="{StaticResource DetailBodyFont_Size}" Height="22" ToolTip="If checked, only admins can join as spectators once the game has started." VerticalAlignment="Top" d:LayoutOverrides="Height"/>
+                                    <UniformGrid Rows="2" Columns="3" Height="140" Margin="6,37,10,23">
+                                        <local:LabeledSlider LabelText="Max Players in Tribe:" Value="{Binding SOTF_MaxNumberOfPlayersInTribe}" Minimum="1" Margin="4" Maximum="127" SmallChange="5" LargeChange="20" ToolTip="The maximum number of players allowed in a tribe."/>
+                                        <local:LabeledSlider LabelText="Tribes Required for Game:" Value="{Binding SOTF_BattleNumOfTribesToStartGame}"  Minimum="1" Margin="4" Maximum="127" SmallChange="5" LargeChange="20" ToolTip="The number of tribes required for the game to start."/>
+                                        <local:LabeledSlider LabelText="Ring of Death Collapse Time (sec):" Value="{Binding SOTF_TimeToCollapseROD}"  Minimum="60" Margin="4" Maximum="86400" SmallChange="900" LargeChange="3600" ToolTip="The game length before Sudden Death."/>
+                                        <local:LabeledSlider LabelText="Auto-start Delay Time (sec):" Value="{Binding SOTF_BattleAutoStartGameInterval}" Minimum="5" Margin="4" Maximum="120" SmallChange="5" LargeChange="20" ToolTip="The time after the minimum number of tribes has been achieved before the game starts."/>
+                                        <local:LabeledSlider LabelText="Auto-restart Delay Time (sec):" Value="{Binding SOTF_BattleAutoRestartGameInterval}"  Minimum="5" Margin="4" Maximum="120" SmallChange="5" LargeChange="20" ToolTip="The time after the last game has ended before the new game will start."/>
+                                        <local:LabeledSlider LabelText="Sudden Death Time (sec):" Value="{Binding SOTF_BattleSuddenDeathInterval}"  Minimum="60" Maximum="3600" Margin="4" SmallChange="60" LargeChange="600" ToolTip="The amount of time Sudden Death will be in effect until the game is declared a draw."/>
+                                    </UniformGrid>
+                                </Grid>
+
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+            </TabItem>
+            <TextBox x:Name="textBox" Height="79" TextWrapping="Wrap" Text="TextBox" Width="260"/>
+
+        </TabControl>
+        <Border x:Name="border" d:LayoutOverrides="Height, LeftMargin, RightMargin" Background="{StaticResource DarkNeutralFade_Brush}" BorderBrush="Black" BorderThickness="1" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,-2.664">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Border.RenderTransform>
+            <StackPanel Orientation="Vertical">
+                <ListBox x:Name="listBox" MinWidth="200" Style="{StaticResource MainListBoxStyle}" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" FontSize="18.667" Margin="0" Background="{x:Null}" Foreground="{StaticResource TextLight_Brush}" BorderBrush="{x:Null}" d:LayoutOverrides="LeftMargin, RightMargin" VerticalAlignment="Top" Loaded="listBox_Loaded" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" d:IsLocked="True">
+                    <ListBoxItem x:Name="listBoxItemAdmin" Content="Administration" Style="{StaticResource MainListBoxItem}" Padding="0,8,0,0" Margin="0,3,0,0" HorizontalContentAlignment="Center"/>
+                    <ListBoxItem x:Name="listBoxItemRules" Content="Rules" Style="{StaticResource MainListBoxItem}" Padding="4,8"/>
+                    <ListBoxItem x:Name="listBoxItemUI" Content="UI" Style="{StaticResource MainListBoxItem}" Padding="4,8"/>
+                    <ListBoxItem x:Name="listBoxItemPlayers" Content="Player Settings" Style="{StaticResource MainListBoxItem}" Padding="4,8"/>
+                    <ListBoxItem x:Name="listBoxItemDinos" Content="Dino Settings" Style="{StaticResource MainListBoxItem}" Padding="4,8"/>
+                    <ListBoxItem x:Name="listBoxItemStructures" Content="Structures" Style="{StaticResource MainListBoxItem}"/>
+                    <ListBoxItem x:Name="listBoxItemEnviron" Content="Environment" Style="{StaticResource MainListBoxItem}" Padding="4,8"/>
+                    <ListBoxItem x:Name="listBoxItemMods" Content="Mods" Style="{StaticResource MainListBoxItem}" Padding="4,8"/>
+                </ListBox>
+                <Button x:Name="backToListButton" Height="42.837" Margin="0,25,0,0" BorderBrush="Black" HorizontalAlignment="Center" Width="154" BorderThickness="2" FontFamily="{StaticResource ButtonFont}" FontSize="16" Background="White" Foreground="White" ToolTip="Return to server list">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,30,0">
+                        <Path Data="F1M0,0L76.591,76.595 153.188,0 76.591,38.297z" Fill="{StaticResource ButtonText_Brush}" Stretch="Fill" Width="32.194" RenderTransformOrigin="0.5,0.5" Height="16.097">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="90"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <TextBlock x:Name="textBlock7" TextWrapping="Wrap" Margin="0" VerticalAlignment="Center" Text="List" FontSize="24" FontFamily="{StaticResource DefaultFont}" d:LayoutOverrides="TopMargin, BottomMargin, LeftPosition, RightPosition"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="ARK_Server_Manager.LabeledTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ARK_Server_Manager"
+             mc:Ignorable="d" 
+             d:DesignHeight="55" d:DesignWidth="380" UseLayoutRounding="True" Height="57" Width="599">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="B2VConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Border Background="{StaticResource VeryDarkNeutral_Brush}" Padding="4" d:LayoutOverrides="TopMargin, BottomMargin"/>
+        <StackPanel Margin="4" Orientation="Vertical" d:LayoutOverrides="Height">
+            <StackPanel Margin="4,0,0,0" Orientation="Horizontal" d:LayoutOverrides="Width, TopPosition, BottomPosition" Height="22">
+                <CheckBox x:Name="checkBox" Content="" Margin="0,0,6,0" Width="18" d:LayoutOverrides="TopPosition, BottomPosition" VerticalAlignment="Center" Height="18" HorizontalAlignment="Left" IsChecked="{Binding IsCheckboxChecked, Mode=TwoWay}" Visibility="{Binding HasCheckBox, Converter={StaticResource B2VConverter}}"/>
+                <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="{Binding LabelText}" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource DetailLabelFont}" FontSize="{StaticResource DetailLabelFont_Size}" FontWeight="Bold" d:LayoutOverrides="Height, TopPosition, BottomPosition" Margin="0" VerticalAlignment="Center"/>
+            </StackPanel>
+            <TextBox x:Name="textBox" TextWrapping="Wrap" Text="{Binding InputText, Mode=TwoWay, FallbackValue='[Runtime Value]'}" FontSize="{StaticResource DetailBodyFont_Size}" FontFamily="{StaticResource DetailBody_Font}" FontWeight="Bold" Style="{StaticResource DefaultTextBoxLong}" Margin="0" Height="25" IsEnabled="{Binding IsChecked, ElementName=checkBox}" IsReadOnly="{Binding IsChecked, ElementName=checkBoxLock}"/>
+
+        </StackPanel>
+        <CheckBox x:Name="checkBoxLock" Content="" Margin="0,4,8,0" Style="{StaticResource CheckBoxLock}" VerticalAlignment="Top" Height="21" d:LayoutOverrides="VerticalAlignment" Width="21" HorizontalAlignment="Right" Visibility="{Binding HasLockBox, Converter={StaticResource B2VConverter}}" IsChecked="{Binding IsLocked, Mode=TwoWay}"/>
+
+    </Grid>
+</UserControl>

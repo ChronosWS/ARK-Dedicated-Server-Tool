@@ -1,26 +1,175 @@
-﻿<globalizer:GlobalizedApplication x:Class="ARK_Server_Manager.App"
+﻿<globalizer:GlobalizedApplication
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:globalizer="clr-namespace:WPFSharp.Globalizer;assembly=WPFSharp.Globalizer"
-             StartupUri="AutoUpdate.xaml">
-	<globalizer:GlobalizedApplication.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="UIStyles/Brushes.xaml"/>
-				<ResourceDictionary Source="UIStyles/MainControlListBox.xaml"/>
-				<ResourceDictionary Source="UIStyles/GlowSlider.xaml"/>
-				<ResourceDictionary Source="Eraseme.xaml"/>
-			</ResourceDictionary.MergedDictionaries>
-			<SolidColorBrush x:Key="LtBeige" Color="#FFE6DFD8"/>
-			<SolidColorBrush x:Key="MedBeige" Color="#FFD8CCBC"/>
-			<Style x:Key="BorderLabel" TargetType="{x:Type Border}">
-				<Setter Property="BorderThickness" Value="1"/>
-				<Setter Property="Width" Value="Auto"/>
-				<Setter Property="Height" Value="Auto"/>
-				<Setter Property="BorderBrush" Value="{DynamicResource MedBeige}"/>
-				<Setter Property="Background" Value="{DynamicResource LtBeige}"/>
-			</Style>
-			<SolidColorBrush x:Key="DkBeige" Color="#FFBFA786"/>
-		</ResourceDictionary>
-	</globalizer:GlobalizedApplication.Resources>
+             xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="ARK_Server_Manager.App"
+             StartupUri="Testing/UITests.xaml">
+
+    <!--StartupUri="AutoUpdate.xaml">-->
+    <globalizer:GlobalizedApplication.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="TempDict.xaml"/>
+                <ResourceDictionary Source="UIStyles/Brushes.xaml"/>
+                <ResourceDictionary Source="UIStyles/MainControlListBox.xaml"/>
+                <ResourceDictionary Source="UIStyles/ExtendedSlider.xaml"/>
+                <ResourceDictionary Source="UIStyles/MainTabControl.xaml"/>
+                <ResourceDictionary Source="UIStyles/Slider_TwoTone.xaml"/>
+                <ResourceDictionary Source="UIStyles/BasicStyles.xaml"/>
+                <ResourceDictionary Source="UIStyles/TextStyles.xaml"/>
+                <ResourceDictionary Source="ScrollViewerStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+            <SolidColorBrush x:Key="LtBeige" Color="#FFE6DFD8"/>
+            <SolidColorBrush x:Key="MedBeige" Color="#FFD8CCBC"/>
+            <Style x:Key="BorderLabel" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource MedBeige}"/>
+                <Setter Property="Background" Value="{DynamicResource LtBeige}"/>
+            </Style>
+            <SolidColorBrush x:Key="DkBeige" Color="#FFBFA786"/>
+            <SolidColorBrush x:Key="StopButtonBase" Color="#FF951515"/>
+            <System:Double x:Key="DetailBodyFont_Size">14</System:Double>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="#FFDDDDDD"/>
+                <Setter Property="BorderBrush" Value="#FF707070"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border" SnapsToDevicePixels="true" Background="{DynamicResource Master_Brush}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{DynamicResource ButtonBorder_Brush}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background)" Storyboard.TargetName="border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonHover_Brush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background)" Storyboard.TargetName="border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ButtonPress_Brush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="0.3"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background)" Storyboard.TargetName="border">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource Disabled_Brush}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+                <Setter Property="Background" Value="#FFFFFFFF"/>
+                <Setter Property="BorderBrush" Value="#FF707070"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                            <StackPanel x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True" Orientation="Horizontal">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualStateGroup.Transitions>
+                                            <VisualTransition GeneratedDuration="0:0:0.1" To="Checked">
+                                                <Storyboard>
+                                                    <DoubleAnimation Duration="0:0:0.1" From="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_checked"/>
+                                                </Storyboard>
+                                            </VisualTransition>
+                                            <VisualTransition From="Checked" GeneratedDuration="0:0:0.1" To="Unchecked">
+                                                <Storyboard/>
+                                            </VisualTransition>
+                                        </VisualStateGroup.Transitions>
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_checked">
+                                                    <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked"/>
+                                        <VisualState x:Name="Indeterminate"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Viewbox x:Name="viewbox" Margin="0" HorizontalAlignment="Left" Height="{TemplateBinding Height}" Width="{TemplateBinding Height}" Stretch="Fill">
+                                    <Grid Height="{TemplateBinding ActualHeight}" Width="{TemplateBinding ActualHeight}" Margin="0">
+                                        <Border x:Name="_unchecked" BorderBrush="{TemplateBinding BorderBrush}" Margin="0" HorizontalAlignment="Stretch" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource Unchecked_Brush}"/>
+                                        <Border x:Name="_checked" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" Margin="3" Width="Auto" Opacity="0" BorderBrush="{TemplateBinding BorderBrush}" Background="{StaticResource Checked_Brush}"/>
+                                    </Grid>
+                                </Viewbox>
+                                <ContentPresenter x:Name="contentPresenter" Focusable="False" Margin="8,0,0,0" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" d:LayoutOverrides="TopPosition, BottomPosition" Height="Auto"/>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" TargetName="viewbox" Value="0.5"/>
+                                    <Setter Property="Opacity" TargetName="contentPresenter" Value="0.5"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="True"/>
+                                <Trigger Property="IsChecked" Value="False"/>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type GroupBox}">
+                <Setter Property="BorderBrush" Value="#D5DFE5"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GroupBox}">
+                            <Grid SnapsToDevicePixels="true">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="6"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="6"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="6"/>
+                                </Grid.RowDefinitions>
+                                <Border BorderBrush="{DynamicResource Master_Brush}" BorderThickness="2" Grid.ColumnSpan="4" CornerRadius="4" Grid.Row="1" Grid.RowSpan="3">
+                                    <Border.OpacityMask>
+                                        <MultiBinding ConverterParameter="7" Converter="{StaticResource BorderGapMaskConverter}">
+                                            <Binding ElementName="Header" Path="ActualWidth"/>
+                                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}"/>
+                                        </MultiBinding>
+                                    </Border.OpacityMask>
+                                </Border>
+                                <Border x:Name="Header" Grid.Column="1" Padding="3,1,3,0" Grid.Row="0" Grid.RowSpan="2">
+                                    <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                                <ContentPresenter Grid.ColumnSpan="2" Grid.Column="1" Margin="{TemplateBinding Padding}" Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </globalizer:GlobalizedApplication.Resources>
 </globalizer:GlobalizedApplication>

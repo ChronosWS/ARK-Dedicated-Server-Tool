@@ -41,8 +41,6 @@ namespace ARK_Server_Manager.Lib
             }
         }
 
-        public abstract bool IsArray { get; }
-
         public string IniCollectionKey { get; }
 
         public void Reset()
@@ -54,64 +52,20 @@ namespace ARK_Server_Manager.Lib
         public void FromIniValues(IEnumerable<string> values)
         {
             this.Clear();
-            if (this.IsArray)
-            {
-                var list = new List<T>();
-                list.AddRange(this.ResetFunc());
-                foreach(var v in values)
-                {
-                    int indexStart = v.IndexOf('[');
-                    int indexEnd = v.IndexOf(']');
-                    if(indexStart >= indexEnd)
-                    {
-                        // Invalid format
-                        continue;
-                    }
+            this.AddRange(values.Select(v => v.Substring(v.IndexOf('=') + 1)).Select(this.FromIniValue));
+            this.IsEnabled = (this.Count != 0);
 
-                    int index;
-                    if(!Int32.TryParse(v.Substring(indexStart + 1, indexEnd - indexStart - 1), out index))
-                    {
-                        // Invalid index
-                        continue;
-                    }
+            // Add any default values which were missing
+            var defaultItemsToAdd = this.ResetFunc().Where(r => !this.Any(v => this.EquivalencyFunc(v, r))).ToArray();
+            this.AddRange(defaultItemsToAdd);
 
-                    if(index >= list.Count)
-                    {
-                        // Unexpected size
-                        continue;
-                    }
-
-                    list[index] = this.FromIniValue(v.Substring(v.IndexOf('=') + 1).Trim());
-                }
-                this.AddRange(list);
-            }
-            else
-            {
-                
-                this.AddRange(values.Select(v => v.Substring(v.IndexOf('=') + 1)).Select(this.FromIniValue));
-                this.IsEnabled = (this.Count != 0);
-
-                // Add any default values which were missing
-                var defaultItemsToAdd = this.ResetFunc().Where(r => !this.Any(v => this.EquivalencyFunc(v, r))).ToArray();
-                this.AddRange(defaultItemsToAdd);
-                this.Sort(this.SortKeySelectorFunc);
-            }            
+            this.Sort(this.SortKeySelectorFunc);
         }
 
         public IEnumerable<string> ToIniValues()
         {
             var values = new List<string>();
-            if (this.IsArray)
-            {
-                for(int i = 0; i < this.Count; i++)
-                {
-                    values.Add($"{this.IniCollectionKey}[{i}]={this.ToIniValue(this[i])}");
-                }
-            }
-            else
-            {
-                values.AddRange(this.Select(d => $"{this.IniCollectionKey}={this.ToIniValue(d)}"));
-            }
+            values.AddRange(this.Select(d => String.Format("{0}={1}", this.IniCollectionKey, this.ToIniValue(d))));
             return values;
         }
 

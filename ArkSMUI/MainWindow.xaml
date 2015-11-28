@@ -1,0 +1,65 @@
+﻿<Window x:Class="ArkSMUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArkSMUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="528" Width="1068">
+    <Window.Resources>
+
+        <Style x:Key="Slider_TwoToneGlow" TargetType="{x:Type Slider}">
+            <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#FFE5E5E5"/>
+            <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="Template" Value="{StaticResource SliderVertical}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="{DynamicResource DarkNeutral_Color}"/>
+        </Grid.Background>
+        <StackPanel Margin="29.252,45.983,0,50.035" HorizontalAlignment="Left" Width="499.1">
+            <StackPanel HorizontalAlignment="Left" Width="324.63" Height="80.8" Orientation="Horizontal">
+                <Button x:Name="button_Copy" Content="Button" HorizontalAlignment="Right" Width="102.315" Style="{StaticResource ButtonDefault}" FontFamily="Montserrat" FontSize="16" IsEnabled="False" Margin="0,0,12,0" Height="40.4"/>
+                <Button x:Name="button_Copy2" Content="Button" HorizontalAlignment="Right" Width="102.315" Style="{DynamicResource ButtonDefault}" FontFamily="Montserrat" FontSize="16" BorderBrush="Black" Height="40.4" Margin="0,17.2,12,23.2"/>
+                <Rectangle HorizontalAlignment="Left" Height="33" Stroke="Black" VerticalAlignment="Top" Width="33" Margin="0,20,0,0">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="UI_Assets/LightDarkBlueSquare.jpg"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </StackPanel>
+            <CheckBox x:Name="checkBox_Copy" Content="CheckBox" Height="32" VerticalAlignment="Top" Style="{DynamicResource CheckBoxDefault}" FontFamily="Montserrat" FontSize="18.667" Foreground="{DynamicResource TextLight_Brush}" BorderBrush="Black" BorderThickness="4" Margin="0,0,0,8"/>
+            <CheckBox x:Name="checkBox_Copy2" Content="CheckBox" Height="32" VerticalAlignment="Top" Style="{DynamicResource CheckBoxDefault}" FontFamily="Montserrat" FontSize="18.667" Foreground="{DynamicResource TextLight_Brush}" BorderBrush="Black" BorderThickness="3" Margin="0,0,0,8"/>
+            <CheckBox x:Name="checkBox_Copy1" Content="CheckBox" Height="32" VerticalAlignment="Top" Style="{DynamicResource CheckBoxDefault}" FontFamily="Montserrat" FontSize="18.667" Foreground="{DynamicResource TextLight_Brush}" BorderBrush="Black" BorderThickness="2" Margin="0,0,0,8"/>
+            <local:ExtendedSlider Template="{DynamicResource DefaultES}" LeftSideBrush="#FF1FAFBD" RightSideBrush="#FF317CC7" GlowBrush="#FF22D6E8" Value="5" Foreground="{x:Null}" ThumbBorderBrush="#FF09A6FF" ThumbBrush="#FF363636" HorizontalAlignment="Left" VerticalAlignment="Top" Width="350.333" Margin="0,12,0,0"/>
+            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Height="31.036" VerticalAlignment="Top" Width="218.545" Margin="0,12,0,0" />
+            <StackPanel Height="34.268" Margin="0,12,0,0" Orientation="Horizontal">
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" Width="88.183" VerticalAlignment="Center" FontSize="{DynamicResource DefaultFontSize}" FontFamily="{DynamicResource DefaultFont}" Foreground="{DynamicResource TextLight_Brush}" Margin="4,0"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="219" Style="{DynamicResource TextBoxDefault}" FontFamily="{DynamicResource DefaultFont}" FontSize="{DynamicResource DefaultFontSize}" Background="{DynamicResource LightNeutral_Brush}"/>
+            </StackPanel>
+        </StackPanel>
+        <UniformGrid Margin="0,323.97,37.534,50.035" Columns="4" HorizontalAlignment="Right" Width="422.949">
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Master_Brush}" Text="Master" Foreground="White" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Lit_Brush}" Text="Lit" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Highlight_Brush}" Text="Highlight" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0" />
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Glow_Brush}" Text="Glow" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Dark_Brush}" Text="Dark" Foreground="White" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource TextLight_Brush}" Text="TextLight" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource MedNeutral_Brush}" Text="MedNeutral" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource DarkNeutral_Brush}" Text="DarkNeutral" Foreground="White" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Disabled_Brush}" Text="Disabled" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Go_Brush}" Text="Go" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{StaticResource Stop_Brush}" Text="Stop" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+            <TextBlock TextWrapping="Wrap" Background="{DynamicResource MasterComp_Brush}" Text="Master Complement" FontFamily="Montserrat" FontSize="13.333" Padding="4,4,0,0"/>
+        </UniformGrid>
+
+    </Grid>
+</Window>

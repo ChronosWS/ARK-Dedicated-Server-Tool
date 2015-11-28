@@ -8,11 +8,9 @@ namespace ARK_Server_Manager.Lib
 {
     public class StringIniValueList : IniValueList<string>
     {
-        public StringIniValueList(string iniKeyName, Func<IEnumerable<string>> resetFunc) : base(iniKeyName, resetFunc, String.Equals, m => m, ToIniValueInternal, FromIniValueInternal)
+        public StringIniValueList(string iniKeyNale, Func<IEnumerable<string>> resetFunc) : base(iniKeyNale, resetFunc, String.Equals, m => m, ToIniValueInternal, FromIniValueInternal)
         {
         }
-
-        public override bool IsArray => false;
 
         private static string ToIniValueInternal(string val)
         {

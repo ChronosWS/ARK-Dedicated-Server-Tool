@@ -3,303 +3,233 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:eo="http://schemas.essentialobjects.com/wpf/"
 	xmlns:local="clr-namespace:ARK_Server_Manager"
+    xmlns:lib="clr-namespace:ARK_Server_Manager.Lib"
+    xmlns:vm="clr-namespace:ARK_Server_Manager.Lib.ViewModel"    
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 	x:Class="ARK_Server_Manager.UITests"
-	x:Name="Window"
+	x:Name="MainWindow" Loaded="Window_Loaded"
 	Title="UITests"
-	Width="1024" Height="800">
-	<Window.Resources>
-		<Style x:Key="MainTabItem" TargetType="{x:Type eo:TabItem}">
-			<Setter Property="SnapsToDevicePixels" Value="True"/>
-			<Setter Property="FocusVisualStyle">
-				<Setter.Value>
-					<Style>
-						<Setter Property="Control.Template">
-							<Setter.Value>
-								<ControlTemplate>
-									<Rectangle Margin="3,3,3,1" SnapsToDevicePixels="True" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
-								</ControlTemplate>
-							</Setter.Value>
-						</Setter>
-					</Style>
-				</Setter.Value>
-			</Setter>
-			<Setter Property="Foreground" Value="Black"/>
-			<Setter Property="Padding" Value="6,1,2,1"/>
-			<Setter Property="BorderBrush" Value="#FF8C8E94"/>
-			<Setter Property="Background">
-				<Setter.Value>
-					<LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
-						<GradientStop Color="#FFF3F3F3" Offset="0"/>
-						<GradientStop Color="#FFEBEBEB" Offset="0.5"/>
-						<GradientStop Color="#FFDDDDDD" Offset="0.5"/>
-						<GradientStop Color="#FFCDCDCD" Offset="1"/>
-					</LinearGradientBrush>
-				</Setter.Value>
-			</Setter>
-			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
-			<Setter Property="HeaderTemplate" Value="{Binding HeaderTemplate, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}"/>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type eo:TabItem}">
-						<Grid SnapsToDevicePixels="True">
-							<Border x:Name="Bd" BorderThickness="1,1,1,0" Padding="{TemplateBinding Padding}">
-								<DockPanel>
-									<eo:BareButton x:Name="PART_CloseTab" DockPanel.Dock="Right" eo:WindowChrome.IsClientElement="True" Margin="5,0,0,0" ToolTip="{DynamicResource EOSTR_Close}"/>
-									<eo:TemplatePresenter x:Name="PART_Presenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-								</DockPanel>
-							</Border>
-						</Grid>
-						<ControlTemplate.Triggers>
-							<DataTrigger Binding="{Binding TabItemOverflowStrategy, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}" Value="Scroll">
-								<Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}" Value="Left">
-								<Setter Property="DockPanel.Dock" TargetName="PART_CloseTab" Value="Left"/>
-								<Setter Property="Margin" TargetName="PART_CloseTab" Value="0,0,5,0"/>
-							</DataTrigger>
-							<Trigger Property="IsMouseOver" Value="True">
-								<Setter Property="Background" TargetName="Bd" Value="{DynamicResource _MainControlSelected}"/>
-							</Trigger>
-							<Trigger Property="IsSelected" Value="True">
-								<Setter Property="Panel.ZIndex" Value="1"/>
-								<Setter Property="Background" TargetName="Bd" Value="#FFF9F9F9"/>
-							</Trigger>
-							<DataTrigger Binding="{Binding ShowCloseTabButton, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}" Value="False">
-								<Setter Property="Visibility" TargetName="PART_CloseTab" Value="Collapsed"/>
-							</DataTrigger>
-							<MultiTrigger>
-								<MultiTrigger.Conditions>
-									<Condition Property="IsSelected" Value="False"/>
-									<Condition Property="IsMouseOver" Value="True"/>
-								</MultiTrigger.Conditions>
-								<Setter Property="BorderBrush" TargetName="Bd" Value="#FF3C7FB1"/>
-							</MultiTrigger>
-							<Trigger Property="TabStripPlacement" Value="Bottom">
-								<Setter Property="BorderThickness" TargetName="Bd" Value="1,0,1,1"/>
-							</Trigger>
-							<Trigger Property="TabStripPlacement" Value="Left">
-								<Setter Property="BorderThickness" TargetName="Bd" Value="1,1,0,1"/>
-							</Trigger>
-							<Trigger Property="TabStripPlacement" Value="Right">
-								<Setter Property="BorderThickness" TargetName="Bd" Value="0,1,1,1"/>
-							</Trigger>
-							<DataTrigger Binding="{Binding TabItemOverflowStrategy, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}" Value="Scroll">
-								<Setter Property="BorderThickness" TargetName="Bd" Value="1"/>
-							</DataTrigger>
-							<MultiTrigger>
-								<MultiTrigger.Conditions>
-									<Condition Property="IsSelected" Value="True"/>
-									<Condition Property="TabStripPlacement" Value="Top"/>
-								</MultiTrigger.Conditions>
-								<Setter Property="Margin" Value="-2,-2,-2,-1"/>
-								<Setter Property="Margin" TargetName="PART_Presenter" Value="0,0,0,1"/>
-							</MultiTrigger>
-							<MultiTrigger>
-								<MultiTrigger.Conditions>
-									<Condition Property="IsSelected" Value="True"/>
-									<Condition Property="TabStripPlacement" Value="Bottom"/>
-								</MultiTrigger.Conditions>
-								<Setter Property="Margin" Value="-2,-1,-2,-2"/>
-								<Setter Property="Margin" TargetName="PART_Presenter" Value="0,1,0,0"/>
-							</MultiTrigger>
-							<MultiTrigger>
-								<MultiTrigger.Conditions>
-									<Condition Property="IsSelected" Value="True"/>
-									<Condition Property="TabStripPlacement" Value="Left"/>
-								</MultiTrigger.Conditions>
-								<Setter Property="Margin" Value="-2,-2,-1,-2"/>
-								<Setter Property="Margin" TargetName="PART_Presenter" Value="0,0,1,0"/>
-							</MultiTrigger>
-							<MultiTrigger>
-								<MultiTrigger.Conditions>
-									<Condition Property="IsSelected" Value="True"/>
-									<Condition Property="TabStripPlacement" Value="Right"/>
-								</MultiTrigger.Conditions>
-								<Setter Property="Margin" Value="-1,-2,-2,-2"/>
-								<Setter Property="Margin" TargetName="PART_Presenter" Value="1,0,0,0"/>
-							</MultiTrigger>
-							<Trigger Property="IsEnabled" Value="False">
-								<Setter Property="Background" TargetName="Bd" Value="#FFF4F4F4"/>
-								<Setter Property="BorderBrush" TargetName="Bd" Value="#FFC9C7BA"/>
-								<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-							</Trigger>
-							<MultiDataTrigger>
-								<MultiDataTrigger.Conditions>
-									<Condition Binding="{Binding AutoRotate, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}" Value="True"/>
-									<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Left"/>
-								</MultiDataTrigger.Conditions>
-								<Setter Property="LayoutTransform" TargetName="PART_Presenter">
-									<Setter.Value>
-										<RotateTransform Angle="-90"/>
-									</Setter.Value>
-								</Setter>
-								<Setter Property="DockPanel.Dock" TargetName="PART_CloseTab" Value="Top"/>
-								<Setter Property="HorizontalAlignment" TargetName="PART_CloseTab" Value="Center"/>
-								<Setter Property="Margin" TargetName="PART_CloseTab" Value="0"/>
-								<Setter Property="Padding" Value="1,2,1,6"/>
-							</MultiDataTrigger>
-							<MultiDataTrigger>
-								<MultiDataTrigger.Conditions>
-									<Condition Binding="{Binding AutoRotate, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:TabControl}}}" Value="True"/>
-									<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource Self}}" Value="Right"/>
-								</MultiDataTrigger.Conditions>
-								<Setter Property="LayoutTransform" TargetName="PART_Presenter">
-									<Setter.Value>
-										<RotateTransform Angle="90"/>
-									</Setter.Value>
-								</Setter>
-								<Setter Property="DockPanel.Dock" TargetName="PART_CloseTab" Value="Top"/>
-								<Setter Property="HorizontalAlignment" TargetName="PART_CloseTab" Value="Center"/>
-								<Setter Property="Margin" TargetName="PART_CloseTab" Value="0"/>
-								<Setter Property="Padding" Value="1,2,1,6"/>
-							</MultiDataTrigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-	</Window.Resources>
+	Width="1200" Height="850" MinWidth="1100" MinHeight="500">
+    <Window.Resources>
+        <!-- Tooltip Style -->
 
-	<Grid x:Name="LayoutRoot">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="221"/>
-			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
-		<Rectangle x:Name="backgroundImage" Grid.ColumnSpan="2" d:IsLocked="True">
-			<Rectangle.Fill>
-				<ImageBrush ImageSource="/ARK Server Manager;component/UIStyles/iStock_000003783032Medium.jpg"/>
-			</Rectangle.Fill>
-		</Rectangle>
-				<TabControl Style="{DynamicResource MainTabControlStyle}" Padding="4" Background="{x:Null}" BorderBrush="{x:Null}" Grid.Column="1" SelectedIndex="{Binding SelectedIndex, ElementName=listBox}">
-			<TabItem Header="Administration">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<Grid Margin="10">
-        					<Grid.ColumnDefinitions>
-        						<ColumnDefinition Width="Auto" MinWidth="120"/>
-        						<ColumnDefinition Width="Auto" MinWidth="120"/>
-        						<ColumnDefinition Width="Auto" MinWidth="120"/>
-        						<ColumnDefinition Width="Auto" MinWidth="120"/>
-        						<ColumnDefinition Width="Auto" MinWidth="120"/>
-        						<ColumnDefinition Width="Auto" MinWidth="120"/>
-        					</Grid.ColumnDefinitions>
-        					<Grid.RowDefinitions>
-        						<RowDefinition Height="38"/>
-        						<RowDefinition Height="38"/>
-        						<RowDefinition Height="38"/>
-        						<RowDefinition Height="38"/>
-        						<RowDefinition Height="38"/>
-        						<RowDefinition Height="38"/>
-        					</Grid.RowDefinitions>
-							<TextBlock HorizontalAlignment="Right" Grid.Row="0" TextWrapping="Wrap" Text="Server Name:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,0,4,0" Height="14.4"  />
-							<TextBox Grid.Column="1" Grid.Row="0"  Text="{Binding ServerName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" ToolTip="The public name of the server, as seen in Steam and Ark." Margin="0,8"/>
-        					<TextBlock HorizontalAlignment="Right" Grid.Column="2" Grid.Row="0" TextWrapping="Wrap" Text="Server Password:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,4.783,4,4.785" Height="14.4" Width="100.26" />
-							<TextBox Grid.Column="3" Grid.Row="0"  Text="{Binding ServerPassword}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" ToolTip="The password users must enter in order to access the server. If this is set, only people who know the password can access your server." Margin="0,8"/>
-
-        					<TextBlock HorizontalAlignment="Right" Grid.Column="4" Grid.Row="0" TextWrapping="Wrap" Text="Admin Password:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,4.783,4,4.785" Height="14.4" Width="103.464" />
-							<TextBox Grid.Column="5" Grid.Row="0" Text="{Binding AdminPassword}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
-        						ToolTip="Ths password users must enter to execute admin/cheat commands on the server. If this is not set, anyone can use cheats." Margin="0,8"/>							
-							<TextBlock HorizontalAlignment="Right"  Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" Text="Server Port:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,0,4,0" Height="14.4"  />
-
-        					<TextBox Grid.Column="1" Grid.Row="1" Text="{Binding ServerConnectionPort}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
-        						ToolTip="The port users will use to connect to your server. Default is 7777. Change this and Query Port if you wish to host multiple servers on one machine." Margin="0,8"/>
-        					<Label Grid.Column="2" Grid.Row="1" Content="Query Port:" VerticalContentAlignment="Center" Margin="8,98.874,0,98.88" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Left" Height="15.96" Width="59.97"/>
-        					<TextBlock HorizontalAlignment="Right"  Grid.Column="2" Grid.Row="1" TextWrapping="Wrap" Text="Query Port:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,0,4,0" Height="14.4"  />
-							<TextBox Grid.Column="3" Grid.Row="1" Text="{Binding ServerPort}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
-        						ToolTip="The port Steam uses to communicate with your server. Default is 27015. Change this and Server Port if you wish to host multiple servers on one machine." Margin="0,8"/>
-        					<Label Grid.Column="4" Grid.Row="1" Content="MultiHome IP:" VerticalContentAlignment="Center" Margin="8,98.874,0,98.88" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0" Height="15.96" Width="75.41"/>
-        					<TextBlock HorizontalAlignment="Right"  Grid.Column="4" Grid.Row="1" TextWrapping="Wrap" Text="MultiHome IP:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,0,4,0" Height="14.4"  />
-							
-							<TextBox Grid.Column="5" Grid.Row="1" Text="{Binding ServerIP}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
-        						ToolTip="Sets the IP address to bind the server to. Only necessary if your machine is on multiple networks. Most users do not need to use this and it should remain blank." Margin="0,8"/>
-
-        					<local:AnnotatedGlowSlider Grid.Column= "0" Grid.ColumnSpan="6" Grid.Row="2" FrontNote="Max Players:" EndNote="" SliderValue="{Binding MaxPlayers}" SliderMin="1" SliderMax="127" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" ToolTip="Sets the maximum number of players which can join this server." Height="38" Margin="0,0,-45,0" FontFamily="{DynamicResource LabelFont}"/>
-                            <TextBlock HorizontalAlignment="Right"  Grid.Column="0" Grid.Row="3" TextWrapping="Wrap" Text="MOTD:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,0,4,0" Height="14.4"  />
-        					
-        					<TextBox Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="3"  Text="{Binding MOTD}" TextWrapping="Wrap" MaxLength="256"
-        						ToolTip="The Message of the Day displayed to users when they connect to the server." SnapsToDevicePixels="True" Margin="0,8"/>
-        					<TextBox Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="5" MinWidth="400" HorizontalAlignment="Stretch" Text="{Binding AdditionalArgs}" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"
-        						ToolTip="Additional command-line args for the server.  If you specify this, add the args which start with ?'s first, followed by any other args.  For example: ?MaxPlayers=5?QueryPort=9999 -nosteamclient" Margin="0,0,0,10"/>
-        					<TextBlock HorizontalAlignment="Right"  Grid.Column="0" Grid.Row="5" TextWrapping="Wrap" Text="Additional Args:" VerticalAlignment="Center" Foreground="{DynamicResource _GrayTextLight}" FontFamily="{DynamicResource LabelFont}" Margin="0,10,4,13.6" Height="14.4"  />
-        					<TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="34.666" Margin="66.667,60.707,0,-57.373" Grid.Row="5" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="130" Style="{DynamicResource TextBlockStyle1}"/>
-        					<Slider x:Name="slider" Grid.ColumnSpan="3" Grid.Column="1" HorizontalAlignment="Left" Height="24.667" Margin="49.333,138.04,0,-124.707" Grid.Row="5" VerticalAlignment="Top" Width="248.667"/>
-        					<TextBlock Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Left" Height="37.334" Margin="99.333,125.373,0,-124.707" Grid.Row="5" TextWrapping="Wrap" Text="{Binding Value, ElementName=slider}" VerticalAlignment="Top" Width="96.667"/>
-        					<Calendar Grid.ColumnSpan="3" Grid.Column="3" HorizontalAlignment="Left" Height="172" Margin="33.333,227.373,0,-361.373" Grid.Row="5" VerticalAlignment="Top" Width="221.667"/>
-        					
-
-        				</Grid>
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="Rules">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<Grid Margin ="10">
-        					<StackPanel>
-        						<CheckBox IsChecked="{Binding EnableHardcore}" Content="Enable Hardcore Mode" Foreground="{DynamicResource _GrayTextLight}"/>
-        						<CheckBox IsChecked="{Binding EnablePVP}" Content="Enable PvP" Foreground="{DynamicResource _GrayTextLight}"/>
-        						<CheckBox IsChecked="{Binding EnableTributeDownloads}" Content="Enable Tribute Downloads" Foreground="{DynamicResource _GrayTextLight}"/>
-								<!--local:AnnotatedGlowSlider FrontNote="Difficulty:" EndNote="%" SliderMin="50" SliderMax="300" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" ToolTip="" Height="18" 
-								 Foreground="{DynamicResource _GrayTextLight}" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat"/-->
-
-        					</StackPanel>
-        				</Grid>
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="Chat">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Chat" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="HUD">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="HUD" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="Players">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Players" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="Dinos">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Dinos" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="Environment" Foreground="Black">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Environment" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>
-			
-			<TabItem Header="Structures">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Structures" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>	
-			
-			<TabItem Header="Leveling">
-				<Grid Background="{DynamicResource _GrayMainBG}" Opacity="0.795">
-					<TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="Leveling" VerticalAlignment="Center" FontSize="48" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" Foreground="White" />
-				</Grid>
-			</TabItem>
-			
-		</TabControl>
-		<ListBox x:Name="listBox" HorizontalAlignment="Left" Width="213" MinWidth="200" Style="{DynamicResource MainListBoxStyle}" BorderBrush="{DynamicResource MainControlGray}" Background="{DynamicResource MainControlGray}" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat" FontSize="18.667" Opacity="0.715" Foreground="{DynamicResource _GrayTextLight}" Margin="8,8,0,8">
-			<ListBoxItem Content="Administration" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="0,8,4,8" Margin="0,3,0,0"/>
-			<ListBoxItem Content="Rules" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="Chat/Notifications" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="HUD and Visuals" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="Player Settings" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="Dino Settings" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="Environment" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="Structures" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-			<ListBoxItem Content="Level Progression" Style="{DynamicResource MainLBItem}" Background="{DynamicResource MainControlGray}" Padding="4,8"/>
-		</ListBox>
-	</Grid>
+        <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="HasDropShadow" Value="True"/>
+            <Setter Property="Foreground" Value="{StaticResource MasterComp_Brush}"/>
+            <Setter Property="FontFamily" Value="{StaticResource TooltipFont}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToolTip}">
+                        <Border x:Name="Border" BorderThickness="1" BorderBrush="Black" Background="#AA000000">
+                            <ContentPresenter Margin="4" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Storyboard x:Key="hideServerList">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="listViewServers">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="listViewServers">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="listViewServers">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="30"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="listViewServers">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="100"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="showServerList">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="listViewServers">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="listViewServers">
+                <SplineDoubleKeyFrame KeyTime="0" Value="0"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(BlurEffect.Radius)" Storyboard.TargetName="listViewServers">
+                <SplineDoubleKeyFrame KeyTime="0" Value="30"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="listViewServers">
+                <SplineThicknessKeyFrame KeyTime="0" Value="10,114,10,10"/>
+                <SplineThicknessKeyFrame KeyTime="0:0:0.2" Value="10,114,10,10"/>
+            </ThicknessAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="listViewServers">
+                <EasingDoubleKeyFrame KeyTime="0" Value="100"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Grid x:Name="LayoutRoot">
+        <Rectangle x:Name="background" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Grid.ColumnSpan="3">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="/ARK Server Manager;component/UIStyles/iStock_000003783032MediumA.jpg" Stretch="UniformToFill"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Grid x:Name="Header" Height="100" Margin="8,9,10,0" VerticalAlignment="Top" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Grid.ColumnSpan="3" Background="{StaticResource DarkNeutral_Brush}">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="3" ShadowDepth="0"/>
+            </Grid.Effect>
+            <Rectangle HorizontalAlignment="Left" Width="272">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="/ARK Server Manager;component/UIStyles/header.png" Stretch="UniformToFill"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <Button x:Name="button_Copy" Width="95.986"  BorderBrush="Black" IsDefault="True" HorizontalAlignment="Right" Margin="0,12.743,10,0" VerticalAlignment="Top" Height="32">
+                <StackPanel Orientation="Horizontal">
+                    <Path x:Name="DollarSign" Data="F1M32.396,78.922C32.396,79.342,31.874,79.762,31.351,79.762L21.946,79.762C20.9,79.762 20.9,79.026 20.9,72.73 7.184,70.735 0,63.494 0,51.11 0,50.585 0.391,50.271 1.044,50.165L17.634,49.431C18.418,49.431 18.81,49.641 19.072,50.585 19.986,54.259 22.076,56.463 25.081,56.463 26.779,56.463 27.955,55.518 27.955,54.153 27.955,51.425 24.819,49.116 14.5,43.134 7.053,38.831 2.22,32.639 2.22,25.083 2.22,17.107 8.751,8.711 20.9,6.716L20.9,0.944C20.9,0.42,21.292,0,21.815,0L31.351,0C32.396,0 32.396,0.629 32.396,6.821 44.414,8.816 51.729,16.792 51.729,26.027 51.729,26.657 51.207,27.077 50.292,27.182L32.396,27.916C31.481,27.916 29.13,23.928 28.085,23.928 26.91,23.928 26.387,24.768 26.387,25.503 26.387,28.021 30.698,30.645 39.45,35.997 47.549,40.93 51.86,46.808 51.86,53.315 51.86,63.809 44.544,70.945 32.396,72.835z" Fill="{StaticResource ButtonText_Brush}" Height="23.08" Width="15.006" Stretch="Fill"/>
+                    <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="Donate" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0" FontFamily="{StaticResource ButtonFont}" FontSize="14.667" Foreground="{StaticResource ButtonText_Brush}"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="button_Copy1" Width="95.986"  BorderBrush="Black" IsDefault="True" HorizontalAlignment="Right" Margin="0,0,10,12.984" Height="32" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal">
+                    <Path Data="F1M86.168,119.73C67.632,119.73 52.604,104.704 52.604,86.168 52.604,67.632 67.632,52.606 86.168,52.606 104.704,52.606 119.73,67.632 119.73,86.168 119.73,104.704 104.704,119.73 86.168,119.73 M171.984,93.724C172.202,91.232 172.334,88.716 172.334,86.168 172.334,83.778 172.212,81.418 172.02,79.078L156.88,75.288C156.104,70.204,154.776,65.305,152.99,60.632L164.256,49.734C162.184,45.302,159.748,41.078,156.982,37.096L141.94,41.396C138.746,37.422,135.14,33.794,131.18,30.584L135.484,15.526C131.522,12.756,127.324,10.304,122.914,8.222L112.03,19.474C107.314,17.644,102.364,16.285,97.228,15.488L93.432,0.329C91.036,0.128 88.616,0.001 86.168,0.001 83.718,0.001 81.3,0.128 78.902,0.329L75.108,15.488C69.97,16.285,65.02,17.644,60.306,19.474L49.42,8.222C45.01,10.304,40.812,12.756,36.852,15.526L41.154,30.584C37.194,33.794,33.588,37.422,30.394,41.396L15.352,37.096C12.588,41.078,10.15,45.302,8.08,49.734L19.344,60.632C17.558,65.305,16.23,70.204,15.456,75.288L0.314,79.078C0.124,81.418 0,83.778 0,86.168 0,88.716 0.132,91.232 0.35,93.724L15.54,97.526C16.343,102.56,17.68,107.412,19.474,112.036L8.223,122.92C10.33,127.378,12.814,131.622,15.624,135.622L30.688,131.316C33.838,135.18,37.384,138.704,41.262,141.836L36.96,156.886C40.98,159.69,45.248,162.158,49.73,164.252L60.626,152.99C65.208,154.742,70.01,156.046,74.988,156.828L78.786,172C81.22,172.206 83.678,172.334 86.168,172.334 88.656,172.334 91.114,172.206 93.55,172L97.348,156.828C102.326,156.046,107.126,154.742,111.708,152.99L122.606,164.252C127.086,162.158,131.354,159.69,135.374,156.886L131.074,141.836C134.952,138.704,138.498,135.18,141.646,131.316L156.712,135.62C159.52,131.622,162.004,127.378,164.11,122.92L152.86,112.036C154.654,107.412,155.992,102.56,156.794,97.526z" Fill="{StaticResource ButtonText_Brush}" Height="22.166" Stretch="Fill" Width="22.166"/>
+                    <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" FontFamily="{StaticResource ButtonFont}" FontSize="{StaticResource DefaultButtonFontSize}" Foreground="{StaticResource ButtonText_Brush}"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="button_Copy2" Width="95.986"  BorderBrush="Black" IsDefault="True" HorizontalAlignment="Right" Margin="0,12.743,114.987,0" Height="32" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" Width="81.151">
+                    <Grid Height="29" Width="25">
+                        <Path Data="F1M0,44.979L0,37.604 22.183,44.348 22.183,0 38.319,0 38.319,44.348 60.502,35.869 60.502,44.979 30.251,75.209z" Fill="{StaticResource ButtonText_Brush}" HorizontalAlignment="Stretch" Stretch="Fill" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Margin="6.301,-1.61,7.367,0" Height="13.454">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="360"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <Viewbox Margin="5,11,3,-2" Stretch="Fill">
+                            <Grid Height="96" Width="84">
+                                <Path Data="F1M42.116,0L0,0 0,82 66,82 66,25.276z" Fill="{StaticResource ButtonText_Brush}" Margin="4.611,10,13.389,4"/>
+                                <Path Data="F1M21,13L13,13 13,20 7,20 7,13 0,13 0,7 7,7 7,0 13,0 13,7 21,7z" Fill="{StaticResource ButtonText_Brush}" Margin="58.565,-4.224,-4.435,71.776" Stretch="Fill"/>
+                            </Grid>
+                        </Viewbox>
+                    </Grid>
+                    <TextBlock x:Name="textBlock4" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" FontFamily="{StaticResource ButtonFont}" FontSize="14.667" Foreground="{StaticResource ButtonText_Brush}"><Run Text="I"/><Run Text="mport"/></TextBlock>
+                </StackPanel>
+            </Button>
+            <Button x:Name="button_Copy3" Width="95.986"  BorderBrush="Black" IsDefault="True" HorizontalAlignment="Right" Margin="0,0,114.987,12.984" Height="32" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal" Width="81.151">
+                    <Path x:Name="NewFile" Data="F1M122,128L98,128 98,152 77,152 77,128 53,128 53,107 77,107 77,83 98,83 98,107 122,107z M84,0L0,0 0,160 129,160 129,49z" Fill="{StaticResource ButtonText_Brush}" Height="20.948" Width="16.89" Stretch="Fill"/>
+                    <TextBlock x:Name="textBlock5" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="4,0,0,0" FontSize="14.667" Text="New" Foreground="{StaticResource ButtonText_Brush}" FontFamily="{StaticResource ButtonFont}"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+        <ListView x:Name="listViewServers" ItemsSource="{Binding Source={x:Static lib:ServerManager.Instance}, Path=Servers}" Background="{StaticResource DarkNeutralFade_Brush}" BorderBrush="Black" Margin="10,114,10,10" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Center" MinWidth="750" RenderTransformOrigin="0.5,0.5">
+            <ListView.Resources>
+                <vm:BindingProxy x:Key="proxy" Data="{Binding ElementName=MainWindow}"/>
+            </ListView.Resources>
+            <ListView.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ListView.RenderTransform>
+            <ListView.Effect>
+                <BlurEffect Radius="0"/>
+            </ListView.Effect>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{StaticResource DarkNeutralFade_Brush}" Margin="0" Width="750" Height="150" BorderBrush="Black" BorderThickness="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid x:Name="bodyArea" Margin="0,32.708,0,0" d:LayoutOverrides="LeftMargin, RightMargin">
+                                <StackPanel HorizontalAlignment="Left" Margin="6.06,6,0,10" Orientation="Vertical" Width="332.335">
+                                    <StackPanel x:Name="installedVersionArea" HorizontalAlignment="Stretch" Margin="0" Orientation="Horizontal" VerticalAlignment="Stretch" d:LayoutOverrides="Width" Height="20">
+                                        <TextBlock TextWrapping="Wrap" Text="Installed Version:" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock x:Name="textInstalledVersion" TextWrapping="Wrap" Text="{Binding Profile.LastInstalledVersion}" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="IPaddressArea" HorizontalAlignment="Stretch" Margin="0" Orientation="Horizontal" VerticalAlignment="Stretch" d:LayoutOverrides="Width" Height="20">
+                                        <TextBlock TextWrapping="Wrap" Text="Server IP Address:" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBox x:Name="textServerIP" TextWrapping="Wrap" Text="{Binding Profile.ServerIP}" IsReadOnly="True" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" Margin="10,0,0,0" VerticalAlignment="Center" Style="{StaticResource PlainTextBox}"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="serverPortArea" HorizontalAlignment="Stretch" Margin="0" Orientation="Horizontal" VerticalAlignment="Stretch" d:LayoutOverrides="Width" Height="20">
+                                        <TextBlock TextWrapping="Wrap" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" FontWeight="Bold" VerticalAlignment="Center"><Run Text="Server "/><Run Text="Port"/><Run Text=":"/></TextBlock>
+                                        <TextBlock x:Name="textServerPort" TextWrapping="Wrap" Text="{Binding Profile.ServerPort}" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="serverConnectionPortArea" HorizontalAlignment="Stretch" Margin="0" Orientation="Horizontal" VerticalAlignment="Stretch" d:LayoutOverrides="Width" Height="20">
+                                        <TextBlock TextWrapping="Wrap" Text="Server Connection Port:" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" FontWeight="Bold" VerticalAlignment="Center"/>
+                                        <TextBlock x:Name="textserverConnectionPort" TextWrapping="Wrap" Text="{Binding Profile.ServerConnectionPort}" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource TextLight_Brush}" FontFamily="{StaticResource ServerListBodyFont}" FontSize="{StaticResource ServerListBodyFontSize}" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Right" Margin="0,0,10,47.667" Width="196.734" Height="Auto" Background="#FFA8A8A8">
+                                    <Grid Height="17.472" Margin="-0.5,0" VerticalAlignment="Top">
+                                        <TextBlock x:Name="textBlockServerStatus" TextWrapping="Wrap" Text="{Binding Runtime.Status}" Height="17.472" Margin="0,0,0,-18.833" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontFamily="{StaticResource DefaultFont}" FontSize="14.667" MinWidth="20" />
+                                        <StackPanel Margin="0,0,0,-46.166" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                            <TextBlock x:Name="textBlockPlayers" TextWrapping="Wrap" Height="17.472" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Center" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat Light" FontSize="12" MinWidth="20" Text="Players:" />
+                                            <TextBlock x:Name="textBlockPlayersMin" Text="[X]" TextWrapping="Wrap" Height="17.472" Margin="2,0" VerticalAlignment="Stretch" HorizontalAlignment="Center" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat Light" FontSize="12" MinWidth="5" />
+                                            <TextBlock TextWrapping="Wrap" Height="17.472" Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Center" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat Light" FontSize="12" MinWidth="0" Text="/" />
+                                            <TextBlock x:Name="textBlockPlayersMax" Text="{Binding Profile.MaxPlayers}" TextWrapping="Wrap" Height="17.472" Margin="2,0" VerticalAlignment="Stretch" HorizontalAlignment="Left" FontFamily="/ARK Server Manager;component/Fonts/#Montserrat Light" FontSize="12" MinWidth="5" />
+                                        </StackPanel>
+                                        <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="SERVER STATUS" FontFamily="{StaticResource DefaultFont}" FontSize="13.333" HorizontalAlignment="Stretch" Foreground="{StaticResource TextLight_Brush}" Margin="0" Background="Black" TextAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <Button x:Name="buttonStart" Content="START" HorizontalAlignment="Right" Margin="0,0,10,10" Width="97" Style="{StaticResource StartButton}" Foreground="{StaticResource ButtonText_Brush}" FontFamily="{StaticResource ButtonFont}" FontSize="{StaticResource DefaultButtonFontSize}" Height="32.667" VerticalAlignment="Bottom"/>
+                                <Button x:Name="buttonStop" Content="STOP" HorizontalAlignment="Right" Margin="0,0,109.734,10" Width="97" Style="{StaticResource StopButton}" Foreground="{StaticResource ButtonText_Brush}" FontFamily="{StaticResource ButtonFont}" FontSize="{StaticResource DefaultButtonFontSize}" Height="32.667" VerticalAlignment="Bottom"/>
+                            </Grid>
+                            <Grid x:Name="titleArea" Height="30.088" Margin="0,2.62,-4.289,0" VerticalAlignment="Top">
+                                <Path Data="F1M0,0L230.479,14.095 0,28.188z" Stretch="Fill" Fill="{StaticResource BlackFadeRight_Brush}"/>
+                                <StackPanel HorizontalAlignment="Left" Margin="3.38,0,0,1" Orientation="Horizontal" Height="Auto" VerticalAlignment="Center">
+                                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="Server:" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource MasterComp_Brush}" FontFamily="{StaticResource DefaultFont}" FontSize="16" FontWeight="Bold" MinWidth="10" MinHeight="20" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="textServerName" TextWrapping="Wrap" Text="{Binding Profile.ProfileName}" d:LayoutOverrides="Height, TopPosition, BottomPosition" Foreground="{StaticResource MasterComp_Brush}" FontFamily="{StaticResource DefaultFont}" FontSize="21.333" Margin="10,0,0,0" MinWidth="20" VerticalAlignment="Center" ClipToBounds="True"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid x:Name="detailButtonArea" Grid.Column="1">
+                                <Border Margin="0" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                            <LinearGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                                                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </LinearGradientBrush.RelativeTransform>
+                                            <GradientStop Color="#44000000" Offset="0"/>
+                                            <GradientStop Color="#00000000" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Button x:Name="buttonGoToDetail" Margin="0" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Width="40" Height="80" BorderBrush="Black" VerticalAlignment="Center" Command="{Binding Data.OpenDetailView, Source={StaticResource proxy}}" CommandParameter="{Binding}">
+                                        <Path Data="F1M0,0L76.591,76.595 153.188,0 76.591,38.297z" Fill="{DynamicResource ButtonText_Brush}" Margin="0" Height="16.402" VerticalAlignment="Stretch" Stretch="Fill" Width="35.683" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Button>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <local:ServerDetailControl x:Name="serverDetailCtrl" Margin="10,114,10,10" Visibility="Collapsed"/>
+    </Grid>
 </Window>

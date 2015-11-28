@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="ARK_Server_Manager.Controls.LabeledTextBlock"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ARK_Server_Manager.Controls"
+             mc:Ignorable="d" d:DesignWidth="327.223" d:DesignHeight="57.027"              >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="B2VConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Border Background="{DynamicResource VeryDarkNeutral_Brush}" Padding="4" d:LayoutOverrides="TopMargin, BottomMargin"/>
+        <TextBlock TextWrapping="Wrap" Text="{Binding LabelText}" Foreground="{DynamicResource TextLight_Brush}" FontSize="{DynamicResource DetailLabelFont_Size}" FontWeight="Bold" Margin="8,8.014,0,0" VerticalAlignment="Top" Height="19" FontFamily="{DynamicResource DetailLabelFont}"/>
+        <TextBlock TextWrapping="Wrap" Text="{Binding BodyText, FallbackValue='[Runtime Value]'}" Foreground="{DynamicResource TextLight_Brush}" FontFamily="{DynamicResource DetailBody_Font}" FontSize="{DynamicResource DetailBodyFont_Size}" FontWeight="Bold" Margin="8,0,0,7" VerticalAlignment="Bottom" Height="20"/>
+
+    </Grid>
+</UserControl>

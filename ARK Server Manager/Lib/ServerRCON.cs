@@ -36,18 +36,7 @@ namespace ARK_Server_Manager.Lib
             get { return (SortableObservableCollection<PlayerInfo>)GetValue(PlayersProperty); }
             set { SetValue(PlayersProperty, value); }
         }
-
-
-
-        public int CountPlayers
-        {
-            get { return (int)GetValue(CountPlayersProperty); }
-            set { SetValue(CountPlayersProperty, value); }
-        }
-
-        public static readonly DependencyProperty CountPlayersProperty = DependencyProperty.Register(nameof(CountPlayers), typeof(int), typeof(ServerRCON), new PropertyMetadata(0));
-
-
+                
         public enum ConsoleStatus
         {
             Disconnected,
@@ -76,26 +65,26 @@ namespace ARK_Server_Manager.Lib
         private const int GetChatPeriod = 1000;
         private readonly ActionQueue commandProcessor;
         private readonly ActionQueue outputProcessor;
-        private RCONParameters rconParams;
-        //private readonly PropertyChangeNotifier runtimeChangedNotifier;
+        private ServerRuntime.RuntimeProfileSnapshot snapshot;
+        private readonly PropertyChangeNotifier runtimeChangedNotifier;
         private QueryMaster.Rcon console;
 
-        public ServerRCON(RCONParameters parameters)
+        public ServerRCON(Server server)
         {
-            //this.runtimeChangedNotifier = new PropertyChangeNotifier(server.Runtime, ServerRuntime.ProfileSnapshotProperty, (s, d) =>
-            //{
-            //    var oldSnapshot = this.rconParams;
-            //    if (d == null || d.NewValue == null) return;
+            this.runtimeChangedNotifier = new PropertyChangeNotifier(server.Runtime, ServerRuntime.ProfileSnapshotProperty, (s, d) =>
+            {
+                var oldSnapshot = this.snapshot;
+                if (d == null || d.NewValue == null) return;
 
-            //    var newSnapshot = (ServerRuntime.RuntimeProfileSnapshot)d.NewValue;
-            //    this.rconParams = (ServerRuntime.RuntimeProfileSnapshot)d.NewValue;
+                var newSnapshot = (ServerRuntime.RuntimeProfileSnapshot)d.NewValue;
+                this.snapshot = (ServerRuntime.RuntimeProfileSnapshot)d.NewValue;
 
-            //    bool reinitLoggers = !String.Equals(this.rconParams.ProfileName, newSnapshot.ProfileName);
-            //    if (reinitLoggers)
-            //    {
-            //        ReinitializeLoggers();
-            //    }
-            //});
+                bool reinitLoggers = !String.Equals(this.snapshot.ProfileName, newSnapshot.ProfileName);
+                if (reinitLoggers)
+                {
+                    ReinitializeLoggers();
+                }
+            });
 
             this.commandProcessor = new ActionQueue(TaskScheduler.Default);
 
@@ -104,7 +93,7 @@ namespace ARK_Server_Manager.Lib
 
             this.Players = new SortableObservableCollection<PlayerInfo>();
 
-            this.rconParams = parameters;
+            this.snapshot = server.Runtime.ProfileSnapshot;
             ReinitializeLoggers();
             commandProcessor.PostAction(AutoPlayerList);
             commandProcessor.PostAction(AutoGetChat);
@@ -112,10 +101,10 @@ namespace ARK_Server_Manager.Lib
 
         private void ReinitializeLoggers()
         {
-            this.allLogger = App.GetProfileLogger(this.rconParams.ProfileName, "RCON_All");
-            this.chatLogger = App.GetProfileLogger(this.rconParams.ProfileName, "RCON_Chat");
-            this.eventLogger = App.GetProfileLogger(this.rconParams.ProfileName, "RCON_Event");
-            this._logger = App.GetProfileLogger(this.rconParams.ProfileName, "RCON_Debug");
+            this.allLogger = App.GetProfileLogger(this.snapshot.ProfileName, "RCON_All");
+            this.chatLogger = App.GetProfileLogger(this.snapshot.ProfileName, "RCON_Chat");
+            this.eventLogger = App.GetProfileLogger(this.snapshot.ProfileName, "RCON_Event");
+            this._logger = App.GetProfileLogger(this.snapshot.ProfileName, "RCON_Debug");
         }
 
         private enum LogEventType
@@ -170,7 +159,7 @@ namespace ARK_Server_Manager.Lib
         {
             await this.commandProcessor.DisposeAsync();
             await this.outputProcessor.DisposeAsync();
-            // this.runtimeChangedNotifier.Dispose();
+            this.runtimeChangedNotifier.Dispose();
         }
 
         private class CommandListener : IDisposable
@@ -304,7 +293,6 @@ namespace ARK_Server_Manager.Lib
                 }
 
                 this.Players.Sort(p => !p.IsOnline);
-                this.CountPlayers = this.Players.Count(p => p.IsOnline);
 
                 if (this.Players.Count == 0 || newPlayerList.Count > 0)
                 {
@@ -347,29 +335,26 @@ namespace ARK_Server_Manager.Lib
 
         private async Task UpdatePlayerDetails()
         {
-            if (!String.IsNullOrEmpty(rconParams.InstallDirectory))
+            var savedArksPath = Path.Combine(snapshot.InstallDirectory, Config.Default.SavedArksRelativePath);
+            var arkData = await ArkData.ArkDataContainer.CreateAsync(savedArksPath);
+            await arkData.LoadSteamAsync(Config.Default.SteamAPIKey);
+            TaskUtils.RunOnUIThreadAsync(() =>
             {
-                var savedArksPath = Path.Combine(rconParams.InstallDirectory, Config.Default.SavedArksRelativePath);
-                var arkData = await ArkData.ArkDataContainer.CreateAsync(savedArksPath);
-                await arkData.LoadSteamAsync(Config.Default.SteamAPIKey);
-                TaskUtils.RunOnUIThreadAsync(() =>
+                foreach (var playerData in arkData.Players)
                 {
-                    foreach (var playerData in arkData.Players)
+                    var playerToUpdate = this.Players.FirstOrDefault(p => p.SteamId == Int64.Parse(playerData.SteamId));
+                    if (playerToUpdate != null)
                     {
-                        var playerToUpdate = this.Players.FirstOrDefault(p => p.SteamId == Int64.Parse(playerData.SteamId));
-                        if (playerToUpdate != null)
-                        {
-                            playerToUpdate.UpdateArkData(playerData).DoNotWait();
-                        }
-                        else
-                        {
-                            var newPlayer = new PlayerInfo() { SteamId = Int64.Parse(playerData.SteamId), SteamName = playerData.SteamName };
-                            newPlayer.UpdateArkData(playerData).DoNotWait();
-                            this.Players.Add(newPlayer);
-                        }
+                        playerToUpdate.UpdateArkData(playerData).DoNotWait();
                     }
-                }).DoNotWait();
-            }
+                    else
+                    {
+                        var newPlayer = new PlayerInfo() { SteamId = Int64.Parse(playerData.SteamId), SteamName = playerData.SteamName };
+                        newPlayer.UpdateArkData(playerData).DoNotWait();
+                        this.Players.Add(newPlayer);
+                    }
+                }
+            }).DoNotWait();           
         }
 
         private static readonly char[] lineSplitChars = new char[] { '\n' };
@@ -464,9 +449,9 @@ namespace ARK_Server_Manager.Lib
             }
 
             _logger.Debug("Failed to connect to RCON at {0}:{1} with {2}: {3}\n{4}",
-                   this.rconParams.ServerIP,
-                   this.rconParams.RCONPort,
-                   this.rconParams.AdminPassword,
+                   this.snapshot.ServerIP,
+                   this.snapshot.RCONPort,
+                   this.snapshot.AdminPassword,
                    lastException.Message,
                    lastException.StackTrace);
 
@@ -481,9 +466,9 @@ namespace ARK_Server_Manager.Lib
                 this.console = null;
             }
           
-            var endpoint = new IPEndPoint(IPAddress.Parse(this.rconParams.ServerIP), this.rconParams.RCONPort);    
+            var endpoint = new IPEndPoint(IPAddress.Parse(this.snapshot.ServerIP), this.snapshot.RCONPort);    
             var server = QueryMaster.ServerQuery.GetServerInstance(QueryMaster.EngineType.Source, endpoint);
-            this.console = server.GetControl(this.rconParams.AdminPassword);
+            this.console = server.GetControl(this.snapshot.AdminPassword);
             return true;
         }
     }

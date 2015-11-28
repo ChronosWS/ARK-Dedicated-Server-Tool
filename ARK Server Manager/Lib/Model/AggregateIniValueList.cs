@@ -21,8 +21,6 @@ namespace ARK_Server_Manager.Lib
             }
         }
 
-        public bool IsArray => false;
-
         public void AddRange(IEnumerable<T> values)
         {
             foreach (var value in values)

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -135,52 +134,6 @@ namespace ARK_Server_Manager.Lib
                 return false;
             }
 
-            return true;
-        }
-
-        public static bool SetDirectoryOwnershipForAllUsers(string destinationDirectory)
-        {
-            try
-            {
-                FileSystemRights Rights = (FileSystemRights)0;
-                Rights = FileSystemRights.FullControl;
-                var usersGroup = @"BUILTIN\Users";
-                // *** Add Access Rule to the actual directory itself
-                FileSystemAccessRule AccessRule = new FileSystemAccessRule(usersGroup, Rights,
-                                            InheritanceFlags.None,
-                                            PropagationFlags.NoPropagateInherit,
-                                            AccessControlType.Allow);
-
-                DirectoryInfo Info = new DirectoryInfo(destinationDirectory);
-                DirectorySecurity Security = Info.GetAccessControl(AccessControlSections.Access);
-
-                bool Result = false;
-                Security.ModifyAccessRule(AccessControlModification.Set, AccessRule, out Result);
-
-                if (!Result)
-                    return false;
-
-                // *** Always allow objects to inherit on a directory
-                InheritanceFlags iFlags = InheritanceFlags.ObjectInherit;
-                iFlags = InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit;
-
-                // *** Add Access rule for the inheritance
-                AccessRule = new FileSystemAccessRule(usersGroup, Rights,
-                                            iFlags,
-                                            PropagationFlags.InheritOnly,
-                                            AccessControlType.Allow);
-                Result = false;
-                Security.ModifyAccessRule(AccessControlModification.Add, AccessRule, out Result);
-
-                if (!Result)
-                    return false;
-
-                Info.SetAccessControl(Security);
-            }
-            catch(Exception)
-            {
-                // We give it a best-effort here.  If we aren't running an enterprise OS, this group may not exist (or be needed.)
-            }
             return true;
         }
     }

@@ -1,0 +1,665 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ARK_Server_Manager" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:eo="http://schemas.essentialobjects.com/wpf/" xmlns:Aero="clr-namespace:EO.Wpf.Themes.Aero;assembly=EO.Wpf" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    <Style x:Key="SpinEditStyle1" TargetType="{x:Type eo:SpinEdit}">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0,20" MappingMode="Absolute" StartPoint="0,0">
+                    <GradientStop Color="#FFABADB3" Offset="0.05"/>
+                    <GradientStop Color="#FFE2E3EA" Offset="0.07"/>
+                    <GradientStop Color="#FFE3E9EF" Offset="1"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="AllowDrop" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="RangeIndicatorStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="StrokeThickness" Value="1"/>
+                    <Setter Property="Fill" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    <Setter Property="Stroke" Value="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SpinUpButtonStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type eo:RepeatButton}">
+                    <Style.BasedOn>
+                        <Style TargetType="{x:Type eo:RepeatButton}">
+                            <Setter Property="FocusVisualStyle">
+                                <Setter.Value>
+                                    <Style>
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                                        <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                                        <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                                        <GradientStop Color="#FFCDCDCD" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush" Value="#FF707070"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="1"/>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Path Data="M0,0L4,3.5 0,7z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" HorizontalAlignment="Center" Stretch="Uniform" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                        <Aero:ButtonChrome x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RoundCorners="False" SnapsToDevicePixels="True">
+                                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Aero:ButtonChrome>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="RenderDefaulted" TargetName="Chrome" Value="True"/>
+                                            </Trigger>
+                                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                                <Setter Property="RenderPressed" TargetName="Chrome" Value="True"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="#FFADADAD"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Style.BasedOn>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SpinButtonsOrientation, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:SpinEdit}}}" Value="Vertical">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Path Data="M0,4L3.5,0 7,4z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SpinButtonsOrientation, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:SpinEdit}}}" Value="Horizontal">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Path Data="M0,0L4,3.5 0,7z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" HorizontalAlignment="Center" Stretch="Uniform" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="SpinDownButtonStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type eo:RepeatButton}">
+                    <Style.BasedOn>
+                        <Style TargetType="{x:Type eo:RepeatButton}">
+                            <Setter Property="FocusVisualStyle">
+                                <Setter.Value>
+                                    <Style>
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                        <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                                        <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                                        <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                                        <GradientStop Color="#FFCDCDCD" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush" Value="#FF707070"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="1"/>
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Path Data="M0,0L4,3.5 0,7z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" HorizontalAlignment="Center" Stretch="Uniform" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                        <Aero:ButtonChrome x:Name="Chrome" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RoundCorners="False" SnapsToDevicePixels="True">
+                                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Aero:ButtonChrome>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="RenderDefaulted" TargetName="Chrome" Value="True"/>
+                                            </Trigger>
+                                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                                <Setter Property="RenderPressed" TargetName="Chrome" Value="True"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Foreground" Value="#FFADADAD"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Style.BasedOn>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SpinButtonsOrientation, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:SpinEdit}}}" Value="Vertical">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Path Data="M0,0L3.5,4 7,0z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SpinButtonsOrientation, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:SpinEdit}}}" Value="Horizontal">
+                            <Setter Property="ContentTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <Path Data="M4,0L4,7 0,3.5z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" HorizontalAlignment="Center" Margin="0,0,1,0" Stretch="Uniform" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type eo:SpinEdit}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto" MinWidth="14"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="PART_Track" Grid.RowSpan="2" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                            <Border.Background>
+                                <ImageBrush ImageSource="UIStyles/TextBoxInnerShadow.png"/>
+                            </Border.Background>
+                            <Rectangle x:Name="PART_RangeIndicator" HorizontalAlignment="Left" Style="{TemplateBinding RangeIndicatorStyle}" Visibility="Collapsed"/>
+                        </Border>
+                        <eo:MaskedEdit x:Name="PART_EditableBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}" Grid.RowSpan="2" Visibility="Collapsed" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <eo:MaskedEdit.Style>
+                                <Style TargetType="{x:Type eo:MaskedEdit}">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+                                    <Setter Property="AllowDrop" Value="True"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="HighlightBrush" Value="#FFADD6FF"/>
+                                    <Setter Property="CaretBrush" Value="#FF6299FF"/>
+                                    <Setter Property="FontFamily" Value="Segoe UI"/>
+                                    <Setter Property="ErrorBrush" Value="Red"/>
+                                    <Setter Property="Cursor" Value="IBeam"/>
+                                    <Setter Property="ItemsPanel">
+                                        <Setter.Value>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type eo:MaskedEdit}">
+                                                <Grid Background="Transparent">
+                                                    <ItemsPresenter x:Name="PART_Items"/>
+                                                    <ContentPresenter x:Name="PART_EmptyPrompt" Content="{TemplateBinding EmptyPrompt}" Visibility="Collapsed"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsEmpty" Value="True"/>
+                                                            <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                                                        </MultiTrigger.Conditions>
+                                                        <Setter Property="Visibility" TargetName="PART_Items" Value="Collapsed"/>
+                                                        <Setter Property="Visibility" TargetName="PART_EmptyPrompt" Value="Visible"/>
+                                                        <Setter Property="Focusable" Value="True"/>
+                                                    </MultiTrigger>
+                                                    <Trigger Property="EmptyPrompt" Value="{x:Null}">
+                                                        <Setter Property="Visibility" TargetName="PART_Items" Value="Visible"/>
+                                                        <Setter Property="Visibility" TargetName="PART_EmptyPrompt" Value="Collapsed"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </eo:MaskedEdit.Style>
+                        </eo:MaskedEdit>
+                        <TextBox x:Name="PART_DisplayBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="True" Grid.RowSpan="2" Text="{Binding Text, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="3,0,0,0" VerticalAlignment="Center" Height="Auto">
+                            <TextBox.Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="AllowDrop" Value="True"/>
+                                    <Setter Property="MinWidth" Value="0"/>
+                                    <Setter Property="MinHeight" Value="0"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type TextBox}">
+                                                <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <Button x:Name="decreaseButton" Grid.Column="1" Grid.Row="1" Command="eo:SpinEdit.DecreaseSmall"  d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+                            <Path Data="F1M0,0L76.591,76.595 153.188,0 76.591,38.297z" Fill="{DynamicResource ButtonText_Brush}" Margin="0" Height="6.89" VerticalAlignment="Top" Stretch="Fill" Grid.Column="0" Grid.Row="1" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Grid.ColumnSpan="1" HorizontalAlignment="Left" Width="10">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Button>
+                        <Button x:Name="increaseButton" Grid.Column="1" Grid.Row="0" Command="eo:SpinEdit.IncreaseSmall"  d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin">
+                            <Path Data="F1M0,0L76.591,76.595 153.188,0 76.591,38.297z" Fill="{DynamicResource ButtonText_Brush}" Margin="0" Height="6.89" VerticalAlignment="Top" Stretch="Fill" Grid.Column="0" Grid.Row="1" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" Grid.ColumnSpan="1" HorizontalAlignment="Left" Width="10">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="-1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="180"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Button>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ShowRangeIndicator" Value="True">
+                            <Setter Property="Visibility" TargetName="PART_RangeIndicator" Value="Visible"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsReadOnly" Value="False"/>
+                                <Condition Property="IsKeyboardFocusWithin" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Visibility" TargetName="PART_EditableBox" Value="Visible"/>
+                            <Setter Property="Visibility" TargetName="PART_DisplayBox" Value="Collapsed"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter Property="Visibility" TargetName="PART_EditableBox" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="PART_DisplayBox" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="SpinButtonsOrientation" Value="Horizontal">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type eo:SpinEdit}">
+                            <Aero:ListBoxChrome x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderFocused="{TemplateBinding IsKeyboardFocusWithin}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border x:Name="PART_Track">
+                                        <Rectangle x:Name="PART_RangeIndicator" HorizontalAlignment="Left" Style="{TemplateBinding RangeIndicatorStyle}" Visibility="Collapsed" VerticalAlignment="Stretch"/>
+                                    </Border>
+                                    <eo:MaskedEdit x:Name="PART_EditableBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="{Binding IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}" Margin="{TemplateBinding Padding}" Visibility="Collapsed" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                        <eo:MaskedEdit.Style>
+                                            <Style TargetType="{x:Type eo:MaskedEdit}">
+                                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+                                                <Setter Property="AllowDrop" Value="True"/>
+                                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                                <Setter Property="HighlightBrush" Value="#FFADD6FF"/>
+                                                <Setter Property="CaretBrush" Value="#FF6299FF"/>
+                                                <Setter Property="FontFamily" Value="Segoe UI"/>
+                                                <Setter Property="ErrorBrush" Value="Red"/>
+                                                <Setter Property="Cursor" Value="IBeam"/>
+                                                <Setter Property="ItemsPanel">
+                                                    <Setter.Value>
+                                                        <ItemsPanelTemplate>
+                                                            <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                                                        </ItemsPanelTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type eo:MaskedEdit}">
+                                                            <Grid Background="Transparent">
+                                                                <ItemsPresenter x:Name="PART_Items"/>
+                                                                <ContentPresenter x:Name="PART_EmptyPrompt" Content="{TemplateBinding EmptyPrompt}" Visibility="Collapsed"/>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <MultiTrigger>
+                                                                    <MultiTrigger.Conditions>
+                                                                        <Condition Property="IsEmpty" Value="True"/>
+                                                                        <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                                                                    </MultiTrigger.Conditions>
+                                                                    <Setter Property="Visibility" TargetName="PART_Items" Value="Collapsed"/>
+                                                                    <Setter Property="Visibility" TargetName="PART_EmptyPrompt" Value="Visible"/>
+                                                                    <Setter Property="Focusable" Value="True"/>
+                                                                </MultiTrigger>
+                                                                <Trigger Property="EmptyPrompt" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" TargetName="PART_Items" Value="Visible"/>
+                                                                    <Setter Property="Visibility" TargetName="PART_EmptyPrompt" Value="Collapsed"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </eo:MaskedEdit.Style>
+                                    </eo:MaskedEdit>
+                                    <TextBox x:Name="PART_DisplayBox" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" IsReadOnly="True" Text="{Binding Text, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                        <TextBox.Style>
+                                            <Style TargetType="{x:Type TextBox}">
+                                                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                                <Setter Property="AllowDrop" Value="True"/>
+                                                <Setter Property="MinWidth" Value="0"/>
+                                                <Setter Property="MinHeight" Value="0"/>
+                                                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type TextBox}">
+                                                            <ScrollViewer x:Name="PART_ContentHost" Background="Transparent" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                    <eo:RepeatButton x:Name="spinUpButton" Grid.Column="2" Command="eo:SpinEdit.IncreaseSmall" Style="{TemplateBinding SpinUpButtonStyle}">
+                                        <eo:RepeatButton.IsEnabled>
+                                            <Binding Path="IsReadOnly" RelativeSource="{RelativeSource TemplatedParent}">
+                                                <Binding.Converter>
+                                                    <eo:NegationConverter/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </eo:RepeatButton.IsEnabled>
+                                    </eo:RepeatButton>
+                                    <eo:RepeatButton x:Name="spinDownButton" Grid.Column="1" Command="eo:SpinEdit.DecreaseSmall" Style="{TemplateBinding SpinDownButtonStyle}">
+                                        <eo:RepeatButton.IsEnabled>
+                                            <Binding Path="IsReadOnly" RelativeSource="{RelativeSource TemplatedParent}">
+                                                <Binding.Converter>
+                                                    <eo:NegationConverter/>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </eo:RepeatButton.IsEnabled>
+                                    </eo:RepeatButton>
+                                </Grid>
+                            </Aero:ListBoxChrome>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="ShowRangeIndicator" Value="True">
+                                    <Setter Property="Visibility" TargetName="PART_RangeIndicator" Value="Visible"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsReadOnly" Value="False"/>
+                                        <Condition Property="IsKeyboardFocusWithin" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Visibility" TargetName="PART_EditableBox" Value="Visible"/>
+                                    <Setter Property="Visibility" TargetName="PART_DisplayBox" Value="Collapsed"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsReadOnly" Value="True">
+                                    <Setter Property="Visibility" TargetName="PART_EditableBox" Value="Collapsed"/>
+                                    <Setter Property="Visibility" TargetName="PART_DisplayBox" Value="Visible"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="RepeatButtonStyle1" TargetType="{x:Type eo:RepeatButton}">
+        <Style.BasedOn>
+            <Style TargetType="{x:Type eo:RepeatButton}">
+                <Setter Property="FocusVisualStyle">
+                    <Setter.Value>
+                        <Style>
+                            <Setter Property="Control.Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="Black" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                            <GradientStop Color="#FFF3F3F3" Offset="0"/>
+                            <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                            <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                            <GradientStop Color="#FFCDCDCD" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BorderBrush" Value="#FF707070"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="1"/>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Path Data="M0,0L4,3.5 0,7z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" HorizontalAlignment="Center" Stretch="Uniform" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ButtonBase}">
+                            <Aero:ButtonChrome x:Name="Chrome" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RoundCorners="False" SnapsToDevicePixels="True" Width="13" d:LayoutOverrides="Width">
+                                <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Aero:ButtonChrome>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="RenderDefaulted" TargetName="Chrome" Value="True"/>
+                                </Trigger>
+                                <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                    <Setter Property="RenderPressed" TargetName="Chrome" Value="True"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Foreground" Value="#FFADADAD"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Style.BasedOn>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding SpinButtonsOrientation, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:SpinEdit}}}" Value="Vertical">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Path Data="M0,0L3.5,4 7,0z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding SpinButtonsOrientation, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type eo:SpinEdit}}}" Value="Horizontal">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Path Data="M4,0L4,7 0,3.5z" Fill="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" HorizontalAlignment="Center" Margin="0,0,1,0" Stretch="Uniform" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <System:Double x:Key="DetailLabelFont_Size">16</System:Double>
+    <FontFamily x:Key="DetailBody_Font">Segoe WP Semibold</FontFamily>
+    <FontFamily x:Key="DetailLabelFont">Segoe UI</FontFamily>
+    <FontFamily x:Key="TooltipFont">Segoe UI Semibold</FontFamily>
+    <Style x:Key="DefaultTextBoxLong" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="2" SnapsToDevicePixels="True" Margin="0" Background="{DynamicResource TextBoxBG_Brush}">
+                        <Border>
+                            <Border.Background>
+                                <ImageBrush ImageSource="/ARK Server Manager;component/UIStyles/TextBoxInnerShadowLong.png"/>
+                            </Border.Background>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center" Margin="4,0,0,0" Background="{x:Null}" Foreground="{DynamicResource VeryDarkNeutral_Brush}" FontFamily="{DynamicResource DefaultTextBoxFont}" FontSize="{DynamicResource DefaultTextBoxSize}" OverridesDefaultStyle="False">
+                                <ScrollViewer.Effect>
+                                    <DropShadowEffect ShadowDepth="0" Opacity="0.2"/>
+                                </ScrollViewer.Effect>
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MasterComp_Brush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MasterComp_Brush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <Thickness x:Key="DetailItemMargins">4</Thickness>
+    <System:Double x:Key="DefaultTextBlockSize">16</System:Double>
+    <FontFamily x:Key="DefaultTextBlockFont">/ARK Server Manager;component/Fonts/#Montserrat Light</FontFamily>
+    <FontFamily x:Key="ServerListBodyFont">/ARK Server Manager;component/Fonts/#Montserrat Light</FontFamily>
+    <System:Double x:Key="DefaultTextBoxSize">14</System:Double>
+    <FontFamily x:Key="DefaultTextBoxFont">Segoe WP Semibold</FontFamily>
+    <Style x:Key="DefaultTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" BorderBrush="{x:Null}" BorderThickness="2" SnapsToDevicePixels="True" Margin="0">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF9CA2A8" Offset="1"/>
+                                <GradientStop Color="#FFB4B4B4"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border>
+                            <Border.Background>
+                                <ImageBrush ImageSource="/ARK Server Manager;component/UIStyles/TextBoxInnerShadow.png"/>
+                            </Border.Background>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalAlignment="Center" Margin="8,0,0,0" Background="{x:Null}" Foreground="{DynamicResource VeryDarkNeutral_Brush}" FontFamily="{DynamicResource DefaultTextBoxFont}" FontSize="{DynamicResource DefaultTextBoxSize}" OverridesDefaultStyle="False">
+                                <ScrollViewer.Effect>
+                                    <DropShadowEffect ShadowDepth="0" Opacity="0.2"/>
+                                </ScrollViewer.Effect>
+                            </ScrollViewer>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            <Setter Property="Opacity" TargetName="PART_ContentHost" Value="0.4"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource TextLight_Brush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource MasterComp_Brush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+    <FontFamily x:Key="DefaultFont">/ARK Server Manager;component/Fonts/#Montserrat</FontFamily>
+    <System:Double x:Key="DefaultButtonFontSize">14.667</System:Double>
+    <FontFamily x:Key="HeaderFont">/ARK Server Manager;component/Fonts/#Montserrat</FontFamily>
+
+    <System:Double x:Key="ServerListBodyFontSize">14.667</System:Double>
+
+
+    <System:Double x:Key="HeaderSize">24</System:Double>
+    <FontFamily x:Key="ButtonFont">/ARK Server Manager;component/Fonts/#Montserrat Light</FontFamily>
+
+</ResourceDictionary>

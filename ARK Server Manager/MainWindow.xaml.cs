@@ -183,12 +183,7 @@ namespace ARK_Server_Manager
             }
         }
 
-        private void RCON_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new OpenRCON();
-            window.Owner = this;
-            window.ShowDialog();
-        }
+      
 
         private void Upgrade_Click(object sender, RoutedEventArgs e)
         {

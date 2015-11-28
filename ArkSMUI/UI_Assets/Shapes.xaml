@@ -1,0 +1,25 @@
+﻿<Window x:Class="ArkSMUI.UI_Assets.Shapes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ArkSMUI.UI_Assets"
+        mc:Ignorable="d"
+        Title="Shapes" Height="300" Width="300">
+    <Grid>
+        <Viewbox x:Name="Layer_1" Margin="16.525,12.487,0,0" Stretch="Fill" HorizontalAlignment="Left" Height="30.996" VerticalAlignment="Top" Width="29.706">
+            <Grid Height="242.028" Width="231.953">
+                <Path Data="F1M34.927,49.153L0,49.153 0,0 34.927,0z" Fill="#FF323232" Height="49.153" Margin="105.791,7.047,91.235,0" VerticalAlignment="Top"/>
+                <Path Data="F1M227.876,43.225L187.448,6.303C185.252,4.511,182.889,0,180.043,0L154.112,0 151.275,0 151.275,80.678 70.593,80.678 70.593,0 65.383,0 0,0 0,242.028 231.953,242.028 231.953,53.442C231.953,49.478,230.948,45.726,227.876,43.225" Fill="#FF323232" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition"/>
+                <Path Data="F1M42.854,108.252L0,61.108 16.924,61.108 16.924,-0.001 42.854,-0.001 68.78,-0.001 68.78,61.108 85.71,61.108z" Fill="#FF0072C5" Margin="73.12,107.363,73.123,26.412"/>
+            </Grid>
+        </Viewbox>
+        <Viewbox x:Name="Folder" UseLayoutRounding="False" Stretch="Fill" Margin="60.522,10,0,0" HorizontalAlignment="Left" Height="44.777" VerticalAlignment="Top" Width="56.867">
+            <Grid Height="200" Width="254">
+                <Path Data="F1M0.001,34.532C0.001,34.532 0.438,25.246 4.69,24.24 8.954,23.238 10.67,19.672 11.172,12.912 11.674,6.152 16.145,0 19.658,0L85.018,0C85.018,0 92.778,4.365 93.278,11.626 93.78,18.892 95.284,23.506 103.05,23.506L209.22,23.506C209.22,23.506,219.748,24.24,221.248,32.508z" Fill="#FF323232" Margin="11.653,0,13.038,163.273" Stretch="Fill"/>
+                <Path Data="F1M12.12,0.462L232.492,0.462C232.492,0.462 246.02,-3.387 245.018,11.14 244.015,25.667 240.005,99.761 240.005,138.326 240.005,138.326 240.005,149.33 233.487,149.33L12.12,149.33C12.12,149.33 5.107,147.676 5.107,138.663 5.107,129.649 0.099,30.242 0.099,11.714 0.099,11.714 -1.906,0.462 12.12,0.462" Fill="#FF323232" Margin="0,41.179,0,0" Stretch="Fill"/>
+            </Grid>
+        </Viewbox>
+
+    </Grid>
+</Window>

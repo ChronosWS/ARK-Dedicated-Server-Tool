@@ -9,6 +9,7 @@
              xmlns:local="clr-namespace:ARK_Server_Manager"
              xmlns:lib="clr-namespace:ARK_Server_Manager.Lib"
              xmlns:vm="clr-namespace:ARK_Server_Manager.Lib.ViewModel"
+             xmlns:eo="http://schemas.essentialobjects.com/wpf/"
              mc:Ignorable="d"
              d:DesignWidth="800"
              x:Name="SettingsControl">
@@ -432,11 +433,12 @@
     <Grid Background="{DynamicResource BeigeGradient}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="1191*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
         </Grid.ColumnDefinitions>
-        <Border Margin="10,5" Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="#FF10274F" BorderThickness="1">
+        <Border Margin="10,5" Grid.Row="0" BorderBrush="#FF10274F" BorderThickness="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -677,7 +679,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <Border Grid.Row="1" BorderBrush="#FFD4C2B0" BorderThickness="2" Margin="3" Padding="0" >
+        <Border Grid.Row="1" BorderBrush="#FFD4C2B0" BorderThickness="2" Margin="3" Padding="0" Grid.RowSpan="2" >
             <Border.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFECE1D4"/>
@@ -802,7 +804,6 @@
                                     <local:AnnotatedSlider Grid.Column="3" Grid.ColumnSpan="3" Grid.Row="0" Label="{DynamicResource ServerSettings_MaxPlayersLabel}"  Value="{Binding MaxPlayers}" Minimum="1" Maximum="127" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" LargeChange="25" SmallChange="10" TickFrequency="10" LabelRelativeWidth="Auto" SliderRelativeWidth="15*" SuffixRelativeWidth="0" 
         						        ToolTip="{DynamicResource ServerSettings_MaxPlayersTooltip}"/>
 
-
                                     <CheckBox x:Name="EnableKickIdlePlayersCheckbox" Grid.Column="0" Grid.Row="4" IsChecked="{Binding EnableKickIdlePlayers}" Content="{DynamicResource ServerSettings_EnableIdleTimeoutLabel}" VerticalAlignment="Center" Margin="5" ToolTip="{DynamicResource ServerSettings_EnableIdleTimeoutTooltip}"/>
                                     <local:AnnotatedSlider Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="4" Label="" Suffix="{DynamicResource ServerSettings_IdleTimeoutUnits}"  Value="{Binding KickIdlePlayersPeriod}" Minimum="60" Maximum="7200" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" LargeChange="300" SmallChange="60" TickFrequency="300" LabelRelativeWidth="Auto" SliderRelativeWidth="15*" SuffixRelativeWidth="Auto" 
         						ToolTip="{DynamicResource ServerSettings_IdleTimeoutTooltip}"
@@ -854,8 +855,7 @@
                                         <RowDefinition Height="25"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="34"/>
-                                        <ColumnDefinition Width="99"/>
+                                        <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0" Grid.Row="0"   Content="{DynamicResource ServerSettings_MapPathLabel}" Grid.ColumnSpan="2" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
@@ -894,6 +894,7 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <TextBox Grid.Row="0" AcceptsReturn="True" Text="{Binding MOTD}" TextWrapping="Wrap" MaxLength="4096"
+
         						ToolTip="{DynamicResource ServerSettings_MOTDTooltip}" SpellCheck.IsEnabled="True" VerticalScrollBarVisibility="Auto"/>
                                     <local:AnnotatedSlider Grid.Row="1" Label="{DynamicResource ServerSettings_MOTDDurationLabel}" Value="{Binding MOTDDuration}" Suffix="{DynamicResource ServerSettings_MOTDDurationUnits}" Minimum="1" Maximum="30" TickFrequency="5" SmallChange="1" LargeChange="5" ToolTip="{DynamicResource ServerSettings_MOTDDurationTooltip}" />
                                 </Grid>
@@ -1075,7 +1076,8 @@
                                     </GroupBox.Header>
                                     <Grid IsEnabled="{Binding ElementName=EnableAutoPvETimer, Path=IsChecked}">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="86"/>
+                                            <ColumnDefinition Width="27.973"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
@@ -1378,6 +1380,7 @@
                         </Expander.Header>
                         <Grid Margin ="10">
                             <StackPanel Grid.Column="0">
+
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_TamingSpeedLabel}"                Value="{Binding TamingSpeedMultiplier}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_TamingSpeedTooltip}"/>
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_HarvestAmountLabel}"              Value="{Binding HarvestAmountMultiplier}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_HarvestAmountTooltip}"/>
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_ResourceRespawnLabel}"            Value="{Binding ResourcesRespawnPeriodMultiplier}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_ResourceRespawnTooltip}"/>
@@ -1416,6 +1419,7 @@
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                 </GroupBox>
+
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_DayCycleSpeedLabel}" Value="{Binding DayCycleSpeedScale}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_DayCycleSpeedTooltip}"/>
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_DayTimeSpeedLabel}" Value="{Binding DayTimeSpeedScale}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_DayTimeSpeedTooltip}"/>
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_NightTimeSpeedLabel}" Value="{Binding NightTimeSpeedScale}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_NightTimeSpeedTooltip}"/>
@@ -1435,6 +1439,7 @@
                         </Expander.Header>
                         <Grid Margin ="10">
                             <StackPanel Grid.Column="0">
+
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_StructureResistanceLabel}" Value="{Binding StructureResistanceMultiplier}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_StructureResistanceTooltip}"/>
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_StructureDamageLabel}" Value="{Binding StructureDamageMultiplier}" Suffix="{DynamicResource SliderUnits_Multiplier}" Minimum="0" Maximum="10" SmallChange="0.1" LargeChange="1" TickFrequency="1" ToolTip="{DynamicResource ServerSettings_StructureDamageTooltip}"/>
                                 <local:AnnotatedSlider Label="{DynamicResource ServerSettings_StructureDamageRepairCooldownLabel}" Value="{Binding StructureDamageRepairCooldown}" Suffix="{DynamicResource SliderUnits_Seconds}" Minimum="0" Maximum="1000" SmallChange="10" LargeChange="50" TickFrequency="10" ToolTip="{DynamicResource ServerSettings_StructureDamageRepairCooldownTooltip}" />

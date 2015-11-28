@@ -7,7 +7,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         Name="RCON"
-        Title="{Binding RCONParameters.ProfileName}" Height="768" Width="1024" ResizeMode="CanResizeWithGrip"
+        Title="{Binding Server.Profile.ProfileName}" Height="768" Width="1024" ResizeMode="CanResizeWithGrip"
         SizeChanged="RCON_SizeChanged" LocationChanged="RCON_LocationChanged"
         Icon="Art/favicon.ico">
     <Window.Resources>
@@ -92,9 +92,9 @@
                         </Label.Style>
                     </Label>
                     <Label Content="Players:" Margin="5,0,0,0"/>
-                    <Label Content="{Binding ServerRCON.CountPlayers}"/>
+                    <Label Content="{Binding Server.Runtime.Players}"/>
                     <Label Content="/"/>
-                    <Label Content="{Binding RCONParameters.MaxPlayers}"/>
+                    <Label Content="{Binding Server.Runtime.MaxPlayers}"/>
                 </StackPanel>
             </DockPanel>
         </Border>

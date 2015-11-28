@@ -1,32 +1,104 @@
 ﻿<ResourceDictionary
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-	<SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
-	<SolidColorBrush x:Key="_BlueButton" Color="#FF0073c6"/>
-	<SolidColorBrush x:Key="_BlueBright" Color="#FF0094c8"/>
-	<SolidColorBrush x:Key="_BlueLuminous" Color="#FF43A4C1"/>
-	<SolidColorBrush x:Key="_BlueDark" Color="#FF253858"/>
-	<SolidColorBrush x:Key="_GrayLightBG" Color="#FFa4a899"/>
-	<SolidColorBrush x:Key="_GrayTextLight" Color="#FFc3c3c3"/>
-	<SolidColorBrush x:Key="_GrayMainBG" Color="#FF404040"/>
-	<SolidColorBrush x:Key="_DisabledGray50" Color="#FF888888"/>
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    <LinearGradientBrush x:Key="TextBoxBG_Brush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF9CA2A8" Offset="1"/>
+        <GradientStop Color="#FFB4B4B4"/>
+    </LinearGradientBrush>
+    <ImageBrush x:Key="Locked_Brush" ImageSource="/ARK Server Manager;component/UIStyles/locked.png"/>
+    <ImageBrush x:Key="Unlocked_Brush" ImageSource="/ARK Server Manager;component/UIStyles/unlocked.png"/>
+    <ImageBrush x:Key="Checked_Brush" ImageSource="/ARK Server Manager;component/UIStyles/checked.jpg"/>
+    <ImageBrush x:Key="Unchecked_Brush" ImageSource="/ARK Server Manager;component/UIStyles/unchecked.jpg"/>
+    
+    
+    <Color x:Key="Master_Color">#FF0d6cb1</Color>
+    <SolidColorBrush x:Key="Master_Brush" Color="{StaticResource Master_Color}"/>
 
-	<Color x:Key="_BlueButtonC">#FF0073c6</Color>
-	<Color x:Key="_BlueBrightC">#FF0094c8</Color>
-	<Color x:Key="_BlueLuminousC">#FF43A4C1</Color>
-	<Color x:Key="_BlueDarkC">#FF253858</Color>
-	<Color x:Key="_GrayLightBGC">#FFa4a899</Color>
-	<Color x:Key="_GrayTextLightC">#FFc3c3c3</Color>
-	<Color x:Key="_GrayMainBGC">#FF404040</Color>
-	<Color x:Key="_DisabledGray50pct">#FF888888</Color>
-	<RadialGradientBrush x:Key="_TextBoxGradientBorder" RadiusX="2" RadiusY="2">
-		<GradientStop Color="#FF4C4C4C" Offset="0.427"/>
-		<GradientStop Color="#FF797979" Offset="0.142"/>
-	</RadialGradientBrush>
-	<SolidColorBrush x:Key="_DisabledGray50Br" Color="Gray"/>
-	<SolidColorBrush x:Key="_MainControlSelected" Color="#FF405970"/>
-	<SolidColorBrush x:Key="_MainControlText" Color="#FFCBCBCB"/>
-	<SolidColorBrush x:Key="MainControlGray" Color="#FF505050"/>
-	<FontFamily x:Key="LabelFont">/ARK Server Manager;component/Fonts/#Montserrat</FontFamily>
-	<!-- Resource dictionary entries should be defined here. -->
+    <Color x:Key="MasterComp_Color">#FFff9000</Color>
+    <SolidColorBrush x:Key="MasterComp_Brush" Color="{StaticResource MasterComp_Color}"/>
+
+    <Color x:Key="Lit_Color">#FF0094ff</Color>
+    <SolidColorBrush x:Key="Lit_Brush" Color="{StaticResource Lit_Color}"/>
+
+    <Color x:Key="Highlight_Color">#3fbeff</Color>
+    <SolidColorBrush x:Key="Highlight_Brush" Color="{StaticResource Highlight_Color}"/>
+
+    <Color x:Key="Dark_Color">#FF253858</Color>
+    <SolidColorBrush x:Key="Dark_Brush" Color="{StaticResource Dark_Color}"/>
+
+    <Color x:Key="VeryDark_Color">#FF1D1E2E</Color>
+    <SolidColorBrush x:Key="VeryDark_Brush" Color="{StaticResource VeryDark_Color}"/>
+
+    <Color x:Key="TextLight_Color">#FFd3d3d3</Color>
+    <SolidColorBrush x:Key="TextLight_Brush" Color="{StaticResource TextLight_Color}"/>
+
+    <Color x:Key="MedNeutral_Color">#FF686868</Color>
+    <SolidColorBrush x:Key="MedNeutral_Brush" Color="{StaticResource MedNeutral_Color}"/>
+
+    <Color x:Key="DarkNeutral_Color">#FF323232</Color>
+    <SolidColorBrush x:Key="DarkNeutral_Brush" Color="{StaticResource DarkNeutral_Color}"/>
+
+    <Color x:Key="VeryDarkNeutral_Color">#FF202020</Color>
+    <SolidColorBrush x:Key="VeryDarkNeutral_Brush" Color="{StaticResource VeryDarkNeutral_Color}"/>
+
+    <Color x:Key="Disabled_Color">#FF9D9D9D</Color>
+    <SolidColorBrush x:Key="Disabled_Brush" Color="{StaticResource Disabled_Color}"/>
+
+    <Color x:Key="Glow_Color">#FF03DEFB</Color>
+    <SolidColorBrush x:Key="Glow_Brush" Color="{StaticResource Glow_Color}"/>
+
+    <Color x:Key="Go_Color">#FF53c566</Color>
+    <SolidColorBrush x:Key="Go_Brush" Color="{StaticResource Go_Color}"/>
+
+    <Color x:Key="LightNeutral_Color">#FFC5C5C5</Color>
+    <SolidColorBrush x:Key="LightNeutral_Brush" Color="{StaticResource LightNeutral_Color}"/>
+
+    <Color x:Key="DarkNeutralFade_Color">#D9404040</Color>
+    <SolidColorBrush x:Key="DarkNeutralFade_Brush" Color="{StaticResource DarkNeutralFade_Color}"/>
+
+    <Color x:Key="ButtonText_Color">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="ButtonText_Brush" Color="{StaticResource ButtonText_Color}"/>
+
+    <Color x:Key="ButtonHover_Color">#FF0094ff</Color>
+    <SolidColorBrush x:Key="ButtonHover_Brush" Color="{StaticResource ButtonHover_Color}"/>
+
+    <Color x:Key="ButtonPress_Color">#3fbeff</Color>
+    <SolidColorBrush x:Key="ButtonPress_Brush" Color="{StaticResource ButtonPress_Color}"/>
+
+    <Color x:Key="ButtonBase_Color">#FF0d6cb1</Color>
+    <SolidColorBrush x:Key="ButtonBase_Brush" Color="{StaticResource ButtonBase_Color}"/>
+
+    <Color x:Key="Stop_Color">#8e1c1c</Color>
+    <SolidColorBrush x:Key="Stop_Brush" Color="{StaticResource Stop_Color}"/>
+
+    <Color x:Key="StopButtonPressed_Color">#FFff3838</Color>
+    <SolidColorBrush x:Key="StopButtonPressed_Brush" Color="{StaticResource StopButtonPressed_Color}"/>
+
+    <Color x:Key="StopButtonHover_Color">#FFcd2828</Color>
+    <SolidColorBrush x:Key="StopButtonHover_Brush" Color="{StaticResource StopButtonHover_Color}"/>
+
+    <Color x:Key="ButtonBorder_Color">#FF000000</Color>
+    <SolidColorBrush x:Key="ButtonBorder_Brush" Color="{StaticResource ButtonBorder_Color}"/>
+
+    <Color x:Key="StartButton_Color">#ff3a8743</Color>
+    <SolidColorBrush x:Key="StartButton_Brush" Color="{StaticResource StartButton_Color}"/>
+
+    <Color x:Key="StartButtonHover_Color">#ff4eb65a</Color>
+    <SolidColorBrush x:Key="StartButtonHover_Brush" Color="{StaticResource StartButtonHover_Color}"/>
+
+    <Color x:Key="StartButtonPress_Color">#ff6eff7f</Color>
+    <SolidColorBrush x:Key="StartButtonPress_Brush" Color="{StaticResource StartButtonPress_Color}"/>
+    
+    <LinearGradientBrush x:Key="BlackFadeRight_Brush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <LinearGradientBrush.RelativeTransform>
+            <TransformGroup>
+                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                <TranslateTransform/>
+            </TransformGroup>
+        </LinearGradientBrush.RelativeTransform>
+        <GradientStop Color="Black" Offset="1"/>
+        <GradientStop Color="#00000000"/>
+    </LinearGradientBrush>
 </ResourceDictionary>

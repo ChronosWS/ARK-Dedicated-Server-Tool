@@ -325,7 +325,6 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty DisableDinoDecayPvEProperty = DependencyProperty.Register(nameof(DisableDinoDecayPvE), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
 
-
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "AlwaysNotifyPlayerLeft")]
         public bool EnablePlayerLeaveNotifications
         {
@@ -388,17 +387,6 @@ namespace ARK_Server_Manager.Lib
             get { return (bool)GetValue(AllowPVPGammaProperty); }
             set { SetValue(AllowPVPGammaProperty, value); }
         }
-
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings)]
-        public bool DisablePvEGamma
-        {
-            get { return (bool)GetValue(DisablePvEGammaProperty); }
-            set { SetValue(DisablePvEGammaProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisablePvEGammaProperty = DependencyProperty.Register(nameof(DisablePvEGamma), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
-
 
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerPassword")]        
         public string ServerPassword
@@ -1226,6 +1214,9 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty SOTF_BattleSuddenDeathIntervalProperty = DependencyProperty.Register(nameof(SOTF_BattleSuddenDeathInterval), typeof(int), typeof(ServerProfile), new PropertyMetadata(300));
 
+
+
+
         public bool EnableAutoUpdate
         {
             get { return (bool)GetValue(EnableAutoUpdateProperty); }
@@ -1233,6 +1224,7 @@ namespace ARK_Server_Manager.Lib
         }
 
         public static readonly DependencyProperty EnableAutoUpdateProperty = DependencyProperty.Register(nameof(EnableAutoUpdate), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
+
 
         public int AutoUpdatePeriod
         {
@@ -1242,6 +1234,8 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty AutoUpdatePeriodProperty = DependencyProperty.Register(nameof(AutoUpdatePeriod), typeof(int), typeof(ServerProfile), new PropertyMetadata(60));
 
+
+
         public bool EnableAutoStart
         {
             get { return (bool)GetValue(EnableAutoStartProperty); }
@@ -1250,6 +1244,8 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty EnableAutoStartProperty = DependencyProperty.Register(nameof(EnableAutoStart), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
 
+
+
         public int ServerUpdateGraceMinutes
         {
             get { return (int)GetValue(ServerUpdateGraceMinutesProperty); }
@@ -1257,6 +1253,8 @@ namespace ARK_Server_Manager.Lib
         }
 
         public static readonly DependencyProperty ServerUpdateGraceMinutesProperty = DependencyProperty.Register(nameof(ServerUpdateGraceMinutes), typeof(int), typeof(ServerProfile), new PropertyMetadata(15));
+
+
 
         public bool ServerForceUpdate
         {
@@ -1400,9 +1398,6 @@ namespace ARK_Server_Manager.Lib
             this.DinoSettings = new DinoSettingsList(this.DinoSpawnWeightMultipliers, this.PreventDinoTameClassNames, this.NPCReplacements, this.TamedDinoClassDamageMultipliers, this.TamedDinoClassResistanceMultipliers, this.DinoClassDamageMultipliers, this.DinoClassResistanceMultipliers);
             this.DinoLevels = new LevelList();
             this.PlayerLevels = new LevelList();
-            this.PerLevelStatsMultiplier_Player = new FloatIniValueArray(nameof(PerLevelStatsMultiplier_Player), GameData.GetPerLevelStatsMultipliers);
-            this.PerLevelStatsMultiplier_DinoWild = new FloatIniValueArray(nameof(PerLevelStatsMultiplier_DinoWild), GameData.GetPerLevelStatsMultipliers);
-            this.PerLevelStatsMultiplier_DinoTamed = new FloatIniValueArray(nameof(PerLevelStatsMultiplier_DinoTamed), GameData.GetPerLevelStatsMultipliers);
 
             GetDefaultDirectories();
         }
@@ -1776,13 +1771,6 @@ namespace ARK_Server_Manager.Lib
         public bool UpdateAutoUpdateSettings()
         {
             SaveLauncher();
-
-            if (!ServerScheduler.SetDirectoryOwnershipForAllUsers(this.InstallDirectory))
-            {
-               _logger.Error($"Unable to set directory permissions for {this.InstallDirectory}.");
-                return false;
-            }
-
 
             var schedulerKey = GetSchedulerKey();
             if(!ServerScheduler.ScheduleAutoStart(schedulerKey, this.EnableAutoStart, GetLauncherPath(), String.Empty))

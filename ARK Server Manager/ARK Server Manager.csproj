@@ -90,7 +90,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ArkData">
-      <HintPath>..\..\ArkData\ArkData\bin\Debug\ArkData.dll</HintPath>
+      <HintPath>ExternalLibs\ArkData.dll</HintPath>
     </Reference>
     <Reference Include="EO.Wpf, Version=4.0.12.0, Culture=neutral, PublicKeyToken=e92353a6bf73fffc, processorArchitecture=MSIL">
       <HintPath>..\packages\EO.Wpf.4.0.12\lib\EO.Wpf.dll</HintPath>
@@ -117,6 +117,7 @@
       <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -148,12 +149,27 @@
       <DependentUpon>AnnotatedSlider.xaml</DependentUpon>
     </Compile>
     <Compile Include="AnnotatedTextBox.cs" />
+    <Compile Include="Art\Shapes.xaml.cs">
+      <DependentUpon>Shapes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CommandLine.xaml.cs">
       <DependentUpon>CommandLine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LabeledSlider.xaml.cs">
+      <DependentUpon>LabeledSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LabeledTextBlock.xaml.cs">
+      <DependentUpon>LabeledTextBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="ErrorHandling.cs" />
     <Compile Include="GlobalSettings.xaml.cs">
       <DependentUpon>GlobalSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LabeledTextBox.xaml.cs">
+      <DependentUpon>LabeledTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LabeledSpinner.xaml.cs">
+      <DependentUpon>LabeledSpinner.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lib\ActionQueue.cs" />
     <Compile Include="Lib\DebugUtils.cs" />
@@ -229,23 +245,107 @@
     <Compile Include="RCONWindow.xaml.cs">
       <DependentUpon>RCONWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ServerDetailControl.xaml.cs">
+      <DependentUpon>ServerDetailControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ServerSettingsControl.xaml.cs">
       <DependentUpon>ServerSettingsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Lib\ServerStatusWatcher.cs" />
+    <Compile Include="Testing\Temp.xaml.cs">
+      <DependentUpon>Temp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Testing\UITests.xaml.cs">
       <DependentUpon>UITests.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WPFControls\AnnotatedGlowSlider.xaml.cs">
-      <DependentUpon>AnnotatedGlowSlider.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UIStyles\ExtendedSlider.cs">
+      <DependentUpon>ExtendedSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UIStyles\Shapes.xaml.cs">
+      <DependentUpon>Shapes.xaml</DependentUpon>
+    </Compile>
+    <Resource Include="UIStyles\InnerShadowMultiline.png" />
+    <Resource Include="UIStyles\locked.png" />
+    <Resource Include="UIStyles\unlocked.png" />
+    <Resource Include="UIStyles\checked.jpg" />
+    <Resource Include="UIStyles\unchecked.jpg" />
+    <Resource Include="UIStyles\TextBoxInnerShadowLong.png" />
+    <Resource Include="UIStyles\TextBoxInnerShadow.png" />
+    <SplashScreen Include="Art\splashScreen.png" />
     <Content Include="Lib\ServerUpdater\mcrcon.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="UIStyles\header.png" />
+    <Resource Include="UIStyles\headerTitle.jpg" />
+    <Page Include="Controls\LabeledSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LabeledTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LabeledTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ServerDetailControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OpenRCON.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LabeledSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ScrollViewerStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TempDict.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Testing\Temp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIStyles\TextStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIStyles\BasicStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIStyles\ExtendedSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UIStyles\MainTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIStyles\Shapes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UIStyles\Slider_TwoTone.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Resource Include="UIStyles\iStock_000003783032MediumA.jpg" />
     <Page Include="AnnotatedSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Art\Shapes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -253,15 +353,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Eraseme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainFrame.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="OpenRCON.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,19 +365,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIStyles\GlowSlider.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UIStyles\MainControlListBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UIStyles\MainTabControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="WPFControls\AnnotatedGlowSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -403,7 +483,6 @@
       <Numbers>True</Numbers>
       <Punctuation>True</Punctuation>
     </BlendEmbeddedFont>
-    <Resource Include="UIStyles\iStock_000003783032Medium.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
