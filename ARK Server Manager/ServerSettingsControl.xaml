@@ -1152,7 +1152,12 @@
                     </Expander>
                     <Expander IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
-                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_ChatAndNotificationsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextWrapping="Wrap" Text="{DynamicResource ServerSettings_ChatAndNotificationsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                                <Button Click="ChatAndNotification_Reset" Width="22" Height="22" ToolTip="{DynamicResource ServerSettings_ResetSectionTooltip}" Margin="20,0,0,0">
+                                    <Image Source="Art/Refresh.png" Width="16" Height="16" />
+                                </Button>
+                            </StackPanel>
                         </Expander.Header>
                         <Grid Margin ="10">
                             <StackPanel>
@@ -1165,7 +1170,12 @@
                     </Expander>
                     <Expander IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
-                            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_HUDAndVisualsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_HUDAndVisualsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                                <Button Click="HUDAndVisuals_Reset" Width="22" Height="22" ToolTip="{DynamicResource ServerSettings_ResetSectionTooltip}" Margin="20,0,0,0">
+                                    <Image Source="Art/Refresh.png" Width="16" Height="16" />
+                                </Button>
+                            </StackPanel>
                         </Expander.Header>
                         <Grid Margin ="10">
                             <StackPanel>
@@ -1174,7 +1184,7 @@
                                 <CheckBox IsChecked="{Binding AllowThirdPersonView}" Content="{DynamicResource ServerSettings_AllowThirdPersonViewLabel}" HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_AllowThirdPersonViewTooltip}"/>
                                 <CheckBox IsChecked="{Binding AllowMapPlayerLocation}" Content="{DynamicResource ServerSettings_AllowMapPlayerLocationLabel}" HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_AllowMapPlayerLocationTooltip}"/>
                                 <CheckBox IsChecked="{Binding AllowPVPGamma}" Content="{DynamicResource ServerSettings_AllowPlayerGammaInPvPLabel}" HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_AllowPlayerGammaInPvPTooltip}"/>
-                                <CheckBox IsChecked="{Binding DisablePvEGamma}" Content="{DynamicResource ServerSettings_DisablePlayerGammaInPvELabel}" HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_DisablePlayerGammaInPvETooltip}"/>
+                                <CheckBox IsChecked="{Binding AllowPvEGamma}" Content="{DynamicResource ServerSettings_AllowPlayerGammaInPvELabel}" HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_AllowPlayerGammaInPvETooltip}"/>
                             </StackPanel>
                         </Grid>
                     </Expander>

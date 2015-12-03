@@ -502,5 +502,21 @@ namespace ARK_Server_Manager
 
             this.Settings.ResetOverrideMaxExperiencePointsDino();
         }
+
+        private void ChatAndNotification_Reset(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset the Chat and Notification section.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            this.Settings.ResetChatAndNotificationSection();
+        }
+
+        private void HUDAndVisuals_Reset(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Click 'Yes' to confirm you want to reset the HUD and Visuals section.", "Confirm Reset Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                return;
+
+            this.Settings.ResetHUDAndVisualsSection();
+        }
     }
 }

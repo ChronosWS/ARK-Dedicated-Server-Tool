@@ -104,20 +104,23 @@ namespace ARK_Server_Manager.Lib
 
         #region Server properties
 
-        public static readonly DependencyProperty EnableGlobalVoiceChatProperty = DependencyProperty.Register(nameof(EnableGlobalVoiceChat), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
-        public static readonly DependencyProperty EnableProximityChatProperty = DependencyProperty.Register(nameof(EnableProximityChat), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
+        public static readonly DependencyProperty EnableGlobalVoiceChatProperty = DependencyProperty.Register(nameof(EnableGlobalVoiceChat), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ENABLE_GLOBAL_VOICE_CHAT));
+        public static readonly DependencyProperty EnableProximityChatProperty = DependencyProperty.Register(nameof(EnableProximityChat), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ENABLE_PROXIMITY_CHAT));
+        public static readonly DependencyProperty EnablePlayerLeaveNotificationsProperty = DependencyProperty.Register(nameof(EnablePlayerLeaveNotifications), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ENABLE_PLAYER_LEAVE_NOTIFICATIONS));
+        public static readonly DependencyProperty EnablePlayerJoinedNotificationsProperty = DependencyProperty.Register(nameof(EnablePlayerJoinedNotifications), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ENABLE_PLAYER_JOIN_NOTIFICATIONS));
+
+        public static readonly DependencyProperty AllowCrosshairProperty = DependencyProperty.Register(nameof(AllowCrosshair), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ALLOW_CROSSHAIR));
+        public static readonly DependencyProperty AllowHUDProperty = DependencyProperty.Register(nameof(AllowHUD), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ALLOW_HUD));
+        public static readonly DependencyProperty AllowThirdPersonViewProperty = DependencyProperty.Register(nameof(AllowThirdPersonView), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ALLOW_THIRD_PERSON_VIEW));
+        public static readonly DependencyProperty AllowMapPlayerLocationProperty = DependencyProperty.Register(nameof(AllowMapPlayerLocation), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ALLOW_MAP_PLAYER_LOCATION));
+        public static readonly DependencyProperty AllowPVPGammaProperty = DependencyProperty.Register(nameof(AllowPVPGamma), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ALLOW_PVP_GAMMA));
+        public static readonly DependencyProperty AllowPvEGammaProperty = DependencyProperty.Register(nameof(AllowPvEGamma), typeof(bool), typeof(ServerProfile), new PropertyMetadata(GameData.DEFAULT_ALLOW_PVE_GAMMA));
+
         public static readonly DependencyProperty EnableTributeDownloadsProperty = DependencyProperty.Register(nameof(EnableTributeDownloads), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
         public static readonly DependencyProperty EnableFlyerCarryProperty = DependencyProperty.Register(nameof(EnableFlyerCarry), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
         public static readonly DependencyProperty EnableStructureDecayProperty = DependencyProperty.Register(nameof(EnableStructureDecay), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
-        public static readonly DependencyProperty EnablePlayerLeaveNotificationsProperty = DependencyProperty.Register(nameof(EnablePlayerLeaveNotifications), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
-        public static readonly DependencyProperty EnablePlayerJoinedNotificationsProperty = DependencyProperty.Register(nameof(EnablePlayerJoinedNotifications), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
         public static readonly DependencyProperty EnableHardcoreProperty = DependencyProperty.Register(nameof(EnableHardcore), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
         public static readonly DependencyProperty EnablePVPProperty = DependencyProperty.Register(nameof(EnablePVP), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
-        public static readonly DependencyProperty AllowCrosshairProperty = DependencyProperty.Register(nameof(AllowCrosshair), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
-        public static readonly DependencyProperty AllowHUDProperty = DependencyProperty.Register(nameof(AllowHUD), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
-        public static readonly DependencyProperty AllowThirdPersonViewProperty = DependencyProperty.Register(nameof(AllowThirdPersonView), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
-        public static readonly DependencyProperty AllowMapPlayerLocationProperty = DependencyProperty.Register(nameof(AllowMapPlayerLocation), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
-        public static readonly DependencyProperty AllowPVPGammaProperty = DependencyProperty.Register(nameof(AllowPVPGamma), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
         public static readonly DependencyProperty ServerPasswordProperty = DependencyProperty.Register(nameof(ServerPassword), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
         public static readonly DependencyProperty AdminPasswordProperty = DependencyProperty.Register(nameof(AdminPassword), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
         public static readonly DependencyProperty MaxPlayersProperty = DependencyProperty.Register(nameof(MaxPlayers), typeof(int), typeof(ServerProfile), new PropertyMetadata(5));
@@ -185,6 +188,7 @@ namespace ARK_Server_Manager.Lib
         public static readonly DependencyProperty CustomRecipeEffectivenessMultiplierProperty = DependencyProperty.Register(nameof(CustomRecipeEffectivenessMultiplier), typeof(float), typeof(ServerProfile), new PropertyMetadata(1.0f));
         public static readonly DependencyProperty CustomRecipeSkillMultiplierProperty = DependencyProperty.Register(nameof(CustomRecipeSkillMultiplier), typeof(float), typeof(ServerProfile), new PropertyMetadata(1.0f));
 
+
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "GlobalVoiceChat")]
         public bool EnableGlobalVoiceChat
         {
@@ -198,6 +202,66 @@ namespace ARK_Server_Manager.Lib
             get { return (bool)GetValue(EnableProximityChatProperty); }
             set { SetValue(EnableProximityChatProperty, value); }
         }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "AlwaysNotifyPlayerLeft")]
+        public bool EnablePlayerLeaveNotifications
+        {
+            get { return (bool)GetValue(EnablePlayerLeaveNotificationsProperty); }
+            set { SetValue(EnablePlayerLeaveNotificationsProperty, value); }
+        }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "DontAlwaysNotifyPlayerJoined", InvertBoolean = true)]
+        public bool EnablePlayerJoinedNotifications
+        {
+            get { return (bool)GetValue(EnablePlayerJoinedNotificationsProperty); }
+            set { SetValue(EnablePlayerJoinedNotificationsProperty, value); }
+        }
+
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerCrosshair")]
+        public bool AllowCrosshair
+        {
+            get { return (bool)GetValue(AllowCrosshairProperty); }
+            set { SetValue(AllowCrosshairProperty, value); }
+        }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerForceNoHud", InvertBoolean = true)]
+        public bool AllowHUD
+        {
+            get { return (bool)GetValue(AllowHUDProperty); }
+            set { SetValue(AllowHUDProperty, value); }
+        }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "AllowThirdPersonPlayer")]
+        public bool AllowThirdPersonView
+        {
+            get { return (bool)GetValue(AllowThirdPersonViewProperty); }
+            set { SetValue(AllowThirdPersonViewProperty, value); }
+        }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ShowMapPlayerLocation")]
+        public bool AllowMapPlayerLocation
+        {
+            get { return (bool)GetValue(AllowMapPlayerLocationProperty); }
+            set { SetValue(AllowMapPlayerLocationProperty, value); }
+        }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "EnablePVPGamma")]
+        public bool AllowPVPGamma
+        {
+            get { return (bool)GetValue(AllowPVPGammaProperty); }
+            set { SetValue(AllowPVPGammaProperty, value); }
+        }
+
+        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "DisablePvEGamma", InvertBoolean = true)]
+        public bool AllowPvEGamma
+        {
+            get { return (bool)GetValue(AllowPvEGammaProperty); }
+            set { SetValue(AllowPvEGammaProperty, value); }
+        }
+
+
+
 
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "NoTributeDownloads", InvertBoolean = true)]
         public bool EnableTributeDownloads
@@ -327,20 +391,6 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty DisableDinoDecayPvEProperty = DependencyProperty.Register(nameof(DisableDinoDecayPvE), typeof(bool), typeof(ServerProfile), new PropertyMetadata(true));
 
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "AlwaysNotifyPlayerLeft")]
-        public bool EnablePlayerLeaveNotifications
-        {
-            get { return (bool)GetValue(EnablePlayerLeaveNotificationsProperty); }
-            set { SetValue(EnablePlayerLeaveNotificationsProperty, value); }
-        }
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "DontAlwaysNotifyPlayerJoined", InvertBoolean = true)]
-        public bool EnablePlayerJoinedNotifications
-        {
-            get { return (bool)GetValue(EnablePlayerJoinedNotificationsProperty); }
-            set { SetValue(EnablePlayerJoinedNotificationsProperty, value); }
-        }
         
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerHardcore")]        
         public bool EnableHardcore
@@ -356,50 +406,6 @@ namespace ARK_Server_Manager.Lib
             set { SetValue(EnablePVPProperty, value); }
         }
 
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerCrosshair")]
-        public bool AllowCrosshair
-        {
-            get { return (bool)GetValue(AllowCrosshairProperty); }
-            set { SetValue(AllowCrosshairProperty, value); }
-        }
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerForceNoHud", InvertBoolean = true)]
-        public bool AllowHUD
-        {
-            get { return (bool)GetValue(AllowHUDProperty); }
-            set { SetValue(AllowHUDProperty, value); }
-        }
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "AllowThirdPersonPlayer")]
-        public bool AllowThirdPersonView
-        {
-            get { return (bool)GetValue(AllowThirdPersonViewProperty); }
-            set { SetValue(AllowThirdPersonViewProperty, value); }
-        }
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ShowMapPlayerLocation")]
-        public bool AllowMapPlayerLocation
-        {
-            get { return (bool)GetValue(AllowMapPlayerLocationProperty); }
-            set { SetValue(AllowMapPlayerLocationProperty, value); }
-        }
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "EnablePVPGamma")]
-        public bool AllowPVPGamma
-        {
-            get { return (bool)GetValue(AllowPVPGammaProperty); }
-            set { SetValue(AllowPVPGammaProperty, value); }
-        }
-
-
-        [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings)]
-        public bool DisablePvEGamma
-        {
-            get { return (bool)GetValue(DisablePvEGammaProperty); }
-            set { SetValue(DisablePvEGammaProperty, value); }
-        }
-
-        public static readonly DependencyProperty DisablePvEGammaProperty = DependencyProperty.Register(nameof(DisablePvEGamma), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
 
 
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, "ServerPassword")]        
@@ -1446,7 +1452,6 @@ namespace ARK_Server_Manager.Lib
             list.AddRange(GameData.LevelProgression);
         }
 
-
         public void ResetLevelProgressionToOfficial(LevelProgression levelProgression)
         {
             LevelList list = GetLevelList(levelProgression);
@@ -1880,6 +1885,8 @@ namespace ARK_Server_Manager.Lib
             return settings;
         }
 
+        #region Reset Methods
+        // individual value reset methods
         public void ResetOverrideMaxExperiencePointsPlayer()
         {
             OverrideMaxExperiencePointsPlayer = GameData.DEFAULT_MAX_EXPERIENCE_POINTS_PLAYER;
@@ -1889,5 +1896,25 @@ namespace ARK_Server_Manager.Lib
         {
             OverrideMaxExperiencePointsDino = GameData.DEFAULT_MAX_EXPERIENCE_POINTS_DINO;
         }
+
+        // section reset methods
+        public void ResetChatAndNotificationSection()
+        {
+            EnableGlobalVoiceChat = GameData.DEFAULT_ENABLE_GLOBAL_VOICE_CHAT;
+            EnableProximityChat = GameData.DEFAULT_ENABLE_PROXIMITY_CHAT;
+            EnablePlayerLeaveNotifications = GameData.DEFAULT_ENABLE_PLAYER_LEAVE_NOTIFICATIONS;
+            EnablePlayerJoinedNotifications = GameData.DEFAULT_ENABLE_PLAYER_JOIN_NOTIFICATIONS;
+        }
+
+        public void ResetHUDAndVisualsSection()
+        {
+            AllowCrosshair = GameData.DEFAULT_ALLOW_CROSSHAIR;
+            AllowHUD = GameData.DEFAULT_ALLOW_HUD;
+            AllowThirdPersonView = GameData.DEFAULT_ALLOW_THIRD_PERSON_VIEW;
+            AllowMapPlayerLocation = GameData.DEFAULT_ALLOW_MAP_PLAYER_LOCATION;
+            AllowPVPGamma = GameData.DEFAULT_ALLOW_PVP_GAMMA;
+            AllowPvEGamma = GameData.DEFAULT_ALLOW_PVE_GAMMA;
+        }
+        #endregion
     }
 }
