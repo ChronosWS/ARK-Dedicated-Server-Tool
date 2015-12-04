@@ -105,6 +105,7 @@
     <sys:String x:Key="ServerSettings_SetLocationButtonTooltip">Update the folder that contains the Ark server game and configuration files.</sys:String>
     <sys:String x:Key="ServerSettings_ValidateButtonLabel">Validate</sys:String>
     <sys:String x:Key="ServerSettings_ValidateButtonTooltip">Verify the server content against the Steam version.</sys:String>
+    <sys:String x:Key="ServerSettings_ResetSectionTooltip">Reset the section back to defaults.</sys:String>
 
     <!-- Server Settings - Administration   -->
     <sys:String x:Key="ServerSettings_AdministrationSectionLabel">Administration</sys:String>
@@ -281,8 +282,8 @@
     <sys:String x:Key="ServerSettings_AllowMapPlayerLocationTooltip">If enabled, shows each player their position on the map.</sys:String>
     <sys:String x:Key="ServerSettings_AllowPlayerGammaInPvPLabel">Allow Player Gamma Settings in PvP</sys:String>
     <sys:String x:Key="ServerSettings_AllowPlayerGammaInPvPTooltip">If enabled, allows gamma changes in PvP mode.</sys:String>
-    <sys:String x:Key="ServerSettings_DisablePlayerGammaInPvELabel">Disable Player Gamma Settings in PvE</sys:String>
-    <sys:String x:Key="ServerSettings_DisablePlayerGammaInPvETooltip">If enabled, prevents gamma changes in PvE mode.</sys:String>
+    <sys:String x:Key="ServerSettings_AllowPlayerGammaInPvELabel">Allow Player Gamma Settings in PvE</sys:String>
+    <sys:String x:Key="ServerSettings_AllowPlayerGammaInPvETooltip">If enabled, allows gamma changes in PvE mode.</sys:String>
 
     <!-- Server Settings - Player Settings -->
     <sys:String x:Key="ServerSettings_PlayerSettingsLabel">Player Settings</sys:String>

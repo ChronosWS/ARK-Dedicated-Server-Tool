@@ -10,8 +10,22 @@ namespace ARK_Server_Manager.Lib
 {
     public static class GameData
     {
+        #region Constants
+        public const bool DEFAULT_ENABLE_GLOBAL_VOICE_CHAT = true;
+        public const bool DEFAULT_ENABLE_PROXIMITY_CHAT = true;
+        public const bool DEFAULT_ENABLE_PLAYER_LEAVE_NOTIFICATIONS = true;
+        public const bool DEFAULT_ENABLE_PLAYER_JOIN_NOTIFICATIONS = true;
+
+        public const bool DEFAULT_ALLOW_CROSSHAIR = false;
+        public const bool DEFAULT_ALLOW_HUD = true;
+        public const bool DEFAULT_ALLOW_THIRD_PERSON_VIEW = false;
+        public const bool DEFAULT_ALLOW_MAP_PLAYER_LOCATION = true;
+        public const bool DEFAULT_ALLOW_PVP_GAMMA = false;
+        public const bool DEFAULT_ALLOW_PVE_GAMMA = true;
+
         public const int DEFAULT_MAX_EXPERIENCE_POINTS_DINO = 275000;
         public const int DEFAULT_MAX_EXPERIENCE_POINTS_PLAYER = 873538;
+        #endregion
 
         private static readonly DinoSpawn[] dinoSpawns = new DinoSpawn[]
             {
