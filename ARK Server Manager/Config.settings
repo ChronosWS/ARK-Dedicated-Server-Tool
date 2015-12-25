@@ -95,6 +95,9 @@
     <Setting Name="AvailableVersionUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://api.ark.bar/version</Value>
     </Setting>
+    <Setting Name="AvailableVersionUrl2" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://arkdedicated.com/version</Value>
+    </Setting>
     <Setting Name="ServerStatusUrlFormat" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://api.ark.bar/server/{0}/{1}</Value>
     </Setting>

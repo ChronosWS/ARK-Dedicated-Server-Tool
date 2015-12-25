@@ -325,6 +325,15 @@ namespace ARK_Server_Manager {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://arkdedicated.com/version")]
+        public string AvailableVersionUrl2 {
+            get {
+                return ((string)(this["AvailableVersionUrl2"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://api.ark.bar/server/{0}/{1}")]
         public string ServerStatusUrlFormat {
             get {

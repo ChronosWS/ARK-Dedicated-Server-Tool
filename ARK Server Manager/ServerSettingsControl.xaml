@@ -484,7 +484,7 @@
                         <Border Grid.Column="1" Background="{DynamicResource BeigeLabel}" Margin="2" BorderBrush="{DynamicResource BeigeBorder}" Style="{DynamicResource BorderLabel}" ToolTip="{DynamicResource ServerSettings_AvailableVersionTooltip}">
                             <StackPanel Orientation="Horizontal">
                                 <Label FontSize="15" Content="{DynamicResource ServerSettings_AvailableVersionLabel}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                <Label FontSize="15" Content="{Binding ElementName=SettingsControl, Path=ServerManager.AvailableVersion}" HorizontalAlignment="Left"/>
+                                <Label FontSize="15" Content="{Binding ElementName=SettingsControl, Path=ServerManager.AvailableVersion}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 <Button Margin="5,0,0,0" Click="CheckForUpdates_Click" Width="22" Height="22" VerticalAlignment="Center"
                                         ToolTip="{DynamicResource ServerSettings_AvailableVersionRefreshTooltip}">

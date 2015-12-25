@@ -122,6 +122,14 @@ namespace ARK_Server_Manager.Lib
 
         public class AvailableVersion
         {
+            public AvailableVersion()
+            {
+                IsValid = false;
+                Current = new Version(0, 0);
+                Upcoming = new Version(0, 0);
+                UpcomingETA = "unknown";
+            }
+
             public bool IsValid
             {
                 get;
@@ -201,12 +209,40 @@ namespace ARK_Server_Manager.Lib
 
                 if (upcomingStatus != null)
                 {
-                    result.UpcomingETA = (string)upcomingStatus;
-                }                
+                    result.UpcomingETA = upcomingStatus.ToString();
+                }
+
+                // if successful then exist here and return the result
+                return result;
             }
             catch (Exception ex)
             {
-                logger.Debug(String.Format("Exception checking for version: {0}\r\n{1}", ex.Message, ex.StackTrace));                
+                logger.Debug(String.Format("Exception checking for version (method 1): {0}\r\n{1}", ex.Message, ex.StackTrace));                
+            }
+
+            try
+            {
+                string webString;
+                using (var client = new WebClient())
+                {
+                    webString = await client.DownloadStringTaskAsync(Config.Default.AvailableVersionUrl2);
+                }
+
+                if (!string.IsNullOrWhiteSpace(webString))
+                {
+                    Version ver;
+                    string versionString = webString.ToString();
+                    if (versionString.IndexOf('.') == -1)
+                    {
+                        versionString = versionString + ".0";
+                    }
+                    result.IsValid = Version.TryParse(versionString, out ver);
+                    result.Current = ver;
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Debug(String.Format("Exception checking for version (method 2): {0}\r\n{1}", ex.Message, ex.StackTrace));
             }
 
             return result;
@@ -214,6 +250,15 @@ namespace ARK_Server_Manager.Lib
 
         public class ServerNetworkInfo
         {
+            public ServerNetworkInfo()
+            {
+                Name = "unknown";
+                Version = new Version(0, 0);
+                Map = "unknown";
+                Players = 0;
+                MaxPlayers = 0;
+            }
+
             public string Name
             {
                 get;
