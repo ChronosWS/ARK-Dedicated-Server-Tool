@@ -227,6 +227,9 @@
     <Compile Include="OpenRCON.xaml.cs">
       <DependentUpon>OpenRCON.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlayerProfile.xaml.cs">
+      <DependentUpon>PlayerProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RCONWindow.xaml.cs">
       <DependentUpon>RCONWindow.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,9 @@
     <Compile Include="Lib\ServerStatusWatcher.cs" />
     <Compile Include="Testing\UITests.xaml.cs">
       <DependentUpon>UITests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TribeProfile.xaml.cs">
+      <DependentUpon>TribeProfile.xaml</DependentUpon>
     </Compile>
     <Compile Include="WPFControls\AnnotatedGlowSlider.xaml.cs">
       <DependentUpon>AnnotatedGlowSlider.xaml</DependentUpon>
@@ -266,7 +272,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PlayerProfile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Testing\UITests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="TribeProfile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

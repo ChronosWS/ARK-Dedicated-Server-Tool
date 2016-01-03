@@ -116,7 +116,8 @@
                                 <MenuItem Header="Banned" IsCheckable="{Binding IsBanned}" Command="{Binding Source={StaticResource proxy}, Path=Data.BanPlayerCommand}" CommandParameter="{Binding}" />
                                 <MenuItem Header="Whitelisted" IsCheckable="{Binding IsWhitelisted}" Command="{Binding Source={StaticResource proxy}, Path=Data.WhitelistPlayerCommand}" CommandParameter="{Binding}" />
                                 <Separator/>
-                                <MenuItem Header="View Profile..." Command="{Binding Source={StaticResource proxy}, Path=Data.ViewPlayerProfileCommand}" CommandParameter="{Binding}" />
+                                <MenuItem Header="View Steam Profile..." Command="{Binding Source={StaticResource proxy}, Path=Data.ViewPlayerSteamProfileCommand}" CommandParameter="{Binding}" />
+                                <MenuItem Header="View Profile..." Command="{Binding Source={StaticResource proxy}, Path=Data.ViewPlayerProfileCommand}" CommandParameter="{Binding}"/>
                                 <MenuItem Header="View Tribe..." Command="{Binding Source={StaticResource proxy}, Path=Data.ViewPlayerTribeCommand}" CommandParameter="{Binding}"/>
                                 <MenuItem Header="Copy SteamID..." Command="{Binding Source={StaticResource proxy}, Path=Data.CopySteamIDCommand}" CommandParameter="{Binding}"/>                                
                             </ContextMenu>
