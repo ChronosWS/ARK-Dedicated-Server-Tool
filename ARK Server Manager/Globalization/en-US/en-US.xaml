@@ -542,5 +542,7 @@
     <sys:String x:Key="Profile_OnlineColumnLabel">Online</sys:String>
     <sys:String x:Key="Profile_CreatedColumnLabel">Created</sys:String>
     <sys:String x:Key="Profile_UpdatedColumnLabel">Last Updated</sys:String>
+    <sys:String x:Key="Profile_NavigateSteamProfile">Click to open the steam profile in a browser</sys:String>
+    <sys:String x:Key="Profile_NavigateProfile">Click to view the profile file in explorer</sys:String>
 
 </Globalization:GlobalizationResourceDictionary>

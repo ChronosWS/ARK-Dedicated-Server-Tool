@@ -431,7 +431,7 @@ namespace ARK_Server_Manager
             {
                 return new RelayCommand<PlayerInfo>(
                     execute: (player) => {
-                        var window = new PlayerProfile(player);
+                        var window = new PlayerProfile(player, this.RCONParameters.InstallDirectory);
                         window.Owner = this;
                         window.ShowDialog();
                         },
@@ -446,7 +446,7 @@ namespace ARK_Server_Manager
             {
                 return new RelayCommand<PlayerInfo>(
                     execute: (player) => {
-                        var window = new TribeProfile(player);
+                        var window = new TribeProfile(player, this.RCONParameters.InstallDirectory);
                         window.Owner = this;
                         window.ShowDialog();
                     },

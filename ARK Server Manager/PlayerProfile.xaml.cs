@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Navigation;
 using ARK_Server_Manager.Lib.ViewModel.RCON;
+using ARK_Server_Manager.Properties;
 using ArkData;
 
 namespace ARK_Server_Manager
@@ -13,11 +15,12 @@ namespace ARK_Server_Manager
     /// </summary>
     public partial class PlayerProfile : Window
     {
-        public PlayerProfile(PlayerInfo player)
+        public PlayerProfile(PlayerInfo player, String serverFolder)
         {
             InitializeComponent();
 
             this.Player = player;
+            this.ServerFolder = serverFolder;
             this.DataContext = this;
         }
 
@@ -59,11 +62,39 @@ namespace ARK_Server_Manager
             }
         }
 
+        public String PlayerLink
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(ServerFolder))
+                    return null;
+
+                return String.Format("/select, {0}", Path.Combine(ServerFolder, Config.Default.SavedArksRelativePath, String.Format("{0}.arkprofile", Player.SteamId.ToString())));
+            }
+        }
+
         public String ProfileUrl
         {
             get
             {
                 return ArkDataPlayer?.ProfileUrl;
+            }
+        }
+
+        public String ServerFolder
+        {
+            get;
+            private set;
+        }
+
+        public String TribeLink
+        {
+            get
+            {
+                if (String.IsNullOrWhiteSpace(ServerFolder))
+                    return null;
+                
+                return ArkDataTribe == null ? null : String.Format("/select, {0}", Path.Combine(ServerFolder, Config.Default.SavedArksRelativePath, String.Format("{0}.arktribe", ArkDataTribe.Id.ToString())));
             }
         }
 
@@ -99,6 +130,28 @@ namespace ARK_Server_Manager
             if (String.IsNullOrWhiteSpace(link)) return;
 
             Process.Start(link);
+            e.Handled = true;
+        }
+
+        private void PlayerId_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            if (sender.GetType() != typeof(Hyperlink)) return;
+
+            string link = ((Hyperlink)sender).NavigateUri.ToString();
+            if (String.IsNullOrWhiteSpace(link)) return;
+
+            Process.Start("explorer.exe", link);
+            e.Handled = true;
+        }
+
+        private void TribeId_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            if (sender.GetType() != typeof(Hyperlink)) return;
+
+            string link = ((Hyperlink)sender).NavigateUri.ToString();
+            if (String.IsNullOrWhiteSpace(link)) return;
+
+            Process.Start("explorer.exe", link);
             e.Handled = true;
         }
     }

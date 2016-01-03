@@ -35,7 +35,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Content="{DynamicResource Profile_NameLabel}"/>
-                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333">
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333" ToolTip="{DynamicResource Profile_NavigateSteamProfile}">
                     <Hyperlink NavigateUri="{Binding ProfileUrl}" RequestNavigate="SteamName_RequestNavigate">
                        <Hyperlink.Inlines>
                             <Run Text="{Binding Player.SteamName}"/>
@@ -139,7 +139,13 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Content="{DynamicResource Profile_IdLabel}"/>
-                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding ArkDataPlayer.Id}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="{DynamicResource Profile_NavigateProfile}">
+                        <Hyperlink NavigateUri="{Binding PlayerLink}" RequestNavigate="PlayerId_RequestNavigate">
+                           <Hyperlink.Inlines>
+                                <Run Text="{Binding ArkDataPlayer.Id}"/>
+                           </Hyperlink.Inlines>
+                        </Hyperlink>
+                    </TextBlock>
                     <Label Grid.Row="1" Content="{DynamicResource Profile_NameLabel}"/>
                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding ArkDataPlayer.CharacterName}"/>
                     <Label Grid.Row="2" Content="{DynamicResource Profile_LevelLabel}"/>
@@ -195,7 +201,13 @@
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Content="{DynamicResource Profile_IdLabel}"/>
-                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding ArkDataTribe.Id}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="{DynamicResource Profile_NavigateProfile}">
+                        <Hyperlink NavigateUri="{Binding TribeLink}" RequestNavigate="TribeId_RequestNavigate">
+                           <Hyperlink.Inlines>
+                                <Run Text="{Binding ArkDataTribe.Id}"/>
+                           </Hyperlink.Inlines>
+                        </Hyperlink>
+                    </TextBlock>
                     <Label Grid.Row="1" Content="{DynamicResource Profile_NameLabel}"/>
                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding ArkDataTribe.Name}"/>
                     <Label Grid.Row="2" Content="{DynamicResource Profile_TribeOwnerLabel}"/>
