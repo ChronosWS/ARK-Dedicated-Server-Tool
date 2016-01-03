@@ -516,4 +516,31 @@
     <sys:String x:Key="ServerSettings_EnableGamePlayLoggingLabel">Enable Game Play Logging</sys:String>
     <sys:String x:Key="ServerSettings_EnableGamePlayLoggingTooltip">If enabled, outputs a dated log file to \Saved folder, which will contain a timestamped kill and winners log listing steam id, steam name, character name, etc. Handy for automatic Tournament records.</sys:String>
 
+    <!-- Player/Tribe Profile Window -->
+    <sys:String x:Key="Profile_SteamSectionLabel">Steam Details</sys:String>
+    <sys:String x:Key="Profile_PlayerSectionLabel">Player Details</sys:String>
+    <sys:String x:Key="Profile_TribeSectionLabel">Tribe Details</sys:String>
+    <sys:String x:Key="Profile_TribeMembersSectionLabel">Tribe Members</sys:String>
+
+    <sys:String x:Key="Profile_IdLabel">Id:</sys:String>
+    <sys:String x:Key="Profile_NameLabel">Name:</sys:String>
+    <sys:String x:Key="Profile_OnlineLabel">Online:</sys:String>
+    <sys:String x:Key="Profile_CreatedLabel">Created:</sys:String>
+    <sys:String x:Key="Profile_UpdatedLabel">Last Updated:</sys:String>
+    <sys:String x:Key="Profile_BannedCommunityLabel">Community Banned:</sys:String>
+    <sys:String x:Key="Profile_BannedVACLabel">VAC Banned:</sys:String>
+    <sys:String x:Key="Profile_BannedVACCountLabel">Number of VAC Bans:</sys:String>
+    <sys:String x:Key="Profile_BannedVACDaysLabel">Days Since Last Ban:</sys:String>
+    <sys:String x:Key="Profile_LevelLabel">Level:</sys:String>
+    <sys:String x:Key="Profile_WhitelistedLabel">Whitelisted:</sys:String>
+    <sys:String x:Key="Profile_BannedLabel">Banned:</sys:String>
+    <sys:String x:Key="Profile_BannedGameCountLabel">Number of Game Bans:</sys:String>
+    <sys:String x:Key="Profile_TribeOwnerLabel">Owner:</sys:String>
+    <sys:String x:Key="Profile_SteamNameColumnLabel">Steam Name</sys:String>
+    <sys:String x:Key="Profile_CharacterNameColumnLabel">Character Name</sys:String>
+    <sys:String x:Key="Profile_LevelColumnLabel">Level</sys:String>
+    <sys:String x:Key="Profile_OnlineColumnLabel">Online</sys:String>
+    <sys:String x:Key="Profile_CreatedColumnLabel">Created</sys:String>
+    <sys:String x:Key="Profile_UpdatedColumnLabel">Last Updated</sys:String>
+
 </Globalization:GlobalizationResourceDictionary>

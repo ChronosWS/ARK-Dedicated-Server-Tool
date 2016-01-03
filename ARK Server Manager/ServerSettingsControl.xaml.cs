@@ -293,6 +293,7 @@ namespace ARK_Server_Manager
         private void ShowCmd_Click(object sender, RoutedEventArgs e)
         {
             var cmdLine = new CommandLine(String.Format("{0} {1}", this.Runtime.GetServerExe(), this.Settings.GetServerArgs()));
+            cmdLine.Owner = Window.GetWindow(this);
             cmdLine.ShowDialog();
         }
 

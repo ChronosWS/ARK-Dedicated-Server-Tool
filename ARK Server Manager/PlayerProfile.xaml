@@ -1,0 +1,207 @@
+﻿<Window x:Class="ARK_Server_Manager.PlayerProfile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:ARK_Server_Manager.Lib.ViewModel"
+        Title="{Binding WindowTitle}"
+        Width="500" ResizeMode="NoResize" SizeToContent="Height" Icon="Art/favicon.ico" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Globalization\en-US\en-US.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <LinearGradientBrush x:Key="BeigeGradient" EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFECE1D4" Offset="1"/>
+                <GradientStop Color="#FFEAE8E6"/>
+            </LinearGradientBrush>
+            <vm:NullValueConverter x:Key="NullValueConverter"/>
+            <BitmapImage x:Key="NoAvatar" UriSource="Art/NoAvatar.png" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Background="{StaticResource BeigeGradient}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10,2,10,2" CanVerticallyScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Content="{DynamicResource Profile_NameLabel}"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333">
+                    <Hyperlink NavigateUri="{Binding ProfileUrl}" RequestNavigate="SteamName_RequestNavigate">
+                       <Hyperlink.Inlines>
+                            <Run Text="{Binding Player.SteamName}"/>
+                       </Hyperlink.Inlines>
+                    </Hyperlink>
+                </TextBlock>
+                <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" VerticalAlignment="Top" HorizontalAlignment="Right" Source="{Binding Player.AvatarImage, Converter={StaticResource ResourceKey=NullValueConverter}, ConverterParameter={StaticResource ResourceKey=NoAvatar}}" Width="48" Height="48" Stretch="Uniform"/>
+                <Label Grid.Row="1" Content="{DynamicResource Profile_OnlineLabel}"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{Binding Player.IsOnline}">
+                    <Label.Style>
+                        <Style TargetType="{x:Type Label}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Player.IsOnline}" Value="True">
+                                    <Setter Property="Foreground" Value="Green"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Player.IsOnline}" Value="False">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Grid.Row="2" Content="{DynamicResource Profile_CreatedLabel}"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{Binding CreatedDate}"/>
+                <Label Grid.Row="3" Content="{DynamicResource Profile_UpdatedLabel}"/>
+                <Label Grid.Row="3" Grid.Column="1" Content="{Binding UpdatedDate}"/>
+            </Grid>
+            <GroupBox  HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource Profile_SteamSectionLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Content="{DynamicResource Profile_IdLabel}"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Player.SteamId}"/>
+                    <Label Grid.Row="1" Content="{DynamicResource Profile_BannedCommunityLabel}"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding ArkDataPlayer.CommunityBanned}">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ArkDataPlayer.CommunityBanned}" Value="False">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ArkDataPlayer.CommunityBanned}" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Row="2" Content="{DynamicResource Profile_BannedVACLabel}"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding ArkDataPlayer.VACBanned}">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ArkDataPlayer.VACBanned}" Value="False">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ArkDataPlayer.VACBanned}" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Row="3" Content="{DynamicResource Profile_BannedVACCountLabel}"/>
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding ArkDataPlayer.NumberOfVACBans}"/>
+                    <Label Grid.Row="4" Content="{DynamicResource Profile_BannedVACDaysLabel}"/>
+                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding ArkDataPlayer.DaysSinceLastBan}"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox  HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource Profile_PlayerSectionLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Content="{DynamicResource Profile_IdLabel}"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding ArkDataPlayer.Id}"/>
+                    <Label Grid.Row="1" Content="{DynamicResource Profile_NameLabel}"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding ArkDataPlayer.CharacterName}"/>
+                    <Label Grid.Row="2" Content="{DynamicResource Profile_LevelLabel}"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding ArkDataPlayer.Level}"/>
+                    <Label Grid.Row="3" Content="{DynamicResource Profile_WhitelistedLabel}"/>
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding Player.IsWhitelisted}">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Player.IsWhitelisted}" Value="True">
+                                        <Setter Property="Foreground" Value="Blue"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Player.IsWhitelisted}" Value="False">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Row="4" Content="{DynamicResource Profile_BannedLabel}"/>
+                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding Player.IsBanned}">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Player.IsBanned}" Value="False">
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Player.IsBanned}" Value="True">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Grid.Row="5" Content="{DynamicResource Profile_BannedGameCountLabel}"/>
+                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding ArkDataPlayer.NumberOfGameBans}"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox  HorizontalAlignment="Stretch">
+                <GroupBox.Header>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource Profile_TribeSectionLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Content="{DynamicResource Profile_IdLabel}"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding ArkDataTribe.Id}"/>
+                    <Label Grid.Row="1" Content="{DynamicResource Profile_NameLabel}"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding ArkDataTribe.Name}"/>
+                    <Label Grid.Row="2" Content="{DynamicResource Profile_TribeOwnerLabel}"/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding TribeOwner}"/>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
