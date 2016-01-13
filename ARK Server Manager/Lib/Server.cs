@@ -66,12 +66,19 @@ namespace ARK_Server_Manager.Lib
             await this.Runtime.StopAsync();
         }
 
-        public async Task<bool> UpgradeAsync(CancellationToken cancellationToken, bool validate)
+        public async Task<ServerRuntime.UpdateResult> UpgradeAsync(CancellationToken cancellationToken, bool validate, bool updateMods)
         {
             await this.Runtime.AttachToProfile(this.Profile);
-            var success = await this.Runtime.UpgradeAsync(cancellationToken, validate);
+            var result = await this.Runtime.UpgradeAsync(cancellationToken, validate, updateMods);
             this.Profile.LastInstalledVersion = this.Runtime.Version.ToString();
-            return success;
+            return result;
+        }
+
+        public async Task<ServerRuntime.UpdateResult> UpgradeModsAsync(CancellationToken cancellationToken)
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.UpgradeModsAsync(cancellationToken);
+            return result;
         }
 
         public void Dispose()

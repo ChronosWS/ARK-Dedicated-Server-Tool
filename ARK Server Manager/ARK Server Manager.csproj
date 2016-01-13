@@ -96,6 +96,10 @@
       <HintPath>..\packages\EO.Wpf.4.0.12\lib\EO.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unofficial.Ionic.Zip.1.9.1.8\lib\Ionic.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Win32.TaskScheduler, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0d013ddd5178a2ae, processorArchitecture=MSIL">
       <HintPath>..\packages\TaskScheduler.2.4.0\lib\net40\Microsoft.Win32.TaskScheduler.dll</HintPath>
@@ -173,6 +177,8 @@
     <Compile Include="Lib\Model\StatsMultipliers.cs" />
     <Compile Include="Lib\Model\StringIniValueList.cs" />
     <Compile Include="Lib\ModManager.cs" />
+    <Compile Include="Lib\ModUpdater\ModCopy.cs" />
+    <Compile Include="Lib\ModUpdater\ModUpdater.cs" />
     <Compile Include="Lib\PropertyChangeNotifier.cs" />
     <Compile Include="Lib\ScriptUtils.cs" />
     <Compile Include="Lib\Serialization\AggregateIniValue.cs" />
@@ -249,6 +255,7 @@
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
+    <Resource Include="Ionic.Zip.xml" />
     <Content Include="Lib\ServerUpdater\mcrcon.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

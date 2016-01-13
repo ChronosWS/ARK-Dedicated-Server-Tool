@@ -111,8 +111,9 @@
     <sys:String x:Key="ServerSettings_StartButtonTooltip">Start the Ark server.</sys:String>
     <sys:String x:Key="ServerSettings_RCONButtonLabel">RCON</sys:String>
     <sys:String x:Key="ServerSettings_RCONButtonTooltip">Open the RCON window.</sys:String>
-    <sys:String x:Key="ServerSettings_UpgradeButtonLabel">Upgrade</sys:String>
-    <sys:String x:Key="ServerSettings_UpgradeButtonTooltip">Upgrade to the latest version of the Ark server that is currently available to download.</sys:String>
+    <sys:String x:Key="ServerSettings_UpgradeButtonLabel">Update</sys:String>
+    <sys:String x:Key="ServerSettings_UpgradeButtonTooltip">Update to the latest version of the Ark server that is currently available to download.</sys:String>
+    <sys:String x:Key="ServerSettings_UpgradeModButtonTooltip">Update the specified mods.</sys:String>
     <sys:String x:Key="ServerSettings_InstallButtonLabel">Install</sys:String>
     <sys:String x:Key="ServerSettings_InstallButtonTooltip">Install the latest version of the Ark server.</sys:String>
     <sys:String x:Key="ServerSettings_CancelUpgradeButtonLabel">Cancel</sys:String>

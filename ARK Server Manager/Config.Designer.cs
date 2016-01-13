@@ -535,5 +535,14 @@ namespace ARK_Server_Manager {
                 this["OpenRCON_RCONPort"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("+login anonymous +workshop_download_item 346110 {0} +quit")]
+        public string SteamCmdInstallModArgsFormat {
+            get {
+                return ((string)(this["SteamCmdInstallModArgsFormat"]));
+            }
+        }
     }
 }

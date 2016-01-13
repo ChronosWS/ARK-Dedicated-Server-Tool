@@ -155,5 +155,8 @@
     <Setting Name="OpenRCON_RCONPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32330</Value>
     </Setting>
+    <Setting Name="SteamCmdInstallModArgsFormat" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">+login anonymous +workshop_download_item 346110 {0} +quit</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

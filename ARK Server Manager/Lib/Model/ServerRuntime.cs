@@ -103,6 +103,13 @@ namespace ARK_Server_Manager.Lib
             public string ServerArgs;
             public string AdminPassword;
             public bool UseRawSockets;
+            public string ModIdString;
+        };
+
+        public struct UpdateResult
+        {
+            public bool ServerUpdated;
+            public bool ModsUpdated;
         };
 
         private IAsyncDisposable updateRegistration;
@@ -155,7 +162,8 @@ namespace ARK_Server_Manager.Lib
                 ServerName = profile.ServerName,
                 ServerArgs = profile.GetServerArgs(),
                 AdminPassword = profile.AdminPassword,
-                UseRawSockets = profile.UseRawSockets
+                UseRawSockets = profile.UseRawSockets,
+                ModIdString = profile.ServerModIds,
             };
 
             Version lastInstalled;
@@ -360,18 +368,21 @@ namespace ARK_Server_Manager.Lib
             }            
         }
 
-        public async Task<bool> UpgradeAsync(CancellationToken cancellationToken, bool validate)
+        public async Task<UpdateResult> UpgradeAsync(CancellationToken cancellationToken, bool validate, bool updateMods)
         {
+            var updateResult = new UpdateResult { ServerUpdated = false, ModsUpdated = false };
+
             if (!System.Environment.Is64BitOperatingSystem)
             {
                 var result = MessageBox.Show("ARK: Survival Evolved(tm) Server requires a 64-bit operating system to run.  Your operating system is 32-bit and therefore the Ark Server Manager will be unable to start the server, but you may still install it or load and save profiles and settings files for use on other machines.\r\n\r\nDo you wish to continue?", "64-bit OS Required", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.No)
                 {
-                    return false;
+                    return updateResult;
                 }
             }
 
             string serverExe = GetServerExe();
+
             try
             {
                 await StopAsync();
@@ -380,23 +391,68 @@ namespace ARK_Server_Manager.Lib
                 // Run the SteamCMD to install the server
                 var steamCmdPath = Updater.GetSteamCMDPath();
                 //DataReceivedEventHandler dataReceived = (s, e) => Console.WriteLine(e.Data);
-                var success = await ServerUpdater.UpgradeServerAsync(validate, this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallServerArgsFormat, null /* dataReceived*/, cancellationToken);
-                if (success && ServerManager.Instance.AvailableVersion != null)
+                updateResult.ServerUpdated = await ServerUpdater.UpgradeServerAsync(validate, this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallServerArgsFormat, null /* dataReceived*/, cancellationToken);
+                if (updateResult.ServerUpdated && ServerManager.Instance.AvailableVersion != null)
                 {
                     this.Version = ServerManager.Instance.AvailableVersion;
                 }
 
-                return success;
+                // Run the SteamCMD to install the mods
+                if (updateMods)
+                {
+                    if (updateResult.ServerUpdated)
+                    {
+                        updateResult.ModsUpdated = await ModUpdater.UpgradeModAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, this.ProfileSnapshot.ModIdString, null /* dataReceived*/, cancellationToken);
+                    }
+                }
+                else
+                    updateResult.ModsUpdated = true;
+
+                return updateResult;
             }
             catch (TaskCanceledException)
             {
-                return false;
+                return new UpdateResult { ServerUpdated = false, ModsUpdated = false };
             }
             finally
             {
                 this.Status = ServerStatus.Stopped;
             }
-        }       
+        }
+
+        public async Task<UpdateResult> UpgradeModsAsync(CancellationToken cancellationToken)
+        {
+            var updateResult = new UpdateResult { ServerUpdated = false, ModsUpdated = false };
+
+            if (!System.Environment.Is64BitOperatingSystem)
+            {
+                var result = MessageBox.Show("ARK: Survival Evolved(tm) Server requires a 64-bit operating system to run.  Your operating system is 32-bit and therefore the Ark Server Manager will be unable to start the server, but you may still install it or load and save profiles and settings files for use on other machines.\r\n\r\nDo you wish to continue?", "64-bit OS Required", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.No)
+                {
+                    return updateResult;
+                }
+            }
+
+            try
+            {
+                await StopAsync();
+                this.Status = ServerStatus.Updating;
+
+                // Run the SteamCMD to install the mods
+                var steamCmdPath = Updater.GetSteamCMDPath();
+                updateResult.ModsUpdated = await ModUpdater.UpgradeModAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, this.ProfileSnapshot.ModIdString, null /* dataReceived*/, cancellationToken);
+
+                return updateResult;
+            }
+            catch (TaskCanceledException)
+            {
+                return new UpdateResult { ServerUpdated = false, ModsUpdated = false };
+            }
+            finally
+            {
+                this.Status = ServerStatus.Stopped;
+            }
+        }
 
         public void Dispose()
         {
