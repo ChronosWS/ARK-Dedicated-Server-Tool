@@ -878,17 +878,21 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="164"/>
                                         <ColumnDefinition Width="1*"/>
                                         <ColumnDefinition Width="100"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Grid.Row="0"   Content="{DynamicResource ServerSettings_MapPathLabel}" Grid.ColumnSpan="2" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
-                                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ServerMap}" Width="200"  HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
+                                    <Label Grid.Column="0" Grid.Row="0"   Content="{DynamicResource ServerSettings_MapPathLabel}" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding ServerMap}" HorizontalAlignment="Stretch" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
 
-                                    <Label Grid.Column="0" Grid.Row="1"   Content="{DynamicResource ServerSettings_ModIdsLabel}" Grid.ColumnSpan="2" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}"/>
-                                    <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}">
+                                    <Label Grid.Column="0" Grid.Row="1"   Content="{DynamicResource ServerSettings_TotalConversionModIdLabel}" ToolTip="{DynamicResource ServerSettings_TotalConversionModIdTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding TotalConversionModId}" Width="200" HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_TotalConversionModIdTooltip}"/>
+
+                                    <Label Grid.Column="0" Grid.Row="2"   Content="{DynamicResource ServerSettings_ModIdsLabel}" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}">
                                         <Validation.ErrorTemplate>
                                             <ControlTemplate>
                                                 <StackPanel>
@@ -905,7 +909,8 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <Button DataContext="{Binding Runtime, ElementName=SettingsControl}"  Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"  Margin="5" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Mods}">
+                                    
+                                    <Button DataContext="{Binding Runtime, ElementName=SettingsControl}"  Grid.Column="2" Grid.Row="0" Grid.RowSpan="3"  Margin="5" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Mods}">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">
                                                 <Style.Triggers>

@@ -983,6 +983,14 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty ServerModIdsProperty = DependencyProperty.Register(nameof(ServerModIds), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
 
+        public string TotalConversionModId
+        {
+            get { return (string)GetValue(TotalConversionModIdProperty); }
+            set { SetValue(TotalConversionModIdProperty, value); }
+        }
+
+        public static readonly DependencyProperty TotalConversionModIdProperty = DependencyProperty.Register(nameof(TotalConversionModId), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
+
 
         [IniFileEntry(IniFiles.Game, IniFileSections.GameMode, Key = "DinoHarvestingDamageMultiplier")]
         public float HarvestingDamageMultiplierDino
@@ -1822,6 +1830,13 @@ namespace ARK_Server_Manager.Lib
                 if(this.SOTF_GamePlayLogging)
                 {
                     serverArgs.Append(" -gameplaylogging");
+                }
+            }
+            else
+            {
+                if (!String.IsNullOrWhiteSpace(this.TotalConversionModId))
+                {
+                    serverArgs.Append($" -TotalConversionMod={this.TotalConversionModId}");
                 }
             }
 
