@@ -544,5 +544,17 @@ namespace ARK_Server_Manager {
                 return ((string)(this["SteamCmdInstallModArgsFormat"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UpdateModsWhenUpdatingServer {
+            get {
+                return ((bool)(this["UpdateModsWhenUpdatingServer"]));
+            }
+            set {
+                this["UpdateModsWhenUpdatingServer"] = value;
+            }
+        }
     }
 }

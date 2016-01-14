@@ -650,7 +650,7 @@ namespace ARK_Server_Manager
                         {
                             // sections
                             case UpdateAction.Server:
-                                bool updateMods = true;
+                                bool updateMods = Config.Default.UpdateModsWhenUpdatingServer;
                                 updateResult = await this.Server.UpgradeAsync(upgradeCancellationSource.Token, validate: true, updateMods: updateMods);
 
                                 if (!updateResult.ServerUpdated)

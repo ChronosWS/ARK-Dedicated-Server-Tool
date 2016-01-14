@@ -158,5 +158,8 @@
     <Setting Name="SteamCmdInstallModArgsFormat" Type="System.String" Scope="Application">
       <Value Profile="(Default)">+login anonymous +workshop_download_item 346110 {0} +quit</Value>
     </Setting>
+    <Setting Name="UpdateModsWhenUpdatingServer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

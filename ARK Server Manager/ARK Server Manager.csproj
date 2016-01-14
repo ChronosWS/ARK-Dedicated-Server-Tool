@@ -256,6 +256,9 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Resource Include="Ionic.Zip.xml" />
+    <Content Include="Lib\ModUpdater\arkmodcopy.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\ServerUpdater\mcrcon.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -905,7 +905,7 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
-                                    <Button DataContext="{Binding Runtime}"  Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"  Margin="5" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Mods}">
+                                    <Button DataContext="{Binding Runtime, ElementName=SettingsControl}"  Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"  Margin="5" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Mods}">
                                         <Button.Style>
                                             <Style TargetType="{x:Type Button}">
                                                 <Style.Triggers>

@@ -33,6 +33,7 @@
     <sys:String x:Key="GlobalSettings_UpdateIntervalLabel">Update Interval:</sys:String>
     <sys:String x:Key="GlobalSettings_UpdateIntervalTooltip">How often to check Steam for server updates, in hours and minutes (hh:mm). Set to 00:00 to disable.</sys:String>
     <sys:String x:Key="GlobalSettings_ManageFirewallLabel">Manage firewall settings automatically</sys:String>
+    <sys:String x:Key="GlobalSettings_UpdateModsWhenUpdatingServerLabel">Update mods when updating server</sys:String>
     <sys:String x:Key="GlobalSettings_SetLocationButtonLabel">Set Location...</sys:String>
 
     <!-- 
