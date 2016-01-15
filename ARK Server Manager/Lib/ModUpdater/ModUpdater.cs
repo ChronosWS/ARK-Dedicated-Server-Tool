@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,23 +11,30 @@ namespace ARK_Server_Manager.Lib
 {
     public static class ModUpdater
     {
-        public static Task<bool> UpgradeModAsync(string serverInstallDirectory, string steamCmdFile, string steamCmdArgsFormat, string modIdsString, DataReceivedEventHandler outputHandler, CancellationToken cancellationToken)
+        public static Task<bool> UpgradeAsync(string serverInstallDirectory, string steamCmdFile, string steamCmdArgsFormat, string modIdsString, string mapIdsString, DataReceivedEventHandler outputHandler, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(steamCmdFile) || !File.Exists(steamCmdFile))
                 return Task.FromResult<bool>(false);
 
-            if (string.IsNullOrWhiteSpace(modIdsString))
+            if (string.IsNullOrWhiteSpace(mapIdsString) && string.IsNullOrWhiteSpace(modIdsString))
                 return Task.FromResult<bool>(true);
 
+            var mapIdArray = mapIdsString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             var modIdArray = modIdsString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            if (modIdArray.Length == 0)
+            if (mapIdArray.Length == 0 && modIdArray.Length == 0)
                 return Task.FromResult<bool>(true);
+
+            var idList = mapIdArray.ToList();
+            idList.AddRange(modIdArray);
+
+            // create a comma delimited string of the mod and map ids, excluding an nulls or empties.
+            var idString = String.Join(",", idList.Where(id => !String.IsNullOrWhiteSpace(id)).ToArray());
 
             try
             {
-                foreach (var modId in modIdArray)
+                foreach (var id in idList)
                 {
-                    var steamArgs = String.Format(steamCmdArgsFormat, modId);
+                    var steamArgs = String.Format(steamCmdArgsFormat, id);
 
                     var steamCMDInfo = new ProcessStartInfo()
                     {
@@ -34,7 +43,7 @@ namespace ARK_Server_Manager.Lib
                         UseShellExecute = false,
                         RedirectStandardOutput = outputHandler != null,
                     };
-            
+
                     var steamCMDProcess = Process.Start(steamCMDInfo);
                     steamCMDProcess.EnableRaisingEvents = true;
                     if (outputHandler != null)
@@ -43,7 +52,7 @@ namespace ARK_Server_Manager.Lib
                         steamCMDProcess.BeginOutputReadLine();
                     }
 
-                    var steamCMDTS = new TaskCompletionSource<bool>(); 
+                    var steamCMDTS = new TaskCompletionSource<bool>();
                     using (var cancelRegistration = cancellationToken.Register(() => { try { steamCMDProcess.CloseMainWindow(); } finally { steamCMDTS.TrySetCanceled(); } }))
                     {
                         steamCMDProcess.Exited += (s, e) => steamCMDTS.TrySetResult(steamCMDProcess.ExitCode == 0);
@@ -54,30 +63,30 @@ namespace ARK_Server_Manager.Lib
                 }
 
                 var rootFolder = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-                var modCopyFile = Path.Combine(rootFolder, @"Lib\ModUpdater", "arkmodcopy.exe");
+                var copyFile = Path.Combine(rootFolder, @"Lib\ModUpdater", "arkmodcopy.exe");
 
-                var modCopyInfo = new ProcessStartInfo()
+                var copyInfo = new ProcessStartInfo()
                 {
-                    FileName = modCopyFile,
-                    Arguments = $"\"{Path.GetDirectoryName(steamCmdFile)}\" \"{serverInstallDirectory}\" \"{modIdsString}\"",
+                    FileName = copyFile,
+                    Arguments = $"\"{Path.GetDirectoryName(steamCmdFile)}\" \"{serverInstallDirectory}\" \"{idString}\"",
                     UseShellExecute = false,
                     RedirectStandardOutput = outputHandler != null,
                 };
 
-                var modCopyProcess = Process.Start(modCopyInfo);
-                modCopyProcess.EnableRaisingEvents = true;
+                var copyProcess = Process.Start(copyInfo);
+                copyProcess.EnableRaisingEvents = true;
                 if (outputHandler != null)
                 {
-                    modCopyProcess.OutputDataReceived += outputHandler;
-                    modCopyProcess.BeginOutputReadLine();
+                    copyProcess.OutputDataReceived += outputHandler;
+                    copyProcess.BeginOutputReadLine();
                 }
 
-                var modCopyTS = new TaskCompletionSource<bool>();
-                using (var cancelRegistration = cancellationToken.Register(() => { try { modCopyProcess.CloseMainWindow(); } finally { modCopyTS.TrySetCanceled(); } }))
+                var copyTS = new TaskCompletionSource<bool>();
+                using (var cancelRegistration = cancellationToken.Register(() => { try { copyProcess.CloseMainWindow(); } finally { copyTS.TrySetCanceled(); } }))
                 {
-                    modCopyProcess.Exited += (s, e) => modCopyTS.TrySetResult(modCopyProcess.ExitCode == 0);
-                    modCopyProcess.ErrorDataReceived += (s, e) => modCopyTS.TrySetException(new Exception(e.Data));
-                    if (!modCopyTS.Task.Result)
+                    copyProcess.Exited += (s, e) => copyTS.TrySetResult(copyProcess.ExitCode == 0);
+                    copyProcess.ErrorDataReceived += (s, e) => copyTS.TrySetException(new Exception(e.Data));
+                    if (!copyTS.Task.Result)
                         return Task.FromResult<bool>(false);
                 }
 
@@ -85,8 +94,40 @@ namespace ARK_Server_Manager.Lib
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ModUpdater.UpgradeModAsync - {ex.Message}");
+                Debug.WriteLine($"ModUpdater.UpgradeAsync - {ex.Message}");
                 return Task.FromResult<bool>(false);
+            }
+        }
+
+        public static Task<string> GetMapName(string serverInstallDirectory, string mapIdsString, DataReceivedEventHandler outputHandler, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrWhiteSpace(serverInstallDirectory) || !Directory.Exists(serverInstallDirectory))
+                return Task.FromResult<string>(null);
+
+            if (string.IsNullOrWhiteSpace(mapIdsString))
+                return Task.FromResult<string>(String.Empty);
+
+            var mapIdArray = mapIdsString.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (mapIdArray.Length == 0)
+                return Task.FromResult<string>(String.Empty);
+
+            try
+            {
+                var id = mapIdArray[0];
+                Dictionary<string, string> metaInformation;
+                List<string> mapNames;
+
+                ModCopy.GetModDetails(serverInstallDirectory, id, out metaInformation, out mapNames);
+
+                if (mapNames != null && mapNames.Count > 0)
+                    return Task.FromResult<string>(mapNames[0]);
+
+                return Task.FromResult<string>(null);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ModUpdater.GetMapName - {ex.Message}");
+                return Task.FromResult<string>(null);
             }
         }
     }

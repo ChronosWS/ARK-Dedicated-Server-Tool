@@ -81,6 +81,13 @@ namespace ARK_Server_Manager.Lib
             return result;
         }
 
+        public async Task<String> GetServerMapAsync(CancellationToken cancellationToken)
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.GetServerMapAsync(cancellationToken);
+            return result;
+        }
+
         public void Dispose()
         {
             this.Runtime.Dispose();

@@ -218,6 +218,7 @@
     <Compile Include="Lib\ViewModel\IdListValidationRule.cs" />
     <Compile Include="Lib\ViewModel\IsNullOrWhiteSpaceValueConverter.cs" />
     <Compile Include="Lib\ViewModel\IsNullValueConverter.cs" />
+    <Compile Include="Lib\ViewModel\NegateConverter.cs" />
     <Compile Include="Lib\ViewModel\RelayCommand.cs" />
     <Compile Include="Lib\ViewModel\MinutesToTimeValueConverter.cs" />
     <Compile Include="Lib\ViewModel\TimeValidationRule.cs" />

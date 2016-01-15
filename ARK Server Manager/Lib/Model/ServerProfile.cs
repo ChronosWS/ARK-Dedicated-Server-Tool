@@ -22,17 +22,18 @@ namespace ARK_Server_Manager.Lib
         object this[string propertyName] { get; set; }
     }
 
+    public enum MapSourceType
+    {
+        Default,
+        Custom,
+        TotalConversion,
+    }
+
     [XmlRoot("ArkServerProfile")]
     [Serializable()]
     public class ServerProfile : DependencyObject
     {
         private static NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
-
-        public enum MapSourceType
-        {
-            ByName,
-            ById,
-        };
 
         public static readonly DependencyProperty ProfileNameProperty = DependencyProperty.Register(nameof(ProfileName), typeof(string), typeof(ServerProfile), new PropertyMetadata(Config.Default.DefaultServerProfileName));
         public static readonly DependencyProperty InstallDirectoryProperty = DependencyProperty.Register(nameof(InstallDirectory), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
@@ -40,16 +41,10 @@ namespace ARK_Server_Manager.Lib
         public static readonly DependencyProperty AdditionalArgsProperty = DependencyProperty.Register(nameof(AdditionalArgs), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
         public static readonly DependencyProperty RCONEnabledProperty = DependencyProperty.Register(nameof(RCONEnabled), typeof(bool), typeof(ServerProfile), new PropertyMetadata(false));
         public static readonly DependencyProperty RCONPortProperty = DependencyProperty.Register(nameof(RCONPort), typeof(int), typeof(ServerProfile), new PropertyMetadata(32330));
+        public static readonly DependencyProperty ServerMapSourceProperty = DependencyProperty.Register(nameof(ServerMapSource), typeof(MapSourceType), typeof(ServerProfile), new PropertyMetadata(MapSourceType.Default));
         public static readonly DependencyProperty ServerMapProperty = DependencyProperty.Register(nameof(ServerMap), typeof(string), typeof(ServerProfile), new PropertyMetadata(Config.Default.DefaultServerMap));
-
-
-        public MapSourceType MapSource
-        {
-            get { return (MapSourceType)GetValue(MapSourceProperty); }
-            set { SetValue(MapSourceProperty, value); }
-        }
-
-        public static readonly DependencyProperty MapSourceProperty = DependencyProperty.Register(nameof(MapSource), typeof(MapSourceType), typeof(ServerProfile), new PropertyMetadata(MapSourceType.ByName));
+        public static readonly DependencyProperty ServerMapModIdProperty = DependencyProperty.Register(nameof(ServerMapModId), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
+        public static readonly DependencyProperty TotalConversionModIdProperty = DependencyProperty.Register(nameof(TotalConversionModId), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
 
         public string ProfileName
         {
@@ -87,20 +82,49 @@ namespace ARK_Server_Manager.Lib
             set { SetValue(RCONPortProperty, value); }
         }
 
+        public MapSourceType ServerMapSource
+        {
+            get { return (MapSourceType)GetValue(ServerMapSourceProperty); }
+            set { SetValue(ServerMapSourceProperty, value); }
+        }
+
+        [XmlIgnore()]
+        public string ServerMapSourceId
+        {
+            get
+            {
+                if (SOTF_Enabled)
+                    return Config.Default.ModId_SotF;
+
+                switch (ServerMapSource)
+                {
+                    case MapSourceType.Custom:
+                        return this.ServerMapModId;
+                    case MapSourceType.TotalConversion:
+                        return this.TotalConversionModId;
+                    default:
+                        return String.Empty;
+                }
+            }
+        }
+
         public string ServerMap
         {
             get { return (string)GetValue(ServerMapProperty); }
             set { SetValue(ServerMapProperty, value); }
         }
 
-        public int ServerMapModId
+        public string ServerMapModId
         {
-            get { return (int)GetValue(ServerMapModIdProperty); }
+            get { return (string)GetValue(ServerMapModIdProperty); }
             set { SetValue(ServerMapModIdProperty, value); }
         }
 
-        public static readonly DependencyProperty ServerMapModIdProperty = DependencyProperty.Register(nameof(ServerMapModId), typeof(int), typeof(ServerProfile), new PropertyMetadata(0));
-
+        public string TotalConversionModId
+        {
+            get { return (string)GetValue(TotalConversionModIdProperty); }
+            set { SetValue(TotalConversionModIdProperty, value); }
+        }
 
         #region Server properties
 
@@ -983,14 +1007,6 @@ namespace ARK_Server_Manager.Lib
 
         public static readonly DependencyProperty ServerModIdsProperty = DependencyProperty.Register(nameof(ServerModIds), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
 
-        public string TotalConversionModId
-        {
-            get { return (string)GetValue(TotalConversionModIdProperty); }
-            set { SetValue(TotalConversionModIdProperty, value); }
-        }
-
-        public static readonly DependencyProperty TotalConversionModIdProperty = DependencyProperty.Register(nameof(TotalConversionModId), typeof(string), typeof(ServerProfile), new PropertyMetadata(String.Empty));
-
 
         [IniFileEntry(IniFiles.Game, IniFileSections.GameMode, Key = "DinoHarvestingDamageMultiplier")]
         public float HarvestingDamageMultiplierDino
@@ -1508,7 +1524,6 @@ namespace ARK_Server_Manager.Lib
             list.AddRange(GameData.LevelProgression);
         }
 
-
         public void ResetLevelProgressionToOfficial(LevelProgression levelProgression)
         {
             LevelList list = GetLevelList(levelProgression);
@@ -1753,22 +1768,11 @@ namespace ARK_Server_Manager.Lib
             }
             else
             {
-#if false
-                if (this.MapSource == MapSourceType.ByName)
-                {
-                    serverArgs.Append(this.ServerMap);
-                }
-                else
-                {
-                    serverArgs.Append($"-MapModID={this.ServerMapModId}");
-                }
-#else
                 serverArgs.Append(this.ServerMap);
-#endif
             }
 
             // This flag is broken in the INI        
-            if(this.EnableFlyerCarry)
+            if (this.EnableFlyerCarry)
             {
                 serverArgs.Append("?AllowFlyerCarryPVE=True");
             }
@@ -1807,16 +1811,21 @@ namespace ARK_Server_Manager.Lib
 
             serverArgs.Append("?listen");
 
-            if (!this.SOTF_Enabled && !String.IsNullOrEmpty(this.ServerModIds))
+            if (!this.SOTF_Enabled)
             {
-                serverArgs.Append($"?GameModIds={this.ServerModIds}");
+                if ((!String.IsNullOrWhiteSpace(ServerMapModId) && !String.IsNullOrWhiteSpace(this.ServerModIds)))
+                    serverArgs.Append($"?GameModIds={this.ServerMapModId},{this.ServerModIds}");
+                else if (!String.IsNullOrWhiteSpace(ServerMapModId))
+                    serverArgs.Append($"?GameModIds={this.ServerMapModId}");
+                else if (!String.IsNullOrWhiteSpace(this.ServerModIds))
+                    serverArgs.Append($"?GameModIds={this.ServerModIds}");
             }
 
             serverArgs.Append(this.AdditionalArgs);
 
             if(this.SOTF_Enabled)
             {
-                serverArgs.Append(" -TotalConversionMod=496735411");
+                serverArgs.Append($" -TotalConversionMod={Config.Default.ModId_SotF}");
                 if(this.SOTF_DisableDeathSPectator)
                 {
                     serverArgs.Append(" -DisableDeathSpectator");
@@ -1963,6 +1972,25 @@ namespace ARK_Server_Manager.Lib
         public void ResetOverrideMaxExperiencePointsDino()
         {
             this.ClearValue(OverrideMaxExperiencePointsDinoProperty);
+        }
+
+        public void ClearCustomMap()
+        {
+            ServerMap = String.Empty;
+            this.ClearValue(ServerMapModIdProperty);
+        }
+
+        public void ClearTotalConversion()
+        {
+            ServerMap = String.Empty;
+            this.ClearValue(TotalConversionModIdProperty);
+        }
+
+        public void ResetServerMap()
+        {
+            this.ClearValue(ServerMapProperty);
+            this.ClearValue(ServerMapModIdProperty);
+            this.ClearValue(TotalConversionModIdProperty);
         }
 
         // section reset methods

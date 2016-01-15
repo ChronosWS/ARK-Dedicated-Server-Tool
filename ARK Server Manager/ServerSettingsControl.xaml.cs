@@ -54,6 +54,7 @@ namespace ARK_Server_Manager
     {
         Server,
         Mods,
+        Maps,
     }
 
     /// <summary>
@@ -640,9 +641,6 @@ namespace ARK_Server_Manager
                                 return;
                         }
 
-                        if (MessageBox.Show("Click 'Yes' to confirm you want to perform the update.", "Confirm Update Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
-                            return;
-
                         this.upgradeCancellationSource = new CancellationTokenSource();
                         ServerRuntime.UpdateResult updateResult;
 
@@ -650,24 +648,66 @@ namespace ARK_Server_Manager
                         {
                             // sections
                             case UpdateAction.Server:
+                                if (MessageBox.Show("Click 'Yes' to confirm you want to perform the update.", "Confirm Update Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                                    return;
+
                                 bool updateMods = Config.Default.UpdateModsWhenUpdatingServer;
                                 updateResult = await this.Server.UpgradeAsync(upgradeCancellationSource.Token, validate: true, updateMods: updateMods);
 
                                 if (!updateResult.ServerUpdated)
                                     MessageBox.Show("The update process was not successful, the server was not updated. If this is the first time, please try the update again. If you are unable to successfully update the server then please log a bug.", "Update Server Failed");
                                 else if (!updateResult.ModsUpdated && updateMods)
-                                    MessageBox.Show("The update process was not successful, one or more mods were not updated. If this is the first time, please try the update again. If you are unable to successfully update the mods then please log a bug.", "Update Mods Failed");
+                                    MessageBox.Show("The update process was not successful, one or more mods were not updated. If this is the first time, please try again. If you are unable to successfully update the mods then please log a bug.", "Update Mods Failed");
                                 break;
 
                             case UpdateAction.Mods:
+                                if (MessageBox.Show("Click 'Yes' to confirm you want to perform the update.", "Confirm Update Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                                    return;
+
                                 updateResult = await this.Server.UpgradeModsAsync(upgradeCancellationSource.Token);
 
                                 if (!updateResult.ModsUpdated)
-                                    MessageBox.Show("The update process was not successful, one or more mods were not updated. If this is the first time, please try the update again. If you are unable to successfully update the mods then please log a bug.", "Update Mods Failed");
+                                    MessageBox.Show("The update process was not successful, one or more mods were not updated. If this is the first time, please try again. If you are unable to successfully update the mods then please log a bug.", "Update Mods Failed");
+                                break;
+
+                            case UpdateAction.Maps:
+                                var serverMap = await this.Server.GetServerMapAsync(upgradeCancellationSource.Token);
+
+                                if (serverMap == null)
+                                    MessageBox.Show("The fetch process was not successful, one or more maps could not be fetched. If this is the first time, please try again. If you are unable to successfully fetch the maps then please log a bug.", "Fetch Maps Failed");
+                                else
+                                    Settings.ServerMap = serverMap;
                                 break;
                         }
                     },
                     canExecute: (action) => true
+                );
+            }
+        }
+
+        public ICommand MapSourceTypeSelectionCommand
+        {
+            get
+            {
+                return new RelayCommand<MapSourceType>(
+                    execute: (mapType) =>
+                    {
+                        switch (mapType)
+                        {
+                            case MapSourceType.Default:
+                                this.Settings.ResetServerMap();
+                                break;
+
+                            case MapSourceType.Custom:
+                                this.Settings.ClearTotalConversion();
+                                break;
+
+                            case MapSourceType.TotalConversion:
+                                this.Settings.ClearCustomMap();
+                                break;
+                        }
+                    },
+                    canExecute: (mapType) => true
                 );
             }
         }

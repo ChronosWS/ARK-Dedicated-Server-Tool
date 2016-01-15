@@ -104,6 +104,7 @@ namespace ARK_Server_Manager.Lib
             public string AdminPassword;
             public bool UseRawSockets;
             public string ModIdString;
+            public string MapIdString;
         };
 
         public struct UpdateResult
@@ -163,7 +164,8 @@ namespace ARK_Server_Manager.Lib
                 ServerArgs = profile.GetServerArgs(),
                 AdminPassword = profile.AdminPassword,
                 UseRawSockets = profile.UseRawSockets,
-                ModIdString = profile.ServerModIds,
+                ModIdString = profile.SOTF_Enabled ? String.Empty : profile.ServerModIds,
+                MapIdString = profile.ServerMapSourceId,
             };
 
             Version lastInstalled;
@@ -402,7 +404,7 @@ namespace ARK_Server_Manager.Lib
                 {
                     if (updateResult.ServerUpdated)
                     {
-                        updateResult.ModsUpdated = await ModUpdater.UpgradeModAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, this.ProfileSnapshot.ModIdString, null /* dataReceived*/, cancellationToken);
+                        updateResult.ModsUpdated = await ModUpdater.UpgradeAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, this.ProfileSnapshot.ModIdString, this.ProfileSnapshot.MapIdString, null /* dataReceived*/, cancellationToken);
                     }
                 }
                 else
@@ -440,13 +442,62 @@ namespace ARK_Server_Manager.Lib
 
                 // Run the SteamCMD to install the mods
                 var steamCmdPath = Updater.GetSteamCMDPath();
-                updateResult.ModsUpdated = await ModUpdater.UpgradeModAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, this.ProfileSnapshot.ModIdString, null /* dataReceived*/, cancellationToken);
+                updateResult.ModsUpdated = await ModUpdater.UpgradeAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, this.ProfileSnapshot.ModIdString, this.ProfileSnapshot.MapIdString, null /* dataReceived*/, cancellationToken);
 
                 return updateResult;
             }
             catch (TaskCanceledException)
             {
                 return new UpdateResult { ServerUpdated = false, ModsUpdated = false };
+            }
+            finally
+            {
+                this.Status = ServerStatus.Stopped;
+            }
+        }
+
+        public async Task<String> GetServerMapAsync(CancellationToken cancellationToken)
+        {
+            if (!System.Environment.Is64BitOperatingSystem)
+            {
+                var result = MessageBox.Show("ARK: Survival Evolved(tm) Server requires a 64-bit operating system to run.  Your operating system is 32-bit and therefore the Ark Server Manager will be unable to start the server, but you may still install it or load and save profiles and settings files for use on other machines.\r\n\r\nDo you wish to continue?", "64-bit OS Required", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.No)
+                {
+                    return null;
+                }
+            }
+
+            try
+            {
+                await StopAsync();
+                this.Status = ServerStatus.Updating;
+
+                // try to retrieve the map name
+                var serverMap = await ModUpdater.GetMapName(this.ProfileSnapshot.InstallDirectory, this.ProfileSnapshot.MapIdString, null /* dataReceived*/, cancellationToken);
+
+                // retrieval failed
+                if (serverMap == null)
+                {
+                    // ask user if they wish to attempt the mod download
+                    if (MessageBox.Show("The map could not be located, do you want to download the map mod and try again?", "Map Mod Error", MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                        return String.Empty;
+
+                    // Run the SteamCMD to install the mods
+                    var steamCmdPath = Updater.GetSteamCMDPath();
+                    var modsUpdated = await ModUpdater.UpgradeAsync(this.ProfileSnapshot.InstallDirectory, steamCmdPath, Config.Default.SteamCmdInstallModArgsFormat, String.Empty, this.ProfileSnapshot.MapIdString, null /* dataReceived*/, cancellationToken);
+
+                    // we need to query the mod file to get the name of the map
+                    if (modsUpdated)
+                    {
+                        serverMap = await ModUpdater.GetMapName(this.ProfileSnapshot.InstallDirectory, this.ProfileSnapshot.MapIdString, null /* dataReceived*/, cancellationToken);
+                    }
+                }
+
+                return serverMap;
+            }
+            catch (TaskCanceledException)
+            {
+                return null;
             }
             finally
             {

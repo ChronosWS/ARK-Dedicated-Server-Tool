@@ -161,5 +161,8 @@
     <Setting Name="UpdateModsWhenUpdatingServer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="ModId_SotF" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">496735411</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -556,5 +556,14 @@ namespace ARK_Server_Manager {
                 this["UpdateModsWhenUpdatingServer"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("496735411")]
+        public string ModId_SotF {
+            get {
+                return ((string)(this["ModId_SotF"]));
+            }
+        }
     }
 }

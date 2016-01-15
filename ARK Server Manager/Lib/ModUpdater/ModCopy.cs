@@ -87,6 +87,23 @@ namespace ARK_Server_Manager.Lib
             }
         }
 
+        public static void GetModDetails(string serverPath, string id, out Dictionary<string, string> metaInformation, out List<string> mapNames)
+        {
+            metaInformation = null;
+            mapNames = null;
+
+            if (string.IsNullOrWhiteSpace(serverPath) || string.IsNullOrWhiteSpace(id))
+                return;
+
+            if (!Directory.Exists(serverPath))
+                return;
+
+            string serverModPath = Path.Combine(serverPath, @"ShooterGame\Content\Mods\", id);
+            string modId;
+
+            ReadModFile($"{serverModPath}.mod", out modId, out metaInformation, out mapNames);
+        }
+
         private static bool ParseBaseInformation(string fileName, List<string> mapNames)
         {
             if (!File.Exists(fileName))
@@ -148,6 +165,46 @@ namespace ARK_Server_Manager.Lib
                 }
             }
             return true;
+        }
+
+        private static void ReadModFile(string fileName, out string modID, out Dictionary<string, string> metaInformation, out List<string> mapNames)
+        {
+            modID = null;
+            metaInformation = new Dictionary<string, string>();
+            mapNames = new List<string>();
+
+            using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
+            {
+                ulong num1 = reader.ReadUInt64();
+                modID = num1.ToString();
+
+                string readString1;
+                ReadUE4String(reader, out readString1);
+                string readString2;
+                ReadUE4String(reader, out readString2);
+
+                int count1 = reader.ReadInt32();
+                for (int index = 0; index < count1; ++index)
+                {
+                    string readString3;
+                    ReadUE4String(reader, out readString3);
+                    mapNames.Add(readString3);
+                }
+
+                uint num2 = reader.ReadUInt32();
+                int num3 = reader.ReadInt32();
+                byte num4 = reader.ReadByte();
+
+                int count2 = reader.ReadInt32();
+                for (int index = 0; index < count2; ++index)
+                {
+                    string readString4;
+                    ReadUE4String(reader, out readString4);
+                    string readString5;
+                    ReadUE4String(reader, out readString5);
+                    metaInformation.Add(readString4, readString5);
+                }
+            }
         }
 
         private static void ReadUE4String(BinaryReader reader, out string readString)

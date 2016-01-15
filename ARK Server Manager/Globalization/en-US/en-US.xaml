@@ -114,7 +114,7 @@
     <sys:String x:Key="ServerSettings_RCONButtonTooltip">Open the RCON window.</sys:String>
     <sys:String x:Key="ServerSettings_UpgradeButtonLabel">Update</sys:String>
     <sys:String x:Key="ServerSettings_UpgradeButtonTooltip">Update to the latest version of the Ark server that is currently available to download.</sys:String>
-    <sys:String x:Key="ServerSettings_UpgradeModButtonTooltip">Update the specified mods.</sys:String>
+    <sys:String x:Key="ServerSettings_UpgradeModButtonTooltip">Update the specified maps and mods.</sys:String>
     <sys:String x:Key="ServerSettings_InstallButtonLabel">Install</sys:String>
     <sys:String x:Key="ServerSettings_InstallButtonTooltip">Install the latest version of the Ark server.</sys:String>
     <sys:String x:Key="ServerSettings_CancelUpgradeButtonLabel">Cancel</sys:String>
@@ -172,10 +172,17 @@
 
     <sys:String x:Key="ServerSettings_MapsAndModsLabel">Maps and Mods</sys:String>
     <sys:String x:Key="ServerSettings_MapsAndModsSOTFLabel">Survival of the Fittest enabled - Maps and Mods disabled</sys:String>
-    <sys:String x:Key="ServerSettings_MapPathLabel">Map or Map Mod Path:</sys:String>
-    <sys:String x:Key="ServerSettings_MapPathTooltip">The standard map name (e.g. TheIsland), or the local mod path (e.g. /Game/Mods/123456789/myModMap) if your mod has a map in it.</sys:String>
-    <sys:String x:Key="ServerSettings_TotalConversionModIdLabel">Total Conversion Mod Id:</sys:String>
-    <sys:String x:Key="ServerSettings_TotalConversionModIdTooltip">The mod id of the total conversion mod to be used.</sys:String>
+    <sys:String x:Key="ServerSettings_MapPathLabel">Map Name:</sys:String>
+    <sys:String x:Key="ServerSettings_MapPathTooltip">The name of the map associated with your map selection (e.g. TheIsland).</sys:String>
+    <sys:String x:Key="ServerSettings_MapPathFetchTooltip">Fetch the map name based on your map selection.</sys:String>
+    <sys:String x:Key="ServerSettings_DefaultMapLabel">Default Map</sys:String>
+    <sys:String x:Key="ServerSettings_DefaultMapTooltip">Use the default map.</sys:String>
+    <sys:String x:Key="ServerSettings_CustomMapLabel">Custom Map Id</sys:String>
+    <sys:String x:Key="ServerSettings_CustomMapTooltip">Use a custom map mod.</sys:String>
+    <sys:String x:Key="ServerSettings_CustomMapIdTooltip">The mod id of the custom map to be used.</sys:String>
+    <sys:String x:Key="ServerSettings_TotalConversionLabel">Total Conversion Id</sys:String>
+    <sys:String x:Key="ServerSettings_TotalConversionTooltip">Use a total conversion mod.</sys:String>
+    <sys:String x:Key="ServerSettings_TotalConversionIdTooltip">The mod id of the total conversion to be used.</sys:String>
     <sys:String x:Key="ServerSettings_ModIdsLabel">Mod Ids:</sys:String>
     <sys:String x:Key="ServerSettings_ModIdsTooltip">A comma-separated list of mod ids, in the order in which they should be applied.</sys:String>
 
