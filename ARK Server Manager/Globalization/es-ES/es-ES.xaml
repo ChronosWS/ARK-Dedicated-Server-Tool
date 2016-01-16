@@ -1,0 +1,43 @@
+<Globalization:GlobalizationResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:Globalization="clr-namespace:WPFSharp.Globalizer;assembly=WPFSharp.Globalizer"
+    Name="es-ES"
+    LinkedStyle="es-ES-style"
+    >
+
+    <!-- Updater Window -->
+    <sys:String x:Key="AutoUpdater_Title">ARK Server Manager - Actualizando...</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_DownloadingSteamCmd">Descargando SteamCMD...</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_UnzippingSteamCmd">Descomprimiendo SteamCMD...</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_RunningSteamCmd">Autorizando SteamCMD...</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_InstallSteamCmdComplete">SteamCMD instalado</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_CheckForNewServerVersion">Buscando actualizaciones servidor...</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_DownloadNewServerVersion">Descargando actualizaciones servidor...</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_DownloadNewServerComplete">Descarga servidor Completada</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_Complete">Completa</sys:String>
+    <sys:String x:Key="AutoUpdater_Status_Cancelled">Cancelada</sys:String>
+    
+    <!-- Main Window -->
+    <sys:String x:Key="MainWindow_Title">ARK Server Manager</sys:String>
+
+    <!-- Menu strings -->
+    <sys:String x:Key="Menu_File">_File</sys:String>
+    <sys:String x:Key="Menu_File_Exit">_Exit</sys:String>
+    <sys:String x:Key="Menu_Language">_Language</sys:String>
+    <sys:String x:Key="Menu_Language_English">_English</sys:String>
+    <sys:String x:Key="Menu_Language_Spanish">_Spanish</sys:String>
+    <sys:String x:Key="Menu_Language_Hebrew">_Hebrew</sys:String>
+
+    <sys:String x:Key="LanguageSelectionLabel">_Language</sys:String>
+    
+
+    <!-- Form strings -->
+    <!-- The following line is commented out on purpose in this example in order to demonstrate the FallbackValue -->
+    <!--<sys:String x:Key="Form_FirstName">First Name</sys:String>-->
+    <sys:String x:Key="Form_LastName">Last Name</sys:String>
+    <sys:String x:Key="Form_Age">Age</sys:String>
+    <sys:String x:Key="Form_Button_Clear">Clear</sys:String>
+
+</Globalization:GlobalizationResourceDictionary>
