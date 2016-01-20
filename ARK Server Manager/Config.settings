@@ -155,5 +155,17 @@
     <Setting Name="OpenRCON_RCONPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32330</Value>
     </Setting>
+    <Setting Name="SteamCmdInstallModArgsFormat" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">+login anonymous +workshop_download_item 346110 {0} +quit</Value>
+    </Setting>
+    <Setting Name="UpdateModsWhenUpdatingServer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ModId_SotF" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">496735411</Value>
+    </Setting>
+    <Setting Name="ServerModsRelativePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ShooterGame\Content\Mods</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

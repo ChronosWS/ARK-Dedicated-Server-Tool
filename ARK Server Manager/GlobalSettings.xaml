@@ -37,6 +37,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.ColumnSpan="3" LastChildFill="False">
             <Label DockPanel.Dock="Left" Content="{DynamicResource GlobalSettings_Title}" FontSize="20" VerticalAlignment="Bottom" />
@@ -88,6 +89,7 @@
             </Grid>
         </GroupBox>
 
-        <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="{DynamicResource GlobalSettings_ManageFirewallLabel}" IsChecked="{Binding CurrentConfig.ManageFirewallAutomatically, Mode=TwoWay}" Margin="5"/>        
+        <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="{DynamicResource GlobalSettings_ManageFirewallLabel}" IsChecked="{Binding CurrentConfig.ManageFirewallAutomatically, Mode=TwoWay}" Margin="5"/>
+        <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Content="{DynamicResource GlobalSettings_UpdateModsWhenUpdatingServerLabel}" IsChecked="{Binding CurrentConfig.UpdateModsWhenUpdatingServer, Mode=TwoWay}" Margin="5"/>
     </Grid>
 </UserControl>

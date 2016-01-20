@@ -55,6 +55,20 @@ namespace ARK_Server_Manager.Lib
             return new Server(profile);
         }
 
+        public async Task<String> CheckServerModsAsync()
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.CheckServerModsAsync();
+            return result;
+        }
+
+        public async Task<String> GetServerMapAsync(CancellationToken cancellationToken)
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.GetServerMapAsync(cancellationToken);
+            return result;
+        }
+
         public async Task StartAsync()
         {
             await this.Runtime.AttachToProfile(this.Profile);
@@ -66,12 +80,19 @@ namespace ARK_Server_Manager.Lib
             await this.Runtime.StopAsync();
         }
 
-        public async Task<bool> UpgradeAsync(CancellationToken cancellationToken, bool validate)
+        public async Task<ServerRuntime.UpdateResult> UpgradeAsync(CancellationToken cancellationToken, bool validate, bool updateMods)
         {
             await this.Runtime.AttachToProfile(this.Profile);
-            var success = await this.Runtime.UpgradeAsync(cancellationToken, validate);
+            var result = await this.Runtime.UpgradeAsync(cancellationToken, validate, updateMods);
             this.Profile.LastInstalledVersion = this.Runtime.Version.ToString();
-            return success;
+            return result;
+        }
+
+        public async Task<ServerRuntime.UpdateResult> UpgradeModsAsync(CancellationToken cancellationToken)
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.UpgradeModsAsync(cancellationToken);
+            return result;
         }
 
         public void Dispose()

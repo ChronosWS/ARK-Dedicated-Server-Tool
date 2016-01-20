@@ -29,6 +29,7 @@
             <vm:MinutesToTimeValueConverter x:Key="MinutesToTimeValueConverter"/>
             <vm:AllTrueMultiValueConverter x:Key="AllTrueMultiValueConverter"/>
             <vm:EnumConverter x:Key="EnumConverter"/>
+            <vm:NegateConverter x:Key="NegateConverter" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Style TargetType="local:AnnotatedTextBox">
                 <Setter Property="Template">
@@ -352,6 +353,12 @@
                     <Label Content="{DynamicResource ServerSettings_UpgradeButtonLabel}" VerticalAlignment="Center"/>
                 </StackPanel>
             </ContentControl>
+            <ContentControl x:Key="UpgradeModButtonContent">
+                <StackPanel Orientation="Horizontal" Height="27">
+                    <Image Source="Art/Upgrade.png" Width="16" Margin="5,0,5,0" VerticalAlignment="Center"/>
+                    <Label Content="{DynamicResource ServerSettings_UpgradeButtonLabel}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </ContentControl>
             <ContentControl x:Key="InstallButtonContent">
                 <StackPanel Orientation="Horizontal" Height="27">
                     <Image Source="Art/Upgrade.png" Width="16" Margin="5,0,5,0" VerticalAlignment="Center"/>
@@ -493,7 +500,7 @@
                             </StackPanel>
                         </Border>
                     </Grid>
-                    <Button DataContext="{Binding Runtime}"  Grid.Column="2" Grid.Row="1" Margin="5" Click="Upgrade_Click">
+                    <Button DataContext="{Binding Runtime}"  Grid.Column="2" Grid.Row="1" Margin="5" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Server}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Style.Triggers>
@@ -861,10 +868,74 @@
                                                 <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsSOTFLabel}"/>
                                                 <Setter Property="IsEnabled" Value="False"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False">
+                                            <!--<DataTrigger Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False">
                                                 <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
                                                 <Setter Property="IsEnabled" Value="True"/>
-                                            </DataTrigger>
+                                            </DataTrigger>-->
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Null}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Initializing}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Running}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Stopping}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Stopped}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Unknown}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Updating}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding ElementName=EnableSOTF, Path=IsChecked}" Value="False" />
+                                                    <Condition Binding="{Binding Runtime.Status, ElementName=SettingsControl}" Value="{x:Static lib:ServerRuntime+ServerStatus.Uninstalled}" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Header" Value="{DynamicResource ServerSettings_MapsAndModsLabel}"/>
+                                                <Setter Property="IsEnabled" Value="False"/>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </GroupBox.Style>
@@ -872,17 +943,33 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="25"/>
                                         <RowDefinition Height="25"/>
+                                        <RowDefinition Height="25"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="25"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="34"/>
-                                        <ColumnDefinition Width="99"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="160"/>
                                         <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="100"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Grid.Row="0"   Content="{DynamicResource ServerSettings_MapPathLabel}" Grid.ColumnSpan="2" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
-                                    <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding ServerMap}" Width="200"  HorizontalAlignment="Left" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
 
-                                    <Label Grid.Column="0" Grid.Row="1"   Content="{DynamicResource ServerSettings_ModIdsLabel}" Grid.ColumnSpan="2" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}"/>
-                                    <TextBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}">
+                                    <RadioButton x:Name="RadioDefaultMap" Grid.Column="0" Grid.Row="0" Margin="0,0,5,0" GroupName="MapType" VerticalAlignment="Center" Content="{DynamicResource ServerSettings_DefaultMapLabel}" IsChecked="{Binding Path=ServerMapSource, Converter={StaticResource EnumConverter}, ConverterParameter=Default}" Command="{Binding MapSourceTypeSelectionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static lib:MapSourceType.Default}" ToolTip="{DynamicResource ServerSettings_DefaultMapTooltip}"/>
+
+                                    <RadioButton x:Name="RadioCustomMap" Grid.Column="0" Grid.Row="1" Margin="0,0,5,0" GroupName="MapType" VerticalAlignment="Center" Content="{DynamicResource ServerSettings_CustomMapLabel}" IsChecked="{Binding Path=ServerMapSource, Converter={StaticResource EnumConverter}, ConverterParameter=Custom}" Command="{Binding MapSourceTypeSelectionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static lib:MapSourceType.Custom}" ToolTip="{DynamicResource ServerSettings_CustomMapTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" Text="{Binding ServerMapModId}" IsEnabled="{Binding ElementName=RadioCustomMap, Path=IsChecked}" ToolTip="{DynamicResource ServerSettings_CustomMapIdTooltip}"/>
+
+                                    <RadioButton x:Name="RadioTotalConversion" Grid.Column="0" Grid.Row="2" Margin="0,0,5,0" GroupName="MapType" VerticalAlignment="Center" Content="{DynamicResource ServerSettings_TotalConversionLabel}" IsChecked="{Binding Path=ServerMapSource, Converter={StaticResource EnumConverter}, ConverterParameter=TotalConversion}" Command="{Binding MapSourceTypeSelectionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static lib:MapSourceType.TotalConversion}" ToolTip="{DynamicResource ServerSettings_TotalConversionTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" Text="{Binding TotalConversionModId}" IsEnabled="{Binding ElementName=RadioTotalConversion, Path=IsChecked}" ToolTip="{DynamicResource ServerSettings_TotalConversionIdTooltip}"/>
+
+                                    <Label Grid.Column="0" Grid.Row="3" Content="{DynamicResource ServerSettings_MapPathLabel}" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" Text="{Binding ServerMap}" IsEnabled="{Binding ElementName=RadioDefaultMap, Path=IsChecked, Converter={StaticResource NegateConverter}}" ToolTip="{DynamicResource ServerSettings_MapPathTooltip}"/>
+                                    <Button Grid.Column="2" Grid.Row="3" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Maps}" IsEnabled="{Binding ElementName=RadioDefaultMap, Path=IsChecked, Converter={StaticResource NegateConverter}}" ToolTip="{DynamicResource ServerSettings_MapPathFetchTooltip}">
+                                        <Image Source="Art/Upgrade.png" Width="16" />
+                                    </Button>
+
+                                    <Label Grid.Column="0" Grid.Row="4" Content="{DynamicResource ServerSettings_ModIdsLabel}" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}"/>
+                                    <TextBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" ToolTip="{DynamicResource ServerSettings_ModIdsTooltip}">
                                         <Validation.ErrorTemplate>
                                             <ControlTemplate>
                                                 <StackPanel>
@@ -899,6 +986,8 @@
                                             </Binding>
                                         </TextBox.Text>
                                     </TextBox>
+
+                                    <Button Grid.Column="3" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Bottom" Margin="5,0,0,0" DataContext="{Binding Runtime, ElementName=SettingsControl}" Content="{DynamicResource UpgradeModButtonContent}" Command="{Binding UpdateActionCommand, ElementName=SettingsControl}" CommandParameter="{x:Static local:UpdateAction.Mods}" ToolTip="{DynamicResource ServerSettings_UpgradeModButtonTooltip}"/>
                                 </Grid>
                             </GroupBox>
 

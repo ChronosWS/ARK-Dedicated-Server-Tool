@@ -50,6 +50,12 @@ namespace ARK_Server_Manager
         DinoTamedAddPerLevelStatMultipliers,
         DinoTamedAffinityPerLevelStatMultipliers,
     }
+    public enum UpdateAction
+    {
+        Server,
+        Mods,
+        Maps,
+    }
 
     /// <summary>
     /// Interaction logic for ServerSettings.xaml
@@ -176,34 +182,6 @@ namespace ARK_Server_Manager
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
-        }        
-
-        private async void Upgrade_Click(object sender, RoutedEventArgs e)
-        {
-            switch(this.Runtime.Status)
-            {
-                case ServerRuntime.ServerStatus.Stopped:
-                case ServerRuntime.ServerStatus.Uninstalled:
-                    break;
-
-                case ServerRuntime.ServerStatus.Running:
-                case ServerRuntime.ServerStatus.Initializing:
-                    var result = MessageBox.Show("The server must be stopped to upgrade.  Do you wish to proceed?", "Server running", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if(result == MessageBoxResult.No)
-                    {
-                        return;
-                    }
-
-                    break;
-
-                case ServerRuntime.ServerStatus.Updating:
-                    upgradeCancellationSource.Cancel();
-                    upgradeCancellationSource = null;
-                    return;
-            }
-
-            this.upgradeCancellationSource = new CancellationTokenSource();
-            await this.Server.UpgradeAsync(upgradeCancellationSource.Token, validate: true);            
         }
 
         private async void Start_Click(object sender, RoutedEventArgs e)
@@ -223,6 +201,16 @@ namespace ARK_Server_Manager
 
                 case ServerRuntime.ServerStatus.Stopped:
                     this.Settings.Save();
+
+                    // check if the maps and mods are valid
+                    var checkResult = await this.Server.CheckServerModsAsync();
+                    if (!String.IsNullOrWhiteSpace(checkResult))
+                    {
+                        // mods are not considered valid, prompt user to continue.
+                        if (MessageBox.Show($"{checkResult}\n\nDo you want to continue starting the server?", "Mod Check Failed", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                            return;
+                    }
+
                     await this.Server.StartAsync();
                     break;
             }
@@ -629,6 +617,107 @@ namespace ARK_Server_Manager
                         }
                     },
                     canExecute: (action) => true
+                );
+            }
+        }
+
+        public ICommand UpdateActionCommand
+        {
+            get
+            {
+                return new RelayCommand<UpdateAction>(
+                    execute: async (action) =>
+                    {
+                        switch (this.Runtime.Status)
+                        {
+                            case ServerRuntime.ServerStatus.Stopped:
+                            case ServerRuntime.ServerStatus.Uninstalled:
+                                break;
+
+                            case ServerRuntime.ServerStatus.Running:
+                            case ServerRuntime.ServerStatus.Initializing:
+                                var result = MessageBox.Show("The server must be stopped to perform an update. Do you wish to proceed?", "Server running", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                                if (result == MessageBoxResult.No)
+                                {
+                                    return;
+                                }
+
+                                break;
+
+                            case ServerRuntime.ServerStatus.Updating:
+                                if (upgradeCancellationSource != null)
+                                    upgradeCancellationSource.Cancel();
+                                upgradeCancellationSource = null;
+                                return;
+                        }
+
+                        this.upgradeCancellationSource = new CancellationTokenSource();
+                        ServerRuntime.UpdateResult updateResult;
+
+                        switch (action)
+                        {
+                            // sections
+                            case UpdateAction.Server:
+                                if (MessageBox.Show("Click 'Yes' to confirm you want to perform the update.", "Confirm Update Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                                    return;
+
+                                bool updateMods = Config.Default.UpdateModsWhenUpdatingServer;
+                                updateResult = await this.Server.UpgradeAsync(upgradeCancellationSource.Token, validate: true, updateMods: updateMods);
+
+                                if (!updateResult.ServerUpdated)
+                                    MessageBox.Show("The update process was not successful, the server was not updated. If this is the first time, please try the update again. If you are unable to successfully update the server then please log a bug.", "Update Server Failed");
+                                else if (!updateResult.ModsUpdated && updateMods)
+                                    MessageBox.Show("The update process was not successful, one or more mods were not updated. If this is the first time, please try again. If you are unable to successfully update the mods then please log a bug.", "Update Mods Failed");
+                                break;
+
+                            case UpdateAction.Mods:
+                                if (MessageBox.Show("Click 'Yes' to confirm you want to perform the update.", "Confirm Update Action", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                                    return;
+
+                                updateResult = await this.Server.UpgradeModsAsync(upgradeCancellationSource.Token);
+
+                                if (!updateResult.ModsUpdated)
+                                    MessageBox.Show("The update process was not successful, one or more mods were not updated. If this is the first time, please try again. If you are unable to successfully update the mods then please log a bug.", "Update Mods Failed");
+                                break;
+
+                            case UpdateAction.Maps:
+                                var serverMap = await this.Server.GetServerMapAsync(upgradeCancellationSource.Token);
+
+                                if (serverMap == null)
+                                    MessageBox.Show("The fetch process was not successful, one or more maps could not be fetched. If this is the first time, please try again. If you are unable to successfully fetch the maps then please log a bug.", "Fetch Maps Failed");
+                                else
+                                    Settings.ServerMap = serverMap;
+                                break;
+                        }
+                    },
+                    canExecute: (action) => true
+                );
+            }
+        }
+
+        public ICommand MapSourceTypeSelectionCommand
+        {
+            get
+            {
+                return new RelayCommand<MapSourceType>(
+                    execute: (mapType) =>
+                    {
+                        switch (mapType)
+                        {
+                            case MapSourceType.Default:
+                                this.Settings.ResetServerMap();
+                                break;
+
+                            case MapSourceType.Custom:
+                                this.Settings.ClearTotalConversion();
+                                break;
+
+                            case MapSourceType.TotalConversion:
+                                this.Settings.ClearCustomMap();
+                                break;
+                        }
+                    },
+                    canExecute: (mapType) => true
                 );
             }
         }

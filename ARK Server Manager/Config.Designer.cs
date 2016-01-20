@@ -535,5 +535,44 @@ namespace ARK_Server_Manager {
                 this["OpenRCON_RCONPort"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("+login anonymous +workshop_download_item 346110 {0} +quit")]
+        public string SteamCmdInstallModArgsFormat {
+            get {
+                return ((string)(this["SteamCmdInstallModArgsFormat"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UpdateModsWhenUpdatingServer {
+            get {
+                return ((bool)(this["UpdateModsWhenUpdatingServer"]));
+            }
+            set {
+                this["UpdateModsWhenUpdatingServer"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("496735411")]
+        public string ModId_SotF {
+            get {
+                return ((string)(this["ModId_SotF"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ShooterGame\\Content\\Mods")]
+        public string ServerModsRelativePath {
+            get {
+                return ((string)(this["ServerModsRelativePath"]));
+            }
+        }
     }
 }
