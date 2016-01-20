@@ -201,6 +201,16 @@ namespace ARK_Server_Manager
 
                 case ServerRuntime.ServerStatus.Stopped:
                     this.Settings.Save();
+
+                    // check if the maps and mods are valid
+                    var checkResult = await this.Server.CheckServerModsAsync();
+                    if (!String.IsNullOrWhiteSpace(checkResult))
+                    {
+                        // mods are not considered valid, prompt user to continue.
+                        if (MessageBox.Show($"{checkResult}\n\nDo you want to continue starting the server?", "Mod Check Failed", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                            return;
+                    }
+
                     await this.Server.StartAsync();
                     break;
             }

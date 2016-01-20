@@ -55,6 +55,20 @@ namespace ARK_Server_Manager.Lib
             return new Server(profile);
         }
 
+        public async Task<String> CheckServerModsAsync()
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.CheckServerModsAsync();
+            return result;
+        }
+
+        public async Task<String> GetServerMapAsync(CancellationToken cancellationToken)
+        {
+            await this.Runtime.AttachToProfile(this.Profile);
+            var result = await this.Runtime.GetServerMapAsync(cancellationToken);
+            return result;
+        }
+
         public async Task StartAsync()
         {
             await this.Runtime.AttachToProfile(this.Profile);
@@ -78,13 +92,6 @@ namespace ARK_Server_Manager.Lib
         {
             await this.Runtime.AttachToProfile(this.Profile);
             var result = await this.Runtime.UpgradeModsAsync(cancellationToken);
-            return result;
-        }
-
-        public async Task<String> GetServerMapAsync(CancellationToken cancellationToken)
-        {
-            await this.Runtime.AttachToProfile(this.Profile);
-            var result = await this.Runtime.GetServerMapAsync(cancellationToken);
             return result;
         }
 

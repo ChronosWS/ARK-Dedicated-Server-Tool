@@ -88,26 +88,6 @@ namespace ARK_Server_Manager.Lib
             set { SetValue(ServerMapSourceProperty, value); }
         }
 
-        [XmlIgnore()]
-        public string ServerMapSourceId
-        {
-            get
-            {
-                if (SOTF_Enabled)
-                    return Config.Default.ModId_SotF;
-
-                switch (ServerMapSource)
-                {
-                    case MapSourceType.Custom:
-                        return this.ServerMapModId;
-                    case MapSourceType.TotalConversion:
-                        return this.TotalConversionModId;
-                    default:
-                        return String.Empty;
-                }
-            }
-        }
-
         public string ServerMap
         {
             get { return (string)GetValue(ServerMapProperty); }
@@ -1813,12 +1793,17 @@ namespace ARK_Server_Manager.Lib
 
             if (!this.SOTF_Enabled)
             {
-                if ((!String.IsNullOrWhiteSpace(ServerMapModId) && !String.IsNullOrWhiteSpace(this.ServerModIds)))
-                    serverArgs.Append($"?GameModIds={this.ServerMapModId},{this.ServerModIds}");
-                else if (!String.IsNullOrWhiteSpace(ServerMapModId))
-                    serverArgs.Append($"?GameModIds={this.ServerMapModId}");
-                else if (!String.IsNullOrWhiteSpace(this.ServerModIds))
-                    serverArgs.Append($"?GameModIds={this.ServerModIds}");
+                var delimiter = "?GameModIds=";
+                if (this.ServerMapSource == MapSourceType.Custom)
+                {
+                    serverArgs.Append($"{delimiter}{this.ServerMapModId ?? String.Empty}");
+                    delimiter = ",";
+                }
+                if (!String.IsNullOrWhiteSpace(this.ServerModIds))
+                {
+                    serverArgs.Append($"{delimiter}{this.ServerModIds}");
+                    delimiter = ",";
+                }
             }
 
             serverArgs.Append(this.AdditionalArgs);
@@ -1843,9 +1828,9 @@ namespace ARK_Server_Manager.Lib
             }
             else
             {
-                if (!String.IsNullOrWhiteSpace(this.TotalConversionModId))
+                if (this.ServerMapSource == MapSourceType.TotalConversion)
                 {
-                    serverArgs.Append($" -TotalConversionMod={this.TotalConversionModId}");
+                    serverArgs.Append($" -TotalConversionMod={this.TotalConversionModId ?? String.Empty}");
                 }
             }
 

@@ -177,7 +177,8 @@
     <Compile Include="Lib\Model\StatsMultipliers.cs" />
     <Compile Include="Lib\Model\StringIniValueList.cs" />
     <Compile Include="Lib\ModManager.cs" />
-    <Compile Include="Lib\ModUpdater\ModCopy.cs" />
+    <Compile Include="Lib\ModUpdater\ModUtilities.cs" />
+    <Compile Include="Lib\ModUpdater\ModDetails.cs" />
     <Compile Include="Lib\ModUpdater\ModUpdater.cs" />
     <Compile Include="Lib\PropertyChangeNotifier.cs" />
     <Compile Include="Lib\ScriptUtils.cs" />

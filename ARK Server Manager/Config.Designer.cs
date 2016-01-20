@@ -565,5 +565,14 @@ namespace ARK_Server_Manager {
                 return ((string)(this["ModId_SotF"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ShooterGame\\Content\\Mods")]
+        public string ServerModsRelativePath {
+            get {
+                return ((string)(this["ServerModsRelativePath"]));
+            }
+        }
     }
 }
