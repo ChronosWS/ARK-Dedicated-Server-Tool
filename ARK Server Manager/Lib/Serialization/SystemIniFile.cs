@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace ARK_Server_Manager.Lib
 {
@@ -78,6 +78,11 @@ namespace ARK_Server_Manager.Lib
         public string ClearWhenOff;
 
         /// <summary>
+        /// If true, the value will never be written if the value is the default value
+        /// </summary>
+        public bool ClearIfDefault;
+
+        /// <summary>
         /// Attribute for the IniFile serializer
         /// </summary>
         /// <param name="File">The file into which the setting should be serialized.</param>
@@ -112,23 +117,19 @@ namespace ARK_Server_Manager.Lib
         private readonly Dictionary<IniFiles, string> FileNames = new Dictionary<IniFiles, string>()
         {
             { IniFiles.GameUserSettings, "GameUserSettings.ini" },
-            { IniFiles.Game, "Game.ini" }
+            { IniFiles.Game, "Game.ini" },
         };
 
         public string basePath;
 
         [DllImport("kernel32")]
-        private static extern long WritePrivateProfileString(string section,
-            string key, string val, string filePath);
-
+        private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
 
         [DllImport("kernel32")]
         private static extern int WritePrivateProfileSection(string section, string data, string filePath);
 
         [DllImport("kernel32")]
-        private static extern int GetPrivateProfileString(string section,
-                 string key, string def, StringBuilder retVal,
-            int size, string filePath);
+        private static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
 
         [DllImport("kernel32", CharSet=CharSet.Auto)]
         private static extern int GetPrivateProfileSection(string section, char[] retVal, int size, string filePath);
@@ -148,7 +149,8 @@ namespace ARK_Server_Manager.Lib
         /// <param name="obj"></param>
         public void Serialize(object obj)
         {
-            var fields = obj.GetType().GetProperties().Where(f => f.IsDefined(typeof(IniFileEntryAttribute), false));
+            var objType = obj.GetType();
+            var fields = objType.GetProperties().Where(f => f.IsDefined(typeof(IniFileEntryAttribute), false));
             foreach(var field in fields)
             {
                 var attributes = field.GetCustomAttributes(typeof(IniFileEntryAttribute), false);   
@@ -175,9 +177,21 @@ namespace ARK_Server_Manager.Lib
                         IniWriteSection(attr.Section, filteredSection, attr.File);
                     }
 
-                    if(!String.IsNullOrEmpty(attr.ConditionedOn))
+                    if (attr.ClearIfDefault)
                     {
-                        var conditionField = obj.GetType().GetProperty(attr.ConditionedOn);
+                        var dPField = objType?.GetField(field.Name + "Property", BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                        var dP = dPField?.GetValue(null) as DependencyProperty;
+                        if (dP != null && dP.DefaultMetadata.DefaultValue.Equals(value))
+                        {
+                            // The attribute value was set to true, so clear this attribute instead of writing it
+                            IniWriteValue(attr.Section, keyName, null, attr.File);
+                            continue;
+                        }
+                    }
+
+                    if (!String.IsNullOrEmpty(attr.ConditionedOn))
+                    {
+                        var conditionField = objType.GetProperty(attr.ConditionedOn);
                         var conditionValue = conditionField.GetValue(obj);
                         if(conditionValue is bool && (bool)conditionValue == false)
                         {
@@ -189,7 +203,7 @@ namespace ARK_Server_Manager.Lib
 
                     if(!String.IsNullOrEmpty(attr.ClearWhenOff))
                     {
-                        var updateOffField = obj.GetType().GetProperty(attr.ClearWhenOff);
+                        var updateOffField = objType.GetProperty(attr.ClearWhenOff);
                         var updateOffValue = updateOffField.GetValue(obj);
                         if(updateOffValue is bool && (bool)updateOffValue == false)
                         {
