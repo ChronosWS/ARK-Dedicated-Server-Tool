@@ -692,7 +692,7 @@
             </Border.Background>
             <ScrollViewer DataContext="{Binding Profile}" VerticalScrollBarVisibility="Auto" BorderBrush="Black">
                 <StackPanel Margin="10,5,10,5" CanVerticallyScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <Expander Name="SectionAdministration" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionAdministration" IsExpanded="{Binding CurrentConfig.SectionAdministrationIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_AdministrationSectionLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -989,7 +989,7 @@
                             </GroupBox>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionAutomaticManagement" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionAutomaticManagement" IsExpanded="{Binding CurrentConfig.SectionAutomaticManagementIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <DockPanel>
                                 <TextBlock DockPanel.Dock="Left"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_AutomaticManagementLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1088,7 +1088,7 @@
                             </GroupBox>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionRules" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionRules" IsExpanded="{Binding CurrentConfig.SectionRulesIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_RulesLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1200,7 +1200,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionChatAndNotifications" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionChatAndNotifications" IsExpanded="{Binding CurrentConfig.SectionChatAndNotificationsIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextWrapping="Wrap" Text="{DynamicResource ServerSettings_ChatAndNotificationsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1220,7 +1220,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionHUDAndVisuals" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionHUDAndVisuals" IsExpanded="{Binding CurrentConfig.SectionHUDAndVisualsIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_HUDAndVisualsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1242,7 +1242,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionPlayerSettings" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionPlayerSettings" IsExpanded="{Binding CurrentConfig.SectionPlayerSettingsIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_PlayerSettingsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1330,7 +1330,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionDinoSettings" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionDinoSettings" IsExpanded="{Binding CurrentConfig.SectionDinoSettingsIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_DinoSettingsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1603,7 +1603,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionEnvironment" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionEnvironment" IsExpanded="{Binding CurrentConfig.SectionEnvironmentIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_EnvironmentLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1667,7 +1667,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionStructures" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionStructures" IsExpanded="{Binding CurrentConfig.SectionStructuresIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_StructuresLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1704,7 +1704,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionEngrams" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionEngrams" IsExpanded="{Binding CurrentConfig.SectionEngramsIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_EngramsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1763,7 +1763,7 @@
                             </GroupBox>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionCustomLevels" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionCustomLevels" IsExpanded="{Binding CurrentConfig.SectionCustomLevelsIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_CustomLevelProgressionsLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
@@ -1908,7 +1908,7 @@
                             </StackPanel>
                         </Grid>
                     </Expander>
-                    <Expander Name="SectionSOTF" IsExpanded="True" Style="{DynamicResource ExpanderStyle1}">
+                    <Expander Name="SectionSOTF" IsExpanded="{Binding CurrentConfig.SectionSOTFIsExpanded, ElementName=SettingsControl, FallbackValue=True, Mode=TwoWay}" Style="{DynamicResource ExpanderStyle1}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="{DynamicResource ServerSettings_SOTFLabel}" VerticalAlignment="Center" FontWeight="Bold" FontSize="13.333"/>
