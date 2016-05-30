@@ -71,6 +71,7 @@ namespace ARK_Server_Manager
         public static readonly DependencyProperty RuntimeProperty = DependencyProperty.Register(nameof(Runtime), typeof(ServerRuntime), typeof(ServerSettingsControl));
         public static readonly DependencyProperty NetworkInterfacesProperty = DependencyProperty.Register(nameof(NetworkInterfaces), typeof(List<NetworkAdapterEntry>), typeof(ServerSettingsControl), new PropertyMetadata(new List<NetworkAdapterEntry>()));
         public static readonly DependencyProperty ServerProperty = DependencyProperty.Register(nameof(Server), typeof(Server), typeof(ServerSettingsControl), new PropertyMetadata(null, ServerPropertyChanged));
+        public static readonly DependencyProperty CurrentConfigProperty = DependencyProperty.Register(nameof(CurrentConfig), typeof(Config), typeof(ServerSettingsControl));
 
         CancellationTokenSource upgradeCancellationSource;
 
@@ -83,6 +84,11 @@ namespace ARK_Server_Manager
         // Using a DependencyProperty as the backing store for ServerManager.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ServerManagerProperty = DependencyProperty.Register(nameof(ServerManager), typeof(ServerManager), typeof(ServerSettingsControl), new PropertyMetadata(null));
 
+        public Config CurrentConfig
+        {
+            get { return GetValue(CurrentConfigProperty) as Config; }
+            set { SetValue(CurrentConfigProperty, value); }
+        }
 
 
         public bool IsAdministrator
@@ -142,6 +148,7 @@ namespace ARK_Server_Manager
 
         public ServerSettingsControl()
         {
+            this.CurrentConfig = Config.Default;
             InitializeComponent();
             WindowUtils.RemoveDefaultResourceDictionary(this);
 

@@ -547,5 +547,149 @@ namespace ARK_Server_Manager {
                 this["CultureName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionAdministrationIsExpanded {
+            get {
+                return ((bool)(this["SectionAdministrationIsExpanded"]));
+            }
+            set {
+                this["SectionAdministrationIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionAutomaticManagementIsExpanded {
+            get {
+                return ((bool)(this["SectionAutomaticManagementIsExpanded"]));
+            }
+            set {
+                this["SectionAutomaticManagementIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionRulesIsExpanded {
+            get {
+                return ((bool)(this["SectionRulesIsExpanded"]));
+            }
+            set {
+                this["SectionRulesIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionChatAndNotificationsIsExpanded {
+            get {
+                return ((bool)(this["SectionChatAndNotificationsIsExpanded"]));
+            }
+            set {
+                this["SectionChatAndNotificationsIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionHUDAndVisualsIsExpanded {
+            get {
+                return ((bool)(this["SectionHUDAndVisualsIsExpanded"]));
+            }
+            set {
+                this["SectionHUDAndVisualsIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionPlayerSettingsIsExpanded {
+            get {
+                return ((bool)(this["SectionPlayerSettingsIsExpanded"]));
+            }
+            set {
+                this["SectionPlayerSettingsIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionDinoSettingsIsExpanded {
+            get {
+                return ((bool)(this["SectionDinoSettingsIsExpanded"]));
+            }
+            set {
+                this["SectionDinoSettingsIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionEnvironmentIsExpanded {
+            get {
+                return ((bool)(this["SectionEnvironmentIsExpanded"]));
+            }
+            set {
+                this["SectionEnvironmentIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionStructuresIsExpanded {
+            get {
+                return ((bool)(this["SectionStructuresIsExpanded"]));
+            }
+            set {
+                this["SectionStructuresIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionEngramsIsExpanded {
+            get {
+                return ((bool)(this["SectionEngramsIsExpanded"]));
+            }
+            set {
+                this["SectionEngramsIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionCustomLevelsIsExpanded {
+            get {
+                return ((bool)(this["SectionCustomLevelsIsExpanded"]));
+            }
+            set {
+                this["SectionCustomLevelsIsExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SectionSOTFIsExpanded {
+            get {
+                return ((bool)(this["SectionSOTFIsExpanded"]));
+            }
+            set {
+                this["SectionSOTFIsExpanded"] = value;
+            }
+        }
     }
 }
