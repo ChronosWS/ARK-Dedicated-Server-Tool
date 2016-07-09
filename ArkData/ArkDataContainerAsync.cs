@@ -1,5 +1,10 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -106,6 +111,44 @@ namespace ArkData
 
             container.LinkPlayerTribe();
 
+            return container;
+        }
+        public static async Task<ArkDataContainer> CreateRemoteAsync()
+        {
+
+            var container = new ArkDataContainer();
+            JsonSerializer serializer = new JsonSerializer();
+            using (var client = new WebClient())
+            {
+
+                string requestData = JsonConvert.SerializeObject(new
+                {
+                    api_key = "CHANGEME"
+                });
+                Uri URI = new Uri("http://localhost:8081/listPlayers");
+                client.Headers.Add("Content-Type", "application/json");
+                // client.UploadStringCompleted += new UploadStringCompletedEventHandler(UploadStringCallback2);
+                var response = await client.UploadStringTaskAsync(URI, "POST", requestData);
+                JObject query = JObject.Parse(response);
+                JArray a = (JArray)query["d"];
+                IList<Player> players = a.ToObject<IList<Player>>();
+                foreach (var playerData in players)
+                {
+                    container.Players.Add(playerData);
+                }
+
+                URI = new Uri("http://localhost:8081/listTribes");
+                client.Headers.Add("Content-Type", "application/json");
+                response = await client.UploadStringTaskAsync(URI, "POST", requestData);
+                JObject tribequery = JObject.Parse(response);
+                a = (JArray)tribequery["d"];
+                IList<Tribe> tribes = a.ToObject<IList<Tribe>>();
+                foreach (var tribedata in tribes)
+                {
+                    container.Tribes.Add(tribedata);
+                }
+                container.LinkPlayerTribe();
+            }
             return container;
         }
     }

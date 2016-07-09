@@ -23,7 +23,7 @@ namespace ArkData
         /// <summary>
         /// Indicates whether the steam user data has been loaded.
         /// </summary>
-        private bool SteamLoaded { get; set; }
+        public bool SteamLoaded { get; set; }
 
         /// <summary>
         /// Constructs the ArkDataContainer.
