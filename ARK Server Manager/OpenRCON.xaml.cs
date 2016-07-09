@@ -51,14 +51,6 @@ namespace ARK_Server_Manager
             LoadDefaults();
             this.DataContext = this;
         }
-        public static readonly DependencyProperty MaxPlayersProperty = DependencyProperty.Register(nameof(MaxPlayers), typeof(int), typeof(OpenRCON), new PropertyMetadata(0));
-
-        public int MaxPlayers
-        {
-            get { return (int)GetValue(MaxPlayersProperty); }
-            set { SetValue(MaxPlayersProperty, value); }
-        }
-
 
         public static int GetMaxPlayers()
         {
