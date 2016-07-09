@@ -123,11 +123,10 @@ namespace ArkData
 
                 string requestData = JsonConvert.SerializeObject(new
                 {
-                    api_key = "CHANGEME"
+                    api_key = "changeme"
                 });
-                Uri URI = new Uri("http://localhost:8081/listPlayers");
+                Uri URI = new Uri("http://ark.zkportfolio.info:8081/listPlayers");
                 client.Headers.Add("Content-Type", "application/json");
-                // client.UploadStringCompleted += new UploadStringCompletedEventHandler(UploadStringCallback2);
                 var response = await client.UploadStringTaskAsync(URI, "POST", requestData);
                 JObject query = JObject.Parse(response);
                 JArray a = (JArray)query["d"];
@@ -137,7 +136,7 @@ namespace ArkData
                     container.Players.Add(playerData);
                 }
 
-                URI = new Uri("http://localhost:8081/listTribes");
+                URI = new Uri("http://ark.zkportfolio.info:8081/listTribes");
                 client.Headers.Add("Content-Type", "application/json");
                 response = await client.UploadStringTaskAsync(URI, "POST", requestData);
                 JObject tribequery = JObject.Parse(response);

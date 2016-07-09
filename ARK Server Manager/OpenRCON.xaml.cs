@@ -5,6 +5,10 @@ using System.Windows;
 using System.Windows.Input;
 using ARK_Server_Manager.Lib;
 using WPFSharp.Globalizer;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace ARK_Server_Manager
 {
@@ -47,9 +51,41 @@ namespace ARK_Server_Manager
             LoadDefaults();
             this.DataContext = this;
         }
+        public static readonly DependencyProperty MaxPlayersProperty = DependencyProperty.Register(nameof(MaxPlayers), typeof(int), typeof(OpenRCON), new PropertyMetadata(0));
+
+        public int MaxPlayers
+        {
+            get { return (int)GetValue(MaxPlayersProperty); }
+            set { SetValue(MaxPlayersProperty, value); }
+        }
+
+
+        public static int GetMaxPlayers()
+        {
+            
+            JsonSerializer serializer = new JsonSerializer();
+            using (var client = new WebClient())
+            {
+
+                string requestData = JsonConvert.SerializeObject(new
+                {
+                    api_key = "changeme"
+                });
+                Uri URI = new Uri("http://ark.zkportfolio.info:8081/getServerData");
+                client.Headers.Add("Content-Type", "application/json");
+                var response = client.UploadString(URI, "POST", requestData);
+                JObject query = JObject.Parse(response);
+                JObject data = (JObject)query["d"];
+                int ret;
+                Int32.TryParse(data["maxplayers"].ToString(), out ret);
+                return ret;
+            }
+        }
 
         public ICommand ConnectCommand => new RelayCommand<object>(
-            execute: _ => {
+            execute:  _ =>
+            {
+                
                 // set focus to the Connect button, if the Enter key is pressed, the value just entered has not yet been posted to the property.
                 buttonConnect.Focus();
 
@@ -60,7 +96,8 @@ namespace ARK_Server_Manager
                     RCONPort = RCONPort,
                     AdminPassword = Password,
                     InstallDirectory = String.Empty,
-                    RCONWindowExtents = Rect.Empty
+                    RCONWindowExtents = Rect.Empty,
+                    MaxPlayers = GetMaxPlayers()
                 });
                 window.Owner = this.Owner;
                 window.Show();
