@@ -383,20 +383,12 @@ namespace ARK_Server_Manager.Lib
                         if (playerToUpdate != null)
                         {
 
-                            playerToUpdate.AvatarImage = new BitmapImage(new Uri(playerData.AvatarUrl));
-                            playerToUpdate.ArkData = playerData;
-                            playerToUpdate.LastUpdated = playerData.FileUpdated;
-                            playerToUpdate.TribeName = playerData.Tribe?.Name;
-                            playerToUpdate.HasBan = playerData.CommunityBanned || playerData.VACBanned;
+                            playerToUpdate.UpdateArkDataAsync(playerData).DoNotWait();
                         }
                         else
                         {
                             var newPlayer = new PlayerInfo() { SteamId = Int64.Parse(playerData.SteamId), SteamName = playerData.SteamName };
-                            newPlayer.AvatarImage = new BitmapImage(new Uri(playerData.AvatarUrl));
-                            newPlayer.ArkData = playerData;
-                            newPlayer.LastUpdated = playerData.FileUpdated;
-                            newPlayer.TribeName = playerData.Tribe?.Name;
-                            newPlayer.HasBan = playerData.CommunityBanned || playerData.VACBanned;
+                            newPlayer.UpdateArkDataAsync(playerData).DoNotWait();
                             this.Players.Add(newPlayer);
                         }
                     }

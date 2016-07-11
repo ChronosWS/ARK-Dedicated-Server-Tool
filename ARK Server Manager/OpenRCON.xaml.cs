@@ -52,9 +52,9 @@ namespace ARK_Server_Manager
             this.DataContext = this;
         }
 
-        public static int GetMaxPlayers()
+        public static async Task<int> GetMaxPlayers()
         {
-            
+
             JsonSerializer serializer = new JsonSerializer();
             using (var client = new WebClient())
             {
@@ -65,7 +65,7 @@ namespace ARK_Server_Manager
                 });
                 Uri URI = new Uri("http://ark.zkportfolio.info:8081/getServerData");
                 client.Headers.Add("Content-Type", "application/json");
-                var response = client.UploadString(URI, "POST", requestData);
+                var response = await client.UploadStringTaskAsync(URI, "POST", requestData);
                 JObject query = JObject.Parse(response);
                 JObject data = (JObject)query["d"];
                 int ret;
@@ -75,7 +75,7 @@ namespace ARK_Server_Manager
         }
 
         public ICommand ConnectCommand => new RelayCommand<object>(
-            execute:  _ =>
+            execute: async _ =>
             {
                 
                 // set focus to the Connect button, if the Enter key is pressed, the value just entered has not yet been posted to the property.
@@ -89,7 +89,7 @@ namespace ARK_Server_Manager
                     AdminPassword = Password,
                     InstallDirectory = String.Empty,
                     RCONWindowExtents = Rect.Empty,
-                    MaxPlayers = GetMaxPlayers()
+                    MaxPlayers = await GetMaxPlayers()
                 });
                 window.Owner = this.Owner;
                 window.Show();
