@@ -1366,7 +1366,7 @@ namespace ARK_Server_Manager.Lib
                 gotNewVersion = false;
 
                 // update the server cache
-                var steamCmdArgs = String.Format(Config.Default.SteamCmdInstallServerArgsFormat, Config.Default.AutoUpdate_CacheDir, "validate");
+                var steamCmdArgs = String.Format(Config.Default.SteamCmdInstallServerArgsFormat, Config.Default.AutoUpdate_CacheDir, string.Empty);
                 var success = ServerUpdater.UpgradeServerAsync(steamCmdFile, steamCmdArgs, Config.Default.AutoUpdate_CacheDir, Config.Default.SteamCmdRedirectOutput ? serverOutputHandler : null, CancellationToken.None, ProcessWindowStyle.Hidden).Result;
                 if (success && downloadSuccessful)
                     // download was successful, exit loop and continue.
