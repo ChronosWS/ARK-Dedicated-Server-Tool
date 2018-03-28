@@ -251,7 +251,7 @@ namespace ARK_Server_Manager.Lib
             set { SetValue(EnableBanListURLProperty, value); }
         }
 
-        public static readonly DependencyProperty BanListURLProperty = DependencyProperty.Register(nameof(BanListURL), typeof(string), typeof(ServerProfile), new PropertyMetadata("http://playark.com/banlist.txt"));
+        public static readonly DependencyProperty BanListURLProperty = DependencyProperty.Register(nameof(BanListURL), typeof(string), typeof(ServerProfile), new PropertyMetadata("http://arkdedicated.com/banlist.txt"));
         [DataMember]
         [IniFileEntry(IniFiles.GameUserSettings, IniFileSections.ServerSettings, ConditionedOn = nameof(EnableBanListURL), QuotedString = QuotedStringType.True)]
         public string BanListURL

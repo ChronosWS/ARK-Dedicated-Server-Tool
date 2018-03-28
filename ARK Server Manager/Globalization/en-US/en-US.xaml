@@ -2197,6 +2197,7 @@
     <sys:String x:Key="Ankylo_Character_BP_Aberrant_C">Aberrant Ankylosaurus</sys:String>
     <sys:String x:Key="Arthro_Character_BP_Aberrant_C">Aberrant Arthropluera</sys:String>
     <sys:String x:Key="Baryonyx_Character_BP_Aberrant_C">Aberrant Baryonyx</sys:String>
+    <sys:String x:Key="BigFoot_Character_BP_Aberrant_C">Aberrant Gigantopithecus</sys:String>
     <sys:String x:Key="BoaFrill_Character_BP_Aberrant_C">Aberrant Titanoboa</sys:String>
     <sys:String x:Key="Carno_Character_BP_Aberrant_C">Aberrant Carnotaurus</sys:String>
     <sys:String x:Key="Cnidaria_Character_BP_Aberrant_C">Aberrant Cnidaria</sys:String>
@@ -2205,6 +2206,7 @@
     <sys:String x:Key="Dimorph_Character_BP_Aberrant_C">Aberrant Dimorphodon</sys:String>
     <sys:String x:Key="Diplocaulus_Character_BP_Aberrant_C">Aberrant Diplocaulus</sys:String>
     <sys:String x:Key="Diplodocus_Character_BP_Aberrant_C">Aberrant Diplodocus</sys:String>
+    <sys:String x:Key="Direbear_Character_BP_Aberrant_C">Aberrant Direbear</sys:String>
     <sys:String x:Key="Dodo_Character_BP_Aberrant_C">Aberrant Dodo</sys:String>
     <sys:String x:Key="Doed_Character_BP_Aberrant_C">Aberrant Doedicurus</sys:String>
     <sys:String x:Key="Dragonfly_Character_BP_Aberrant_C">Aberrant Meganeura</sys:String>
