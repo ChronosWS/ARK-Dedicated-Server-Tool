@@ -58,7 +58,7 @@
             <Style x:Key="TribeName" TargetType="Label">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding TribeName, Converter={StaticResource IsNullOrWhiteSpaceValueConverter}}" Value="True">
-                        <Setter Property="Content" Value="No faction"/>
+                        <Setter Property="Content" Value="No tribe"/>
                         <Setter Property="FontStyle" Value="Italic"/>
                         <Setter Property="Foreground" Value="LightGray"/>
                     </DataTrigger>
