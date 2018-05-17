@@ -256,31 +256,38 @@ namespace ARK_Server_Manager.Lib
                 switch (update.Status)
                 {
                     case ServerStatusWatcher.ServerStatus.NotInstalled:
-                        UpdateServerStatus(ServerStatus.Uninstalled, SteamStatus.Unavailable, false);
+                        if (oldStatus != ServerStatus.Updating)
+                            UpdateServerStatus(ServerStatus.Uninstalled, SteamStatus.Unavailable, false);
                         break;
 
                     case ServerStatusWatcher.ServerStatus.Initializing:
-                        UpdateServerStatus(ServerStatus.Initializing, SteamStatus.Unavailable, oldStatus != ServerStatus.Initializing && oldStatus != ServerStatus.Unknown);
+                        if (oldStatus != ServerStatus.Stopping)
+                            UpdateServerStatus(ServerStatus.Initializing, SteamStatus.Unavailable, oldStatus != ServerStatus.Initializing && oldStatus != ServerStatus.Unknown);
                         break;
 
                     case ServerStatusWatcher.ServerStatus.Stopped:
-                        UpdateServerStatus(ServerStatus.Stopped, SteamStatus.Unavailable, oldStatus == ServerStatus.Initializing || oldStatus == ServerStatus.Running || oldStatus == ServerStatus.Stopping);
+                        if (oldStatus != ServerStatus.Updating)
+                            UpdateServerStatus(ServerStatus.Stopped, SteamStatus.Unavailable, oldStatus == ServerStatus.Initializing || oldStatus == ServerStatus.Running || oldStatus == ServerStatus.Stopping);
                         break;
 
                     case ServerStatusWatcher.ServerStatus.Unknown:
-                        UpdateServerStatus(ServerStatus.Unknown, SteamStatus.Unknown, false);
+                        if (oldStatus != ServerStatus.Updating)
+                            UpdateServerStatus(ServerStatus.Unknown, SteamStatus.Unknown, false);
                         break;
 
                     case ServerStatusWatcher.ServerStatus.RunningLocalCheck:
-                        UpdateServerStatus(ServerStatus.Running, this.Steam != SteamStatus.Available ? SteamStatus.WaitingForPublication : this.Steam, oldStatus != ServerStatus.Running && oldStatus != ServerStatus.Unknown);
+                        if (oldStatus != ServerStatus.Stopping)
+                            UpdateServerStatus(ServerStatus.Running, this.Steam != SteamStatus.Available ? SteamStatus.WaitingForPublication : this.Steam, oldStatus != ServerStatus.Running && oldStatus != ServerStatus.Unknown);
                         break;
 
                     case ServerStatusWatcher.ServerStatus.RunningExternalCheck:
-                        UpdateServerStatus(ServerStatus.Running, SteamStatus.WaitingForPublication, oldStatus != ServerStatus.Running && oldStatus != ServerStatus.Unknown);
+                        if (oldStatus != ServerStatus.Stopping)
+                            UpdateServerStatus(ServerStatus.Running, SteamStatus.WaitingForPublication, oldStatus != ServerStatus.Running && oldStatus != ServerStatus.Unknown);
                         break;
 
                     case ServerStatusWatcher.ServerStatus.Published:
-                        UpdateServerStatus(ServerStatus.Running, SteamStatus.Available, oldStatus != ServerStatus.Running && oldStatus != ServerStatus.Unknown);
+                        if (oldStatus != ServerStatus.Stopping)
+                            UpdateServerStatus(ServerStatus.Running, SteamStatus.Available, oldStatus != ServerStatus.Running && oldStatus != ServerStatus.Unknown);
                         break;
                 }
 
@@ -391,7 +398,6 @@ namespace ARK_Server_Manager.Lib
             }
 
             UnregisterForUpdates();
-            UpdateServerStatus(ServerStatus.Initializing, this.Steam, true);
 
             var serverExe = GetServerExe();
             var launcherExe = GetServerLauncherFile();
@@ -452,22 +458,25 @@ namespace ARK_Server_Manager.Lib
                     {
                         if (this.serverProcess != null)
                         {
-                            UpdateServerStatus(ServerStatus.Stopping, SteamStatus.Unavailable, false);
+                            UpdateServerStatus(ServerStatus.Stopping, SteamStatus.Unavailable, true);
 
-                            await ProcessUtils.SendStop(this.serverProcess);
-                        }
-
-                        if (this.serverProcess.HasExited)
-                        {
-                            CheckServerWorldFileExists();
+                            await ProcessUtils.SendStopAsync(this.serverProcess)
+                                .ContinueWith(async t1 =>
+                                {
+                                    if (this.serverProcess.HasExited)
+                                    {
+                                        await TaskUtils.RunOnUIThreadAsync(() => CheckServerWorldFileExists());
+                                    }
+                                })
+                                .ContinueWith(async t2 =>
+                                {
+                                    await TaskUtils.RunOnUIThreadAsync(() => UpdateServerStatus(ServerStatus.Stopped, SteamStatus.Unavailable, false));
+                                });
                         }
                     }
-                    catch(InvalidOperationException)
-                    {                    
-                    }
-                    finally
+                    catch (InvalidOperationException)
                     {
-                        UpdateServerStatus(ServerStatus.Stopped, SteamStatus.Unavailable, true);
+                        UpdateServerStatus(ServerStatus.Unknown, SteamStatus.Unavailable, false);
                     }
                     break;
             }            

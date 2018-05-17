@@ -705,9 +705,8 @@
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}" Value="{x:Static lib:ServerRuntime+ServerStatus.Updating}">
-                                        <Setter Property="Content" Value="{StaticResource CancelInstallButtonContent}"/>
-                                        <Setter Property="ToolTip" Value="{DynamicResource ServerSettings_CancelUpgradeButtonTooltip}" />
-                                        <Setter Property="IsEnabled" Value="True"/>
+                                        <Setter Property="Content" Value="{StaticResource UpgradeButtonContent}"/>
+                                        <Setter Property="IsEnabled" Value="False"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding Status}" Value="{x:Static lib:ServerRuntime+ServerStatus.Uninstalled}">
                                         <Setter Property="Content" Value="{StaticResource InstallButtonContent}"/>
