@@ -5,136 +5,21 @@
   <title>Ark Server Manager Version Feed</title>
   <subtitle>This is the Ark Server Manager beta version feed.</subtitle>
   <link href="http://arkservermanager.freeforums.net/" />
-  <updated>2018-05-16T06:00:00Z</updated>
+  <updated>2018-05-17T06:00:00Z</updated>
 
   <entry>
-    <id>urn:uuid:BABDC41F-552D-49FD-B903-123362019342</id>
-    <title>1.0.328 (1.0.328.7)</title>
-    <summary>1.0.328.7</summary>
+    <id>urn:uuid:2A30E224-4EF6-4823-BD68-DD0BB9286126</id>
+    <title>1.0.329 (1.0.329.2)</title>
+    <summary>1.0.329.2</summary>
     <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-16T06:00:00Z</updated>
+    <updated>2018-05-17T06:00:00Z</updated>
     <content type="xhtml">
       <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
         <p>
           <u style="font-size: .9em;">CHANGE</u>
           <br/>
           <ul>
-            <li>FR Translation file updated. (thanks @angemymy)</li>
-          </ul>
-        </p>
-      </div>
-    </content>
-    <author>
-      <name>bletch</name>
-      <email>bletch1971@hotmail.com</email>
-    </author>
-  </entry>
-
-  <entry>
-    <id>urn:uuid:FC9838F4-B77A-41C1-986F-987D4CE52FCB</id>
-    <title>1.0.328 (1.0.328.6)</title>
-    <summary>1.0.328.6</summary>
-    <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-16T05:50:00Z</updated>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
-        <p>
-          <u style="font-size: .9em;">NEW</u>
-          <br/>
-          <ul>
-            <li>User Settings - added a user settings backup to the backup folder.</li>
-          </ul>
-        </p>
-      </div>
-    </content>
-    <author>
-      <name>bletch</name>
-      <email>bletch1971@hotmail.com</email>
-    </author>
-  </entry>
-
-  <entry>
-    <id>urn:uuid:A6B7F5E0-0DF2-437B-9D7C-809623C72880</id>
-    <title>1.0.328 (1.0.328.5)</title>
-    <summary>1.0.328.5</summary>
-    <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-15T02:10:00Z</updated>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
-        <p>
-          <u style="font-size: .9em;">BUGFIX</u>
-          <br/>
-          <ul>
-            <li>Server Shutdown - when shutting down the server, if method progresses to #3 (CTRL-C), changed the code so that it no longer waits for it to finish.</li>
-          </ul>
-        </p>
-      </div>
-    </content>
-    <author>
-      <name>bletch</name>
-      <email>bletch1971@hotmail.com</email>
-    </author>
-  </entry>
-
-  <entry>
-    <id>urn:uuid:7336274F-E3DC-4C37-9E7D-163A3BB54BE5</id>
-    <title>1.0.328 (1.0.328.4)</title>
-    <summary>1.0.328.4</summary>
-    <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-15T00:10:00Z</updated>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
-        <p>
-          <u style="font-size: .9em;">BUGFIX</u>
-          <br/>
-          <ul>
-            <li>Player List - fixed bug that would prevent loading the player list if the steam fetch caused a problem.</li>
-          </ul>
-        </p>
-      </div>
-    </content>
-    <author>
-      <name>bletch</name>
-      <email>bletch1971@hotmail.com</email>
-    </author>
-  </entry>
-
-  <entry>
-    <id>urn:uuid:620219A2-7CDC-4D9D-8D55-4493A11FB988</id>
-    <title>1.0.328 (1.0.328.3)</title>
-    <summary>1.0.328.3</summary>
-    <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-14T23:25:00Z</updated>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
-        <p>
-          <u style="font-size: .9em;">BUGFIX</u>
-          <br/>
-          <ul>
-            <li>Dino Spawns - changed code to store original values from INI file. Using the original values to determine which dino spawn record has changed.</li>
-          </ul>
-        </p>
-      </div>
-    </content>
-    <author>
-      <name>bletch</name>
-      <email>bletch1971@hotmail.com</email>
-    </author>
-  </entry>
-
-  <entry>
-    <id>urn:uuid:20EA82C2-3657-46B2-BB00-1F2488B5C655</id>
-    <title>1.0.328 (1.0.328.2)</title>
-    <summary>1.0.328.2</summary>
-    <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-14T20:30:00Z</updated>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
-        <p>
-          <u style="font-size: .9em;">BUGFIX</u>
-          <br/>
-          <ul>
-            <li>Dino Spawns - changed code to set spawn values to ALL dino record with the same DinoNameTag.</li>
+            <li>RCON Window - changed player leaving message color to MidniteBlue.</li>
           </ul>
         </p>
       </div>
@@ -147,17 +32,23 @@
 
   <entry>
     <id>urn:uuid:AE20370D-536F-415B-BD9B-E3A373D4A6D4</id>
-    <title>1.0.328 (1.0.328.1)</title>
-    <summary>1.0.328.1</summary>
+    <title>1.0.329 (1.0.329.1)</title>
+    <summary>1.0.329.1</summary>
     <link href="http://arkservermanager.freeforums.net/thread/5141/1-327-test-build" />
-    <updated>2018-05-14T19:50:00Z</updated>
+    <updated>2018-05-17T05:00:00Z</updated>
     <content type="xhtml">
       <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, Verdana, Helvetica, Sans-Serif;font-size: .8em;">
         <p>
+          <u style="font-size: .9em;">BUGFIX</u>
+          <br/>
+          <ul>
+            <li>Server Status spamming - attempt #1 to fix the server status spam being sent to the discord plugin.</li>
+          </ul>
           <u style="font-size: .9em;">CHANGE</u>
           <br/>
           <ul>
-            <li>ArkData - some code tweaks</li>
+            <li>Server Stop process - changed the way the server stop process is done. It is now all threaded properly and should now close down the server within 30 seconds.</li>
+            <li>Server Status - when performing the manual update, the 'Updating' server status should now remain until the update process is complete. This will also keep the update and start buttons disabled.</li>
           </ul>
         </p>
       </div>

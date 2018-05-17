@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ARK_Server_Manager.Lib
@@ -23,5 +24,40 @@ namespace ARK_Server_Manager.Lib
         }
 
         public static readonly Task FinishedTask = Task.FromResult(true);
+
+        public static async Task TimeoutAfterAsync(this Task task, int millisecondsDelay)
+        {
+            using (var timeoutCancellationTokenSource = new CancellationTokenSource())
+            {
+
+                var completedTask = await Task.WhenAny(task, Task.Delay(millisecondsDelay, timeoutCancellationTokenSource.Token));
+                if (completedTask == task)
+                {
+                    timeoutCancellationTokenSource.Cancel();
+                    await task;  // Very important in order to propagate exceptions
+                }
+                else
+                {
+                    throw new TimeoutException("The operation has timed out.");
+                }
+            }
+        }
+
+        public static async Task<TResult> TimeoutAfterAsync<TResult>(this Task<TResult> task, int millisecondsDelay)
+        {
+            using (var timeoutCancellationTokenSource = new CancellationTokenSource())
+            {
+                var completedTask = await Task.WhenAny(task, Task.Delay(millisecondsDelay, timeoutCancellationTokenSource.Token));
+                if (completedTask == task)
+                {
+                    timeoutCancellationTokenSource.Cancel();
+                    return await task;  // Very important in order to propagate exceptions
+                }
+                else
+                {
+                    throw new TimeoutException("The operation has timed out.");
+                }
+            }
+        }
     }
 }

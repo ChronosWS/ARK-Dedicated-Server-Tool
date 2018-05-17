@@ -89,7 +89,7 @@ namespace ARK_Server_Manager.Lib
             return null;
         }
 
-        public static async Task SendStop(Process process)
+        public static async Task SendStopAsync(Process process)
         {
             if (process == null)
                 return;
@@ -110,13 +110,28 @@ namespace ARK_Server_Manager.Lib
 
                     // Must wait here. If we don't and re-enable Ctrl-C
                     // handling below too fast, we might terminate ourselves.
-                    await ts.Task;
 
-                    FreeConsole();
+                    await TaskUtils.TimeoutAfterAsync(ts.Task, 30000)
+                        .ContinueWith(async t1 =>
+                        {
+                            if (!process.HasExited)
+                            {
+                                process.Kill();
 
-                    //Re-enable Ctrl-C handling or any subsequently started
-                    //programs will inherit the disabled state.
-                    SetConsoleCtrlHandler(null, false);
+                                if (!process.HasExited)
+                                {
+                                    await Task.Delay(5000);
+                                }
+                            }
+                        }, TaskContinuationOptions.NotOnRanToCompletion)
+                        .ContinueWith(t2 =>
+                        {
+                            FreeConsole();
+
+                            //Re-enable Ctrl-C handling or any subsequently started
+                            //programs will inherit the disabled state.
+                            SetConsoleCtrlHandler(null, false);
+                        });
                 }
                 else
                 {

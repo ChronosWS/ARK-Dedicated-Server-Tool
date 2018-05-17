@@ -656,7 +656,7 @@ namespace ARK_Server_Manager.Lib
                 // Attempt 3 - Send CNTL-C
                 LogProfileMessage("Closing server timed out, attempting to stop the server.");
 
-                ProcessUtils.SendStop(process).DoNotWait();
+                ProcessUtils.SendStopAsync(process).DoNotWait();
 
                 if (!process.HasExited)
                 {
