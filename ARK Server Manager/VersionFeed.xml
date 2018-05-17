@@ -26,6 +26,7 @@
           <ul>
             <li>Server Stop process - changed the way the server stop process is done. It is now all threaded properly and should now close down the server within 30 seconds.</li>
             <li>Server Status - when performing the manual update, the 'Updating' server status should now remain until the update process is complete. This will also keep the update and start buttons disabled.</li>
+            <li>RCON Window - changed player leaving message color to MidniteBlue.</li>
           </ul>
         </p>
       </div>

@@ -169,7 +169,7 @@ namespace ARK_Server_Manager
         public RCONOutput_PlayerLeft(string text)
             : base(text)
         {
-            Foreground = Brushes.Red;
+            Foreground = Brushes.MidnightBlue;
         }
     };
 
